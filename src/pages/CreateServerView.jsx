@@ -681,8 +681,8 @@ export function CreateServerView() {
                   onChange={(e) => setServerOs(e.target.value)}
                   className="w-full px-3 py-2 text-sm rounded-lg bg-zinc-50 dark:bg-[#060D10] border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:border-[#005459]"
                 >
-                  <option value="Linux">Linux</option>
-                  <option value="Windows">Windows</option>
+                  <option value="Linux">Linux / Unix VPS</option>
+                  <option value="Windows">Windows Server</option>
                 </select>
               </div>
 
