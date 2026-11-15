@@ -65,7 +65,7 @@ export function ServersListCard({ servers = [], loading = false, onManageServers
             </div>
             <div className="font-semibold text-[#101d26] text-[13px]">No target servers configured</div>
             <p className="text-[11px] text-[#565f6b] max-w-xs mx-auto leading-relaxed">
-              Register Linux or Windows Server targets to enable automated deployments.
+              Register Linux / Unix VPS targets to enable automated deployments.
             </p>
             {onManageServers && (
               <button

@@ -226,7 +226,7 @@ export function ProfileView() {
     { key: 'projects:manage', title: 'Manage Repositories & Services', desc: 'Create, edit, and configure projects and target servers.' },
     { key: 'deploy:create', title: 'Trigger Deployments', desc: 'Execute manual pipeline releases and dispatch deployments to nodes.' },
     { key: 'deploy:rollback', title: 'Rollback Deployments', desc: 'Safely revert targets to previous stable production release commits.' },
-    { key: 'servers:manage', title: 'Manage Target Fleet', desc: 'Register Linux/Windows servers, manage SSH credentials, and health probes.' },
+    { key: 'servers:manage', title: 'Manage Target Fleet', desc: 'Register Linux / Unix VPS servers, manage SSH credentials, and health probes.' },
     { key: 'users:manage', title: 'Team Access & IAM', desc: 'Invite engineers, configure roles, and rotate credentials.' },
   ]
 

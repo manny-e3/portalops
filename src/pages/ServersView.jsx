@@ -631,7 +631,7 @@ export function ServersView() {
 
         {/* Table Footer */}
         <div className="px-5 py-3 border-t border-[#E2E7E4] bg-[#FAFBFB] flex items-center justify-between text-[11px] font-mono text-[#565f6b]">
-          <span>Linux (SSH Port 22) · Windows Server (WinRM Port 5985/5986 or OpenSSH)</span>
+          <span>Linux / Unix VPS (SSH Port 22)</span>
           <span>Showing {filteredServers.length} of {servers.length} total hosts</span>
         </div>
       </div>

@@ -388,7 +388,7 @@ export function DocsView() {
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 Supported Application Stacks &amp; Frameworks
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
                 <div className="p-4 rounded-xl bg-[#081419] border border-white/10 space-y-2">
                   <h3 className="text-sm font-bold text-white flex items-center gap-2">
                     <Code2 className="w-4 h-4 text-teal-400" />
@@ -416,16 +416,6 @@ export function DocsView() {
                   </h3>
                   <p className="text-xs text-zinc-400 leading-relaxed">
                     Vite, React, Vue, Svelte, Astro, and plain HTML. Nginx serves pre-compressed Brotli/Gzip assets with aggressive client-side caching headers.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-xl bg-[#081419] border border-white/10 space-y-2">
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Database className="w-4 h-4 text-sky-400" />
-                    <span>Databases &amp; Daemons</span>
-                  </h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    One-click installation and management for PostgreSQL 16, MySQL 8.0, and Redis cache daemons with password authentication and auto-restart policies.
                   </p>
                 </div>
               </div>

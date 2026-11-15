@@ -203,6 +203,26 @@ if [ -f "$APP_DIR/.env" ]; then
   cp -f "$APP_DIR/.env" "$SHARED_DIR/.env"
 fi
 
+# Detect shared hosting (Hostinger, cPanel, LiteSpeed) or existing socket setup
+IS_SHARED_HOSTING=0
+case "$APP_DIR" in
+  */public_html*|*/domains/*|*/htdocs*) IS_SHARED_HOSTING=1 ;;
+esac
+
+# Configure Unix domain socket if on shared hosting or SOCKET_PATH is present
+if [ "$IS_SHARED_HOSTING" -eq 1 ] || grep -q "SOCKET_PATH=" "$SHARED_DIR/.env" "$APP_DIR/.env" 2>/dev/null; then
+  SOCKET_FILE="$APP_DIR/app.sock"
+  for env_file in "$SHARED_DIR/.env" "$APP_DIR/.env"; do
+    if [ -f "$env_file" ]; then
+      if grep -q "^SOCKET_PATH=" "$env_file"; then
+        sed -i "s|^SOCKET_PATH=.*|SOCKET_PATH=\"$SOCKET_FILE\"|" "$env_file"
+      else
+        echo "SOCKET_PATH=\"$SOCKET_FILE\"" >> "$env_file"
+      fi
+    fi
+  done
+fi
+
 # Copy release artifacts
 cp -a * "$RELEASE_DIR/" 2>/dev/null || true
 rm -rf "$RELEASE_DIR/releases" "$RELEASE_DIR/shared" "$RELEASE_DIR/current" 2>/dev/null || true
@@ -251,12 +271,12 @@ command -v "$PM2_CMD" >/dev/null 2>&1 || PM2_CMD="npx --no-install pm2"
 cd "$APP_DIR"
 if [ -f "ecosystem.config.js" ]; then
   echo "Managing PM2 via ecosystem.config.js..."
-  $PM2_CMD reload ecosystem.config.js 2>/dev/null || $PM2_CMD start ecosystem.config.js 2>/dev/null || true
+  $PM2_CMD reload ecosystem.config.js --update-env 2>/dev/null || $PM2_CMD start ecosystem.config.js --update-env 2>/dev/null || true
 else
   APP_NAME="$(basename "$APP_DIR")"
   if $PM2_CMD describe "$APP_NAME" >/dev/null 2>&1; then
     echo "Reloading active PM2 process: $APP_NAME..."
-    $PM2_CMD reload "$APP_NAME" 2>/dev/null || $PM2_CMD restart "$APP_NAME" 2>/dev/null || true
+    $PM2_CMD reload "$APP_NAME" --update-env 2>/dev/null || $PM2_CMD restart "$APP_NAME" --update-env 2>/dev/null || true
   else
     echo "Starting PM2 process: $APP_NAME -> current/$ENTRY..."
     $PM2_CMD start "current/$ENTRY" --name "$APP_NAME" 2>/dev/null || true
@@ -264,13 +284,93 @@ else
 fi
 $PM2_CMD save 2>/dev/null || true
 
-# Auto-configure reverse proxy for LiteSpeed & Apache (cPanel, Hostinger, Linux VPS)
-NODE_PORT=$(grep -E '^[[:space:]]*PORT=' "$SHARED_DIR/.env" "$APP_DIR/.env" "$RELEASE_DIR/.env" 2>/dev/null | head -n 1 | cut -d '=' -f 2 | tr -d '"\r\n ' || echo "")
-[ -z "$NODE_PORT" ] && NODE_PORT="3000"
+# Give process a moment to bind and ensure open socket permissions
+sleep 1
+[ -S "$APP_DIR/app.sock" ] && chmod 777 "$APP_DIR/app.sock" 2>/dev/null || true
 
-if [ ! -f "$APP_DIR/.htaccess" ] || ! grep -q "127.0.0.1" "$APP_DIR/.htaccess" 2>/dev/null; then
-  echo "Configuring LiteSpeed/Apache reverse proxy to http://127.0.0.1:$NODE_PORT in .htaccess..."
-  cat << 'HTACCESS_NODE_EOF' > "$APP_DIR/.htaccess"
+# Auto-configure reverse proxy or PHP Unix socket bridge
+if [ "$IS_SHARED_HOSTING" -eq 1 ] || [ -S "$APP_DIR/app.sock" ]; then
+  echo "Deploying PHP cURL Unix domain socket bridge for LiteSpeed / Apache..."
+  cat << 'PHP_BRIDGE_EOF' > "$APP_DIR/index.php"
+<?php
+$sock = __DIR__ . '/app.sock';
+if (!file_exists($sock)) {
+    http_response_code(503);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'API backend is starting up...', 'status' => 503]);
+    exit;
+}
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_UNIX_SOCKET_PATH, $sock);
+$uri = $_SERVER['REQUEST_URI'] ?? '/';
+curl_setopt($ch, CURLOPT_URL, 'http://localhost' . $uri);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $_SERVER['REQUEST_METHOD']);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HEADER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+
+$headers = [];
+foreach (getallheaders() as $name => $value) {
+    if (strtolower($name) !== 'host') {
+        $headers[] = "$name: $value";
+    }
+}
+$headers[] = 'Host: ' . ($_SERVER['HTTP_HOST'] ?? 'localhost');
+$headers[] = 'X-Forwarded-For: ' . ($_SERVER['REMOTE_ADDR'] ?? '');
+$headers[] = 'X-Forwarded-Proto: ' . ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http');
+
+if (in_array($_SERVER['REQUEST_METHOD'], ['POST', 'PUT', 'PATCH', 'DELETE'])) {
+    $body = file_get_contents('php://input');
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+}
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+$response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+curl_close($ch);
+
+if ($response === false) {
+    http_response_code(502);
+    header('Content-Type: application/json');
+    echo json_encode(['error' => 'Bad gateway', 'status' => 502]);
+    exit;
+}
+
+$responseHeaders = substr($response, 0, $headerSize);
+$responseBody = substr($response, $headerSize);
+
+http_response_code($httpCode);
+foreach (explode("\r\n", $responseHeaders) as $header) {
+    if (!empty($header) && !str_starts_with(strtolower($header), 'transfer-encoding:') && !str_starts_with(strtolower($header), 'connection:')) {
+        header($header, false);
+    }
+}
+echo $responseBody;
+PHP_BRIDGE_EOF
+  chmod 644 "$APP_DIR/index.php" 2>/dev/null || true
+
+  cat << 'HTACCESS_BRIDGE_EOF' > "$APP_DIR/.htaccess"
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+HTACCESS_BRIDGE_EOF
+  chmod 644 "$APP_DIR/.htaccess" 2>/dev/null || true
+
+else
+  NODE_PORT=$(grep -E '^[[:space:]]*PORT=' "$SHARED_DIR/.env" "$APP_DIR/.env" "$RELEASE_DIR/.env" 2>/dev/null | head -n 1 | cut -d '=' -f 2 | tr -d '"\r\n ' || echo "")
+  [ -z "$NODE_PORT" ] && NODE_PORT="3000"
+
+  if [ ! -f "$APP_DIR/.htaccess" ] || ! grep -q "127.0.0.1" "$APP_DIR/.htaccess" 2>/dev/null; then
+    echo "Configuring LiteSpeed/Apache reverse proxy to http://127.0.0.1:$NODE_PORT in .htaccess..."
+    cat << 'HTACCESS_NODE_EOF' > "$APP_DIR/.htaccess"
 Options -Indexes
 DirectoryIndex disabled
 
@@ -283,8 +383,9 @@ DirectoryIndex disabled
   RewriteRule ^(.*)$ http://127.0.0.1:__PORT__/$1 [P,L,QSA]
 </IfModule>
 HTACCESS_NODE_EOF
-  sed -i "s/__PORT__/$NODE_PORT/g" "$APP_DIR/.htaccess" 2>/dev/null || true
-  chmod 644 "$APP_DIR/.htaccess" 2>/dev/null || true
+    sed -i "s/__PORT__/$NODE_PORT/g" "$APP_DIR/.htaccess" 2>/dev/null || true
+    chmod 644 "$APP_DIR/.htaccess" 2>/dev/null || true
+  fi
 fi
 
 # Prune old releases (keep 5)

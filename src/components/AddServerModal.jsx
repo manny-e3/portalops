@@ -692,7 +692,7 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
               <label className="block text-xs font-semibold text-zinc-800 dark:text-zinc-200 mb-2">
                 Server Type &amp; Operating Protocol
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3">
                 {/* Linux Card */}
                 <button
                   type="button"
@@ -721,38 +721,6 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
                     </div>
                     <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 leading-snug">
                       OpenSSH · bash · Ubuntu / Debian / RHEL / AlmaLinux
-                    </div>
-                  </div>
-                </button>
-
-                {/* Windows Card */}
-                <button
-                  type="button"
-                  onClick={() => handleServerTypeChange('WINDOWS')}
-                  className={`p-3.5 rounded-xl border text-left flex items-start gap-3 transition-all cursor-pointer ${
-                    serverType === 'WINDOWS'
-                      ? 'border-2 border-[#0078D4] bg-[#0078D4]/10 shadow-xs'
-                      : 'border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 bg-white dark:bg-[#060D10]'
-                  }`}
-                >
-                  <div
-                    className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${
-                      serverType === 'WINDOWS'
-                        ? 'bg-[#0078D4] text-white'
-                        : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500'
-                    }`}
-                  >
-                    <WindowsLogo className="w-3.5 h-3.5" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-zinc-900 dark:text-white flex items-center gap-1.5">
-                      <span>Windows Server</span>
-                      {serverType === 'WINDOWS' && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#0078D4]" />
-                      )}
-                    </div>
-                    <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 leading-snug">
-                      WinRM / OpenSSH · PowerShell · IIS · Windows Server
                     </div>
                   </div>
                 </button>
