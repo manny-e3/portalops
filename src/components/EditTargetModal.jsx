@@ -3,7 +3,6 @@ import {
   X,
   Server,
   Folder,
-  GitBranch,
   AlertCircle,
   Loader2,
   Edit3,
@@ -12,6 +11,9 @@ import {
   Activity,
   RefreshCw,
   Info,
+  ChevronDown,
+  ChevronRight,
+  Sliders,
 } from 'lucide-react'
 import { api } from '../services/api'
 import { TARGET_PRESETS, isWindowsServer, FRAMEWORK_LABELS } from './AddTargetModal'
@@ -28,7 +30,7 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
   const [requiresApproval, setRequiresApproval] = useState(false)
   const [selectedPresetId, setSelectedPresetId] = useState(null)
   const [isAtomicSymlink, setIsAtomicSymlink] = useState(false)
-  const [showAllPresets, setShowAllPresets] = useState(false)
+  const [showAdvancedScript, setShowAdvancedScript] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(false)
@@ -45,7 +47,7 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
       if (!isWindows && preset.isWindows) return false
 
       // 3. Framework match
-      if (!showAllPresets && projectFramework) {
+      if (projectFramework) {
         if (projectFramework === 'custom') {
           return preset.framework === 'custom' || preset.framework === 'any'
         }
@@ -54,7 +56,7 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
 
       return true
     })
-  }, [isWindows, projectFramework, showAllPresets])
+  }, [isWindows, projectFramework])
 
   const displayedPresets = compatiblePresets.length > 0
     ? compatiblePresets
@@ -219,7 +221,7 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
                 Edit Target Server
               </h2>
               <p className="text-[11px] text-[#565f6b]">
-                Modify destination path, branch override, or post-deploy hook commands.
+                Modify destination path, deployment recipe, or post-deploy hook commands.
               </p>
             </div>
           </div>
@@ -284,23 +286,6 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
             </p>
           </div>
 
-          {/* Branch Override */}
-          <div>
-            <label className="block text-[11px] font-mono uppercase tracking-wider font-semibold text-[#565f6b] mb-1">
-              DEPLOYMENT BRANCH
-            </label>
-            <div className="relative flex items-center">
-              <GitBranch className="w-3.5 h-3.5 text-[#565f6b] absolute left-3 pointer-events-none" />
-              <input
-                type="text"
-                value={branch}
-                onChange={(e) => setBranch(e.target.value)}
-                placeholder="main"
-                className="w-full h-[36px] pl-8 pr-3 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] font-mono text-[#101d26] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15"
-              />
-            </div>
-          </div>
-
           {/* Framework & Deployment Preset */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
@@ -313,13 +298,6 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
                   Auto-Matched
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowAllPresets(!showAllPresets)}
-                className="text-[10px] text-[#005459] hover:underline font-mono cursor-pointer"
-              >
-                {showAllPresets ? 'Show recommended only' : `Show all ${isWindows ? 'Windows' : 'Linux'} recipes`}
-              </button>
             </div>
 
             {/* Smart Stack Banner */}
@@ -459,23 +437,54 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
             )}
           </div>
 
-          {/* Post-Deploy Script */}
-          <div>
-            <label className="block text-[11px] font-mono uppercase tracking-wider font-semibold text-[#565f6b] mb-1">
-              POST-DEPLOY HOOK SCRIPT
-            </label>
-            <div className="relative">
-              <textarea
-                value={postDeploy}
-                onChange={(e) => setPostDeploy(e.target.value)}
-                rows={4}
-                placeholder="e.g. composer install --no-dev or npm run build"
-                className="w-full p-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[11px] font-mono text-[#101d26] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15"
-              />
-            </div>
-            <p className="text-[10px] text-[#565f6b] mt-0.5">
-              Commands executed automatically in target root immediately following git checkout and .env injection.
-            </p>
+          {/* Advanced: Customize Deployment Hook Script Accordion */}
+          <div className="border border-[#CDD4D0] rounded-[6px] overflow-hidden bg-[#FAFBFB]">
+            <button
+              type="button"
+              onClick={() => setShowAdvancedScript(!showAdvancedScript)}
+              className="w-full px-3.5 py-2.5 flex items-center justify-between text-left hover:bg-[#F4F6F5] transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <Sliders className="w-3.5 h-3.5 text-[#005459]" />
+                <span className="text-[12px] font-semibold text-[#101d26]">Deployment Hook Script</span>
+                <span className="text-[10px] text-[#565f6b] font-mono">
+                  (Auto-configured for {projectFramework.toUpperCase()})
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-[#005459] font-medium">
+                <span>{showAdvancedScript ? 'Hide Script' : 'Customize Script'}</span>
+                {showAdvancedScript ? (
+                  <ChevronDown className="w-3.5 h-3.5 text-[#005459]" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5 text-[#005459]" />
+                )}
+              </div>
+            </button>
+
+            {showAdvancedScript && (
+              <div className="p-3.5 border-t border-[#E2E7E4] bg-white space-y-2 animate-in fade-in duration-150">
+                <div className="flex items-center justify-between">
+                  <label className="text-[11px] font-mono uppercase tracking-wider font-semibold text-[#565f6b]">
+                    POST-DEPLOY HOOK SCRIPT
+                  </label>
+                  <span className="text-[10px] font-mono text-[#005459]">
+                    Auto-filled for {projectFramework.toUpperCase()}
+                  </span>
+                </div>
+                <div className="relative">
+                  <textarea
+                    value={postDeploy}
+                    onChange={(e) => setPostDeploy(e.target.value)}
+                    rows={6}
+                    placeholder="e.g. composer install --no-dev or npm run build"
+                    className="w-full p-2.5 bg-[#FAFBFB] border border-[#CDD4D0] rounded-[6px] text-[11px] font-mono text-[#101d26] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15 leading-relaxed"
+                  />
+                </div>
+                <p className="text-[10px] text-[#565f6b]">
+                  Commands executed automatically in target root immediately following git checkout and .env injection.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Reliability & Governance Settings */}

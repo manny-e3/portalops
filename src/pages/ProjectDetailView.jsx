@@ -57,11 +57,9 @@ import { DeploymentDiagnostics } from '../components/DeploymentDiagnostics'
 import { ApprovalModal } from '../components/ApprovalModal'
 import { CommitDiffModal } from '../components/CommitDiffModal'
 import { MaintenanceModeModal } from '../components/MaintenanceModeModal'
-import { PromotionPipelineBoard } from '../components/PromotionPipelineBoard'
 import { GuardrailsPreflightModal } from '../components/GuardrailsPreflightModal'
 import { HostResourceTelemetry } from '../components/HostResourceTelemetry'
 import { DatabaseMigrationsCard } from '../components/DatabaseMigrationsCard'
-import { PreviewEnvironmentsManager } from '../components/PreviewEnvironmentsManager'
 import { ProjectHeroCard } from '../components/ProjectHeroCard'
 import { checkFreezeStatus } from '../utils/freezeWindows'
 import { evaluateGuardrails, getGuardrailPolicies } from '../utils/policyGuardrails'
@@ -1091,7 +1089,7 @@ export function ProjectDetailView() {
             }`}
         >
           <Server className="w-4 h-4" />
-          <span>Servers</span>
+          <span>Environments</span>
           <span className="px-1.5 py-0.2 rounded-full bg-[#E2F0FD] text-[#005459] text-[11px] font-mono font-bold">
             {servers.length}
           </span>
@@ -1121,24 +1119,9 @@ export function ProjectDetailView() {
             }`}
         >
           <KeyRound className="w-4 h-4" />
-          <span>Environment</span>
+          <span>Env Variables</span>
           <span className="px-1.5 py-0.2 rounded-full bg-[#F4F6F5] border border-[#CDD4D0] text-[#565f6b] text-[11px] font-mono">
             {envCount}
-          </span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setActiveTab('Promotion')}
-          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Promotion'
-              ? 'border-[#005459] text-[#005459] font-semibold'
-              : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
-            }`}
-        >
-          <Layers className="w-4 h-4" />
-          <span>Promotion Pipeline</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-[#EAF5EE] text-[#2E8B57] text-[11px] font-mono font-bold">
-            3 Stages
           </span>
         </button>
 
@@ -1171,18 +1154,6 @@ export function ProjectDetailView() {
 
         <button
           type="button"
-          onClick={() => setActiveTab('Preview Envs')}
-          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Preview Envs'
-              ? 'border-[#005459] text-[#005459] font-semibold'
-              : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
-            }`}
-        >
-          <Globe className="w-4 h-4" />
-          <span>Preview Envs</span>
-        </button>
-
-        <button
-          type="button"
           onClick={() => setActiveTab('Settings')}
           className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Settings'
               ? 'border-[#005459] text-[#005459] font-semibold'
@@ -1195,27 +1166,13 @@ export function ProjectDetailView() {
       </div>
 
       {/* 4. Tab Contents */}
-      {activeTab === 'Promotion' && (
-        <PromotionPipelineBoard
-          project={project}
-          servers={servers}
-          projectDeployments={projectDeployments}
-          activeDeploymentsByTarget={activeDeploymentsByTarget}
-          onDeploySuccess={() => {
-            refreshProject()
-            setActiveTab('Deployments')
-          }}
-          onOpenAddTarget={() => setIsAddTargetOpen(true)}
-        />
-      )}
-
       {activeTab === 'Telemetry' && (
         <div className="space-y-4">
           {servers.length === 0 ? (
             <div className="p-8 text-center bg-white border border-[#CDD4D0] rounded-[8px] space-y-2">
               <Cpu className="w-6 h-6 mx-auto text-[#8F9CA7]" />
-              <div className="text-[13px] font-medium text-[#101d26]">No target servers configured</div>
-              <p className="text-[11px] text-[#565f6b]">Add a target server to monitor live host CPU, memory, and container metrics.</p>
+              <div className="text-[13px] font-medium text-[#101d26]">No target environments configured</div>
+              <p className="text-[11px] text-[#565f6b]">Add an environment to monitor live host CPU, memory, and container metrics.</p>
             </div>
           ) : (
             servers.map((srv) => (
@@ -1237,19 +1194,12 @@ export function ProjectDetailView() {
         />
       )}
 
-      {activeTab === 'Preview Envs' && (
-        <PreviewEnvironmentsManager
-          projectId={project?.id || projectId}
-          projectName={project?.name || 'Project'}
-          repoUrl={project?.repoUrl || ''}
-        />
-      )}
       {activeTab === 'Servers' && (
         <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] overflow-hidden shadow-xs">
           {/* Table Card Header */}
           <div className="px-5 py-3.5 border-b border-[#E2E7E4] flex flex-wrap items-center justify-between gap-3">
             <div className="text-[14px] font-semibold text-[#101d26] tracking-tight">
-              Target Servers <span className="font-normal text-[12px] text-[#565f6b]">({servers.length} configured{servers.length > 0 ? `, ${onlineCount} ready` : ''})</span>
+              Target Environments <span className="font-normal text-[12px] text-[#565f6b]">({servers.length} configured{servers.length > 0 ? `, ${onlineCount} ready` : ''})</span>
             </div>
 
             <div className="flex items-center gap-4">
@@ -1282,7 +1232,7 @@ export function ProjectDetailView() {
                   className="h-[30px] px-3 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                  <span>Add Target Server</span>
+                  <span>Add Environment</span>
                 </button>
               )}
             </div>

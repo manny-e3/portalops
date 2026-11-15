@@ -3,7 +3,6 @@ import {
   X,
   Server,
   Folder,
-  GitBranch,
   Terminal,
   AlertCircle,
   Loader2,
@@ -13,6 +12,9 @@ import {
   CheckCircle2,
   HardDrive,
   Info,
+  ChevronDown,
+  ChevronRight,
+  Sliders,
 } from 'lucide-react'
 import { api } from '../services/api'
 import { encodeScript } from '../utils/scriptEncoding'
@@ -863,7 +865,7 @@ export function AddTargetModal({
   const [requiresApproval, setRequiresApproval] = useState(false)
   const [selectedPresetId, setSelectedPresetId] = useState('')
   const [isAtomicSymlink, setIsAtomicSymlink] = useState(false)
-  const [showAllPresets, setShowAllPresets] = useState(false)
+  const [showAdvancedScript, setShowAdvancedScript] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
@@ -880,8 +882,8 @@ export function AddTargetModal({
       if (isWindows && !preset.isWindows) return false
       if (!isWindows && preset.isWindows) return false
 
-      // 3. Framework match: if not showing all recipes, filter strictly by projectFramework
-      if (!showAllPresets && projectFramework) {
+      // 3. Framework match: filter strictly by projectFramework
+      if (projectFramework) {
         if (projectFramework === 'custom') {
           return preset.framework === 'custom' || preset.framework === 'any'
         }
@@ -890,7 +892,7 @@ export function AddTargetModal({
 
       return true
     })
-  }, [isWindows, projectFramework, showAllPresets])
+  }, [isWindows, projectFramework])
 
   const displayedPresets = compatiblePresets.length > 0
     ? compatiblePresets
@@ -931,11 +933,13 @@ export function AddTargetModal({
         const items = Array.isArray(res) ? res : res?.items || []
         const valid = items.filter(Boolean)
         setServers(valid)
-        if (valid.length > 0) {
+        if (valid.length === 1) {
           const first = valid[0]
           setServerId(first.id)
           setName(`Production (${first.name || first.host})`)
           applyPresetForServer(first)
+        } else {
+          setServerId('')
         }
       } catch (err) {
         console.error('Failed to fetch servers for target modal:', err)
@@ -969,13 +973,13 @@ export function AddTargetModal({
     e.preventDefault()
     setError(null)
 
-    if (!name.trim()) {
-      setError('Target name is required.')
+    if (!serverId) {
+      setError('Please select a destination server.')
       return
     }
 
-    if (!serverId) {
-      setError('Please select a destination server.')
+    if (!name.trim()) {
+      setError('Target name is required.')
       return
     }
 
@@ -1129,21 +1133,30 @@ export function AddTargetModal({
               </div>
             ) : servers.length === 0 ? (
               <div className="p-3 bg-[#FAF3E7] border border-[#F1D6A4] rounded-[6px] text-[#B87E0C] text-[12px]">
-                No servers registered in the portal yet. Please register a server in the <strong>Servers</strong> tab first.
+                No servers registered in the portal yet. Please register a server in the <strong>Environments</strong> tab first.
               </div>
             ) : (
-              <select
-                value={serverId}
-                onChange={(e) => handleServerChange(e.target.value)}
-                className="w-full h-[36px] px-3 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[13px] text-[#101d26] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15"
-                required
-              >
-                {servers.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name} ({s.username}@{s.host}:{s.port || 22}) {s.serverType === 'CPANEL_SFTP' ? '· [cPanel SFTP]' : isWindowsServer(s) ? '· [Windows Server]' : '· [Linux VPS]'}
-                  </option>
-                ))}
-              </select>
+              <div className="flex flex-wrap gap-2">
+                {servers.map((s) => {
+                  const isSelected = s.id === serverId
+                  return (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onClick={() => handleServerChange(s.id)}
+                      className={`h-[38px] px-3.5 rounded-[6px] border text-left inline-flex items-center gap-2 transition-all cursor-pointer ${
+                        isSelected
+                          ? 'border-[#005459] bg-[#EAF5EE] text-[#005459] ring-2 ring-[#005459]/20 shadow-xs font-semibold'
+                          : 'border-[#CDD4D0] bg-[#FFFFFF] hover:border-[#8F9CA7] text-[#101d26] font-medium'
+                      }`}
+                    >
+                      <Server className={`w-4 h-4 shrink-0 ${isSelected ? 'text-[#005459]' : 'text-[#565f6b]'}`} />
+                      <span className="text-[13px]">{s.name}</span>
+                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-[#005459] shrink-0" />}
+                    </button>
+                  )
+                })}
+              </div>
             )}
 
             {/* Server Type Insight Banner */}
@@ -1199,23 +1212,6 @@ export function AddTargetModal({
             </p>
           </div>
 
-          {/* Branch Override */}
-          <div>
-            <label className="block text-[11px] font-mono uppercase tracking-wider font-semibold text-[#565f6b] mb-1">
-              DEPLOYMENT BRANCH
-            </label>
-            <div className="relative flex items-center">
-              <GitBranch className="w-3.5 h-3.5 text-[#565f6b] absolute left-3 pointer-events-none" />
-              <input
-                type="text"
-                value={branch}
-                onChange={(e) => setBranch(e.target.value)}
-                placeholder="main"
-                className="w-full h-[36px] pl-8 pr-3 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] font-mono text-[#101d26] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15"
-              />
-            </div>
-          </div>
-
           {/* Framework & Deployment Preset */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
@@ -1228,13 +1224,6 @@ export function AddTargetModal({
                   Auto-Matched
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowAllPresets(!showAllPresets)}
-                className="text-[10px] text-[#005459] hover:underline font-mono cursor-pointer"
-              >
-                {showAllPresets ? 'Show recommended only' : `Show all ${isWindows ? 'Windows' : 'Linux'} recipes`}
-              </button>
             </div>
 
             {/* Smart Stack Banner */}
@@ -1370,33 +1359,59 @@ export function AddTargetModal({
             )}
           </div>
 
-          {/* Post-Deploy Script */}
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="text-[11px] font-mono uppercase tracking-wider font-semibold text-[#565f6b]">
-                POST-DEPLOY HOOK SCRIPT
-              </label>
-              <span className="text-[10px] font-mono text-[#005459]">
-                Auto-filled for {projectFramework.toUpperCase()}
-              </span>
-            </div>
-            <div className="relative">
-              <textarea
-                value={postDeploy}
-                onChange={(e) => {
-                  setPostDeploy(e.target.value)
-                  // If content modified away from preset, clear active selection
-                  const matched = TARGET_PRESETS.find((p) => p.script === e.target.value)
-                  setSelectedPresetId(matched ? matched.id : null)
-                }}
-                rows={7}
-                placeholder="e.g. composer install --no-dev or npm run build"
-                className="w-full p-2.5 bg-[#FAFBFB] border border-[#CDD4D0] rounded-[6px] text-[11px] font-mono text-[#101d26] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15 leading-relaxed"
-              />
-            </div>
-            <p className="text-[10px] text-[#565f6b] mt-0.5">
-              Commands executed automatically in target root immediately following git checkout and .env injection.
-            </p>
+          {/* Advanced: Customize Deployment Hook Script Accordion */}
+          <div className="border border-[#CDD4D0] rounded-[6px] overflow-hidden bg-[#FAFBFB]">
+            <button
+              type="button"
+              onClick={() => setShowAdvancedScript(!showAdvancedScript)}
+              className="w-full px-3.5 py-2.5 flex items-center justify-between text-left hover:bg-[#F4F6F5] transition-colors cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <Sliders className="w-3.5 h-3.5 text-[#005459]" />
+                <span className="text-[12px] font-semibold text-[#101d26]">Deployment Hook Script</span>
+                <span className="text-[10px] text-[#565f6b] font-mono">
+                  (Auto-configured for {projectFramework.toUpperCase()})
+                </span>
+              </div>
+              <div className="flex items-center gap-1.5 text-[11px] text-[#005459] font-medium">
+                <span>{showAdvancedScript ? 'Hide Script' : 'Customize Script'}</span>
+                {showAdvancedScript ? (
+                  <ChevronDown className="w-3.5 h-3.5 text-[#005459]" />
+                ) : (
+                  <ChevronRight className="w-3.5 h-3.5 text-[#005459]" />
+                )}
+              </div>
+            </button>
+
+            {showAdvancedScript && (
+              <div className="p-3.5 border-t border-[#E2E7E4] bg-white space-y-2 animate-in fade-in duration-150">
+                <div className="flex items-center justify-between">
+                  <label className="text-[11px] font-mono uppercase tracking-wider font-semibold text-[#565f6b]">
+                    POST-DEPLOY HOOK SCRIPT
+                  </label>
+                  <span className="text-[10px] font-mono text-[#005459]">
+                    Auto-filled for {projectFramework.toUpperCase()}
+                  </span>
+                </div>
+                <div className="relative">
+                  <textarea
+                    value={postDeploy}
+                    onChange={(e) => {
+                      setPostDeploy(e.target.value)
+                      // If content modified away from preset, clear active selection
+                      const matched = TARGET_PRESETS.find((p) => p.script === e.target.value)
+                      setSelectedPresetId(matched ? matched.id : null)
+                    }}
+                    rows={7}
+                    placeholder="e.g. composer install --no-dev or npm run build"
+                    className="w-full p-2.5 bg-[#FAFBFB] border border-[#CDD4D0] rounded-[6px] text-[11px] font-mono text-[#101d26] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15 leading-relaxed"
+                  />
+                </div>
+                <p className="text-[10px] text-[#565f6b]">
+                  Commands executed automatically in target root immediately following git checkout and .env injection.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Reliability & Governance Settings */}

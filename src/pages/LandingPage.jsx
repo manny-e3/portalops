@@ -141,7 +141,7 @@ export function LandingPage() {
       color: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
       title: 'Database Migrations & Envs',
       badge: 'Encrypted Vault',
-      description: 'Automate Prisma, Drizzle, and Laravel Artisan migrations on deploy. Manage environment variables with AES-256-GCM envelope encryption and preview environments.'
+      description: 'Automate Prisma, Drizzle, and Laravel Artisan migrations on deploy. Manage environment variables with AES-256-GCM envelope encryption.'
     }
   ]
 
