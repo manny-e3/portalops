@@ -223,9 +223,9 @@ if [ "$IS_SHARED_HOSTING" -eq 1 ] || grep -q "SOCKET_PATH=" "$SHARED_DIR/.env" "
   done
 fi
 
-# Copy release artifacts
+# Copy release artifacts (exclude releases, shared, current, and node_modules to avoid copying hundreds of MBs)
 cp -a * "$RELEASE_DIR/" 2>/dev/null || true
-rm -rf "$RELEASE_DIR/releases" "$RELEASE_DIR/shared" "$RELEASE_DIR/current" 2>/dev/null || true
+rm -rf "$RELEASE_DIR/releases" "$RELEASE_DIR/shared" "$RELEASE_DIR/current" "$RELEASE_DIR/node_modules" 2>/dev/null || true
 
 # Symlink persistent environment & uploads
 [ -f "$SHARED_DIR/.env" ] && ln -sfn "$SHARED_DIR/.env" "$RELEASE_DIR/.env"
@@ -234,13 +234,45 @@ ln -sfn "$SHARED_DIR/uploads" "$RELEASE_DIR/uploads"
 # Clean up stale socket file before switching release
 rm -f "$APP_DIR/app.sock" "$RELEASE_DIR/app.sock" 2>/dev/null || true
 
-# Install production dependencies inside the new release directory
+# -------------------------------------------------------------
+# 📦 Smart Dependency Caching (Reuse node_modules if lockfile matches)
+# -------------------------------------------------------------
 cd "$RELEASE_DIR"
-(npm ci --omit=dev 2>/dev/null || npm install --omit=dev 2>/dev/null || true)
+mkdir -p "$SHARED_DIR/node_modules"
+LOCK_HASH=$(sha256sum "$RELEASE_DIR/package.json" "$RELEASE_DIR/package-lock.json" 2>/dev/null | sha256sum | awk '{print $1}')
+PREV_LOCK_FILE="$SHARED_DIR/.lock_hash"
 
-# Run database migrations if Prisma schema exists
+if [ -f "$PREV_LOCK_FILE" ] && [ "$(cat "$PREV_LOCK_FILE")" = "$LOCK_HASH" ] && [ -d "$SHARED_DIR/node_modules/@prisma" ]; then
+  echo "⚡ Dependencies unchanged (package-lock.json matches). Reusing cached node_modules..."
+  ln -sfn "$SHARED_DIR/node_modules" "$RELEASE_DIR/node_modules"
+else
+  echo "📥 Installing production dependencies..."
+  [ -d "$SHARED_DIR/node_modules" ] && cp -a "$SHARED_DIR/node_modules" "$RELEASE_DIR/" 2>/dev/null || true
+  npm ci --omit=dev 2>/dev/null || npm install --omit=dev 2>/dev/null || true
+  rm -rf "$SHARED_DIR/node_modules"
+  cp -a "$RELEASE_DIR/node_modules" "$SHARED_DIR/" 2>/dev/null || true
+  echo "$LOCK_HASH" > "$PREV_LOCK_FILE"
+  echo "✅ Cached production node_modules for future releases."
+fi
+
+# -------------------------------------------------------------
+# 🔄 Database Migrations (Run only when migrations change, timeout 20s)
+# -------------------------------------------------------------
 if [ -f "prisma/schema.prisma" ]; then
-  npx prisma migrate deploy 2>/dev/null || true
+  MIG_HASH=$(find prisma/migrations -type f -exec sha256sum {} + 2>/dev/null | sort | sha256sum | awk '{print $1}')
+  PREV_MIG_FILE="$SHARED_DIR/.migration_hash"
+
+  if [ -f "$PREV_MIG_FILE" ] && [ "$(cat "$PREV_MIG_FILE")" = "$MIG_HASH" ]; then
+    echo "⚡ Database migrations unchanged. Skipping prisma migrate deploy."
+  else
+    echo "🔄 Applying Prisma database migrations (timeout: 20s)..."
+    if timeout 20 npx prisma migrate deploy; then
+      echo "$MIG_HASH" > "$PREV_MIG_FILE"
+      echo "✅ Prisma database migrations applied successfully."
+    else
+      echo "⚠️ Prisma migrate deploy timed out or finished with notice. Proceeding with deployment."
+    fi
+  fi
 fi
 
 # ATOMIC SWITCH: Switch symlink to new release
@@ -388,9 +420,9 @@ HTACCESS_NODE_EOF
   fi
 fi
 
-# Prune old releases (keep 5)
+# Prune old releases (keep latest 3 to save disk & inodes)
 cd "$APP_DIR/releases"
-ls -dt "$APP_DIR/releases"/* | tail -n +6 | xargs rm -rf 2>/dev/null || true
+ls -dt "$APP_DIR/releases"/* | tail -n +4 | xargs rm -rf 2>/dev/null || true
 echo "Atomic switch complete. PM2 workers reloaded with zero dropped connections."`
   },
   {
