@@ -457,8 +457,12 @@ if [ -d "$HOME/.nvm" ]; then
   fi
 fi
 
-# 2. Install dependencies & build production bundle
+# 2. Install dependencies & build production bundle (single-thread mode for shared hosting)
 export NO_UPDATE_NOTIFIER=1
+export RAYON_NUM_THREADS=1
+export ROLLDOWN_WORKERS=1
+export UV_THREADPOOL_SIZE=1
+export NODE_OPTIONS="--max-old-space-size=512"
 npm ci 2>/dev/null || npm install
 npm run build
 
@@ -473,6 +477,7 @@ cat << 'HTACCESS' > .htaccess
   RewriteEngine On
   RewriteBase /
   RewriteRule ^index\.html$ - [L]
+  RewriteRule ^setup/(.*)$ setup.php?file=$1 [QSA,L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]

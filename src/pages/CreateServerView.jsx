@@ -399,11 +399,10 @@ export function CreateServerView() {
                   <button
                     type="button"
                     onClick={() => {
-                      const rawApi = (import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || '').trim()
-                      const apiBase = rawApi ? rawApi.replace(/\/api(\/v1)?\/?$/, '').replace(/\/$/, '') : 'https://deployment-server-3xsh.onrender.com'
-                      const cmd = (createdServer.setupCommand && !createdServer.setupCommand.includes('portalops.online'))
-                        ? createdServer.setupCommand
-                        : `curl -fsSL ${apiBase}/setup/${createdServer.setupToken}.sh | bash`
+                      const portalBase = (typeof window !== 'undefined' && window.location.origin) ? window.location.origin : 'https://portalops.online'
+                      const cmd = createdServer.setupToken
+                        ? `curl -fsSL ${portalBase}/setup/${createdServer.setupToken}.sh | bash`
+                        : (createdServer.setupCommand ? createdServer.setupCommand.replace(/https?:\/\/[^/]+(?=\/setup)/, portalBase) : '')
                       navigator.clipboard?.writeText(cmd)
                       setCopiedScript(true)
                       setTimeout(() => setCopiedScript(false), 2000)
@@ -424,9 +423,9 @@ export function CreateServerView() {
                   </button>
                 </div>
                 <pre className="p-3.5 rounded-lg bg-black/60 border border-white/5 font-mono text-xs text-[#00DF8F] overflow-x-auto select-all break-all whitespace-pre-wrap">
-                  {(createdServer.setupCommand && !createdServer.setupCommand.includes('portalops.online'))
-                    ? createdServer.setupCommand
-                    : `curl -fsSL ${(import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || 'https://deployment-server-3xsh.onrender.com').trim().replace(/\/api(\/v1)?\/?$/, '').replace(/\/$/, '')}/setup/${createdServer.setupToken}.sh | bash`}
+                  {createdServer.setupToken
+                    ? `curl -fsSL ${(typeof window !== 'undefined' && window.location.origin ? window.location.origin : 'https://portalops.online')}/setup/${createdServer.setupToken}.sh | bash`
+                    : (createdServer.setupCommand ? createdServer.setupCommand.replace(/https?:\/\/[^/]+(?=\/setup)/, 'https://portalops.online') : '')}
                 </pre>
               </div>
 

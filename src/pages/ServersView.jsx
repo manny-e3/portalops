@@ -521,30 +521,6 @@ export function ServersView() {
                                 type="button"
                                 onClick={() => {
                                   setActiveMenuId(null)
-                                  setTelemetryServer(srv)
-                                }}
-                                className="w-full px-3 py-1.5 text-left text-[#101d26] hover:bg-[#F4F6F5] flex items-center gap-2 cursor-pointer transition-colors"
-                              >
-                                <Cpu className="w-3.5 h-3.5 text-[#005459]" />
-                                <span>Live Telemetry</span>
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setActiveMenuId(null)
-                                  setTerminalServer(srv)
-                                }}
-                                className="w-full px-3 py-1.5 text-left text-[#101d26] hover:bg-[#F4F6F5] flex items-center gap-2 cursor-pointer transition-colors"
-                              >
-                                <Terminal className="w-3.5 h-3.5 text-[#005459]" />
-                                <span>Interactive Console</span>
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setActiveMenuId(null)
                                   handleTestServer(srv)
                                 }}
                                 disabled={testingId === srv.id}

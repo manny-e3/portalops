@@ -1,3 +1,9 @@
+// Enforce single-worker constraints for Rust / Rayon / Rolldown / libuv
+// Prevents pthread_create exhaustion (EAGAIN 11) on multi-core shared hosts (e.g. 64-core CloudLinux / Hostinger)
+process.env.RAYON_NUM_THREADS = process.env.RAYON_NUM_THREADS || '1'
+process.env.ROLLDOWN_WORKERS = process.env.ROLLDOWN_WORKERS || '1'
+process.env.UV_THREADPOOL_SIZE = process.env.UV_THREADPOOL_SIZE || '1'
+
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -84,6 +90,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           secure: false,
           cookieDomainRewrite: 'localhost',
+        },
+        '/setup': {
+          target: proxyTarget,
+          changeOrigin: true,
+          secure: false,
         },
         '/socket.io': {
           target: proxyTarget,
