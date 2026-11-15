@@ -10,7 +10,6 @@ import {
   Check,
   CheckCircle2,
   Activity,
-  ShieldAlert,
   RefreshCw,
   Info,
 } from 'lucide-react'
@@ -25,7 +24,7 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
   const [preDeploy, setPreDeploy] = useState('')
   const [postDeploy, setPostDeploy] = useState('')
   const [healthCheckUrl, setHealthCheckUrl] = useState('')
-  const [autoRollbackOnFailure, setAutoRollbackOnFailure] = useState(true)
+  const [autoRollbackOnFailure, setAutoRollbackOnFailure] = useState(false)
   const [requiresApproval, setRequiresApproval] = useState(false)
   const [selectedPresetId, setSelectedPresetId] = useState(null)
   const [isAtomicSymlink, setIsAtomicSymlink] = useState(false)
@@ -76,8 +75,8 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
       } catch (_) {}
 
       setHealthCheckUrl(savedMeta.healthCheckUrl !== undefined ? (savedMeta.healthCheckUrl || '') : (target.healthCheckUrl || target.healthUrl || ''))
-      setAutoRollbackOnFailure(savedMeta.autoRollbackOnFailure !== undefined ? savedMeta.autoRollbackOnFailure : (target.autoRollbackOnFailure ?? true))
-      setRequiresApproval(savedMeta.requiresApproval !== undefined ? savedMeta.requiresApproval : (target.requiresApproval ?? false))
+      setAutoRollbackOnFailure(false)
+      setRequiresApproval(false)
 
       // Detect matching preset
       const matched = TARGET_PRESETS.find((p) => p.script === currentScript)
@@ -502,33 +501,6 @@ export function EditTargetModal({ isOpen, onClose, projectId, target, projectFra
                 Leave blank to automatically probe the Project Root URL (HTTP 200/302), or provide a specific domain or path.
               </p>
             </div>
-
-            {/* Auto-rollback on probe fail */}
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={autoRollbackOnFailure}
-                onChange={(e) => setAutoRollbackOnFailure(e.target.checked)}
-                className="rounded border-[#CDD4D0] text-[#005459] focus:ring-[#005459]"
-              />
-              <span className="text-[11px] text-[#101d26] font-medium">
-                Auto-rollback if health probe returns non-200 or times out (30s)
-              </span>
-            </label>
-
-            {/* Require Deployment Approval */}
-            <label className="flex items-center gap-2 cursor-pointer select-none pt-1 border-t border-[#E2E7E4]">
-              <input
-                type="checkbox"
-                checked={requiresApproval}
-                onChange={(e) => setRequiresApproval(e.target.checked)}
-                className="rounded border-[#CDD4D0] text-[#005459] focus:ring-[#005459]"
-              />
-              <div className="flex items-center gap-1.5 text-[11px] text-[#101d26] font-medium">
-                <ShieldAlert className="w-3.5 h-3.5 text-[#B87E0C]" />
-                <span>Require release sign-off before executing on this target</span>
-              </div>
-            </label>
           </div>
 
           {/* Footer Actions */}

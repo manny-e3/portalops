@@ -25,8 +25,6 @@ export function ProjectHeroCard({
   servers = [],
   activeDeployment,
   deploying = false,
-  autoDeploy = true,
-  onToggleAutoDeploy,
   onDeploy,
   onOpenRollback,
   onOpenEdit,
@@ -137,30 +135,6 @@ export function ProjectHeroCard({
 
         {/* Right Action Bar */}
         <div className="flex flex-wrap items-center gap-2 shrink-0">
-          {/* Auto-Deploy Toggle */}
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-[6px] bg-zinc-50 border border-zinc-200">
-            <button
-              type="button"
-              onClick={onToggleAutoDeploy}
-              className={`w-8 h-4.5 flex items-center rounded-full p-0.5 cursor-pointer transition-colors duration-150 ${
-                autoDeploy ? 'bg-zinc-900' : 'bg-zinc-300'
-              }`}
-              title="Toggle automatic deployments on git push"
-            >
-              <div
-                className={`bg-white w-3.5 h-3.5 rounded-full shadow-2xs transform transition-transform duration-150 ${
-                  autoDeploy ? 'translate-x-3.5' : 'translate-x-0'
-                }`}
-              />
-            </button>
-            <div className="text-[11px] font-medium text-zinc-700 leading-none">
-              <div>Auto-deploy</div>
-              <div className="text-[9px] font-mono font-semibold text-zinc-500 uppercase">
-                {autoDeploy ? 'ON' : 'OFF'}
-              </div>
-            </div>
-          </div>
-
           {/* Edit / Settings Button */}
           {canManage && (
             <button

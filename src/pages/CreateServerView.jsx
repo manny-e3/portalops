@@ -9,6 +9,7 @@ import {
   Check,
   Loader2,
   AlertCircle,
+  AlertTriangle,
   Shield,
   KeyRound,
   Terminal,
@@ -64,8 +65,8 @@ export function CreateServerView() {
 
   // Form Fields
   const [serverName, setServerName] = useState(() => generateServerName())
-  const [serverOs, setServerOs] = useState('Ubuntu 24.04 LTS')
-  const [serverType, setServerType] = useState('Server')
+  const [serverOs, setServerOs] = useState('Linux')
+  const [serverType, setServerType] = useState('Web Application')
   const [plan, setPlan] = useState('Standard - 1 vCPU, 2GB RAM, 50GB NVMe ($6/mo)')
   const [region, setRegion] = useState('Frankfurt (eu-central-1)')
 
@@ -90,6 +91,7 @@ export function CreateServerView() {
   const [copiedKey, setCopiedKey] = useState(false)
   const [testKeyStatus, setTestKeyStatus] = useState('idle')
   const [testKeyError, setTestKeyError] = useState(null)
+  const [showDirectCredWarning, setShowDirectCredWarning] = useState(false)
 
   // Polling for automated setup callback
   useEffect(() => {
@@ -132,10 +134,11 @@ export function CreateServerView() {
 
   // Auto-switch OS port/defaults when OS selection changes
   useEffect(() => {
-    if (serverOs.includes('Windows')) {
+    if (serverOs.includes('Windows') || serverOs.toLowerCase().includes('window')) {
       setPort('5985')
       setUsername('Administrator')
       setAuthMethod('PASSWORD')
+      setCustomMethod('manual')
     } else {
       setPort('22')
       if (username === 'Administrator') {
@@ -678,10 +681,8 @@ export function CreateServerView() {
                   onChange={(e) => setServerOs(e.target.value)}
                   className="w-full px-3 py-2 text-sm rounded-lg bg-zinc-50 dark:bg-[#060D10] border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:border-[#005459]"
                 >
-                  <option value="Ubuntu 24.04 LTS">Ubuntu 24.04 LTS (Recommended)</option>
-                  <option value="Ubuntu 22.04 LTS">Ubuntu 22.04 LTS</option>
-                  <option value="Debian 12 Bookworm">Debian 12 Bookworm</option>
-                  <option value="Windows Server 2022">Windows Server 2022 (WinRM / OpenSSH)</option>
+                  <option value="Linux">Linux</option>
+                  <option value="Windows">Windows</option>
                 </select>
               </div>
 
@@ -695,18 +696,8 @@ export function CreateServerView() {
                   onChange={(e) => setServerType(e.target.value)}
                   className="w-full px-3 py-2 text-sm rounded-lg bg-zinc-50 dark:bg-[#060D10] border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:border-[#005459]"
                 >
-                  <option value="Server">Server (Standard web & application runtime)</option>
-                  <option value="Worker">Worker (Background jobs, queues & cron)</option>
-                  <option value="Database">Database (Dedicated MySQL, Postgres, Redis)</option>
-                  <option value="Load Balancer">Load Balancer (Reverse proxy & SSL termination)</option>
+                  <option value="Web Application">Web Application</option>
                 </select>
-                <button
-                  type="button"
-                  onClick={() => setIsServerTypesModalOpen(true)}
-                  className="text-[11.5px] text-[#0080FF] hover:underline mt-1.5 inline-block cursor-pointer"
-                >
-                  Tell me more about the available server types
-                </button>
               </div>
 
               {/* BYOS / VPS Setup Box (When Custom server is chosen) */}
@@ -714,25 +705,33 @@ export function CreateServerView() {
                 <div className="pt-2 space-y-4">
                   {/* Method selector toggle for custom server */}
                   <div className="flex border border-zinc-200 dark:border-zinc-700 rounded-lg p-1 bg-zinc-50 dark:bg-[#060D10] w-full sm:w-auto self-start">
+                    {serverOs !== 'Windows' && (
+                      <button
+                        type="button"
+                        onClick={() => setCustomMethod('script')}
+                        className={`flex-1 sm:flex-none px-4 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${customMethod === 'script'
+                            ? 'bg-white dark:bg-[#0B1317] text-[#005459] dark:text-[#00DF8F] shadow-xs'
+                            : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900'
+                          }`}
+                      >
+                        1-Line Setup Script (Keyless · Recommended)
+                      </button>
+                    )}
                     <button
                       type="button"
-                      onClick={() => setCustomMethod('script')}
-                      className={`flex-1 sm:flex-none px-4 py-1.5 rounded-md text-xs font-semibold transition-all ${customMethod === 'script'
+                      onClick={() => {
+                        if (customMethod !== 'manual') {
+                          setShowDirectCredWarning(true)
+                        }
+                      }}
+                      className={`flex-1 sm:flex-none px-4 py-1.5 rounded-md text-xs font-semibold transition-all cursor-pointer ${customMethod === 'manual'
                           ? 'bg-white dark:bg-[#0B1317] text-[#005459] dark:text-[#00DF8F] shadow-xs'
                           : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900'
                         }`}
                     >
-                      1-Line Setup Script (Keyless · Recommended)
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setCustomMethod('manual')}
-                      className={`flex-1 sm:flex-none px-4 py-1.5 rounded-md text-xs font-semibold transition-all ${customMethod === 'manual'
-                          ? 'bg-white dark:bg-[#0B1317] text-[#005459] dark:text-[#00DF8F] shadow-xs'
-                          : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900'
-                        }`}
-                    >
-                      Direct SSH Credentials (AES-256 Encrypted)
+                      {serverOs === 'Windows'
+                        ? 'Direct Credentials (WinRM / OpenSSH)'
+                        : 'Direct SSH Credentials (AES-256 Encrypted)'}
                     </button>
                   </div>
 
@@ -798,16 +797,23 @@ export function CreateServerView() {
                   {/* Direct SSH fields if manual method chosen */}
                   {customMethod === 'manual' && (
                     <div className="space-y-3 pt-1">
+                      <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-900/50 flex items-start gap-2.5 text-xs text-amber-900 dark:text-amber-200">
+                        <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                        <div className="leading-relaxed">
+                          <span className="font-semibold">Security Notice:</span> Direct credentials grant administrative access. For maximum security, we recommend using a non-root user and SSH keys, or switching back to the keyless 1-line script.
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                           <label className="block text-xs font-semibold text-zinc-800 dark:text-zinc-200 mb-1.5">
-                            SSH Username
+                            {serverOs === 'Windows' ? 'Windows User' : 'SSH Username'}
                           </label>
                           <input
                             type="text"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            placeholder="deploy or root"
+                            placeholder={serverOs === 'Windows' ? 'Administrator' : 'deploy or root'}
                             className="w-full px-3 py-2 text-sm rounded-lg bg-zinc-50 dark:bg-[#060D10] border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white font-mono focus:outline-none focus:border-[#005459]"
                           />
                         </div>
@@ -821,7 +827,7 @@ export function CreateServerView() {
                             className="w-full px-3 py-2 text-sm rounded-lg bg-zinc-50 dark:bg-[#060D10] border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white focus:outline-none focus:border-[#005459]"
                           >
                             <option value="PASSWORD">Password</option>
-                            <option value="KEY">SSH Private Key</option>
+                            <option value="KEY">{serverOs === 'Windows' ? 'OpenSSH Private Key' : 'SSH Private Key'}</option>
                           </select>
                         </div>
                       </div>
@@ -829,13 +835,13 @@ export function CreateServerView() {
                       {authMethod === 'PASSWORD' ? (
                         <div>
                           <label className="block text-xs font-semibold text-zinc-800 dark:text-zinc-200 mb-1.5">
-                            Password
+                            {serverOs === 'Windows' ? 'Windows Account Password' : 'Password'}
                           </label>
                           <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Enter deploy user password (or root)"
+                            placeholder={serverOs === 'Windows' ? 'Enter Administrator password' : 'Enter deploy user password (or root)'}
                             className="w-full px-3 py-2 text-sm rounded-lg bg-zinc-50 dark:bg-[#060D10] border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white font-mono focus:outline-none focus:border-[#005459]"
                           />
                           <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-1">
@@ -962,6 +968,95 @@ export function CreateServerView() {
                 className="px-4 py-2 rounded-lg bg-[#005459] hover:bg-[#074549] text-white text-xs font-medium"
               >
                 Got it
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Direct SSH Credentials Security Warning */}
+      {showDirectCredWarning && (
+        <div
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150"
+          onClick={() => setShowDirectCredWarning(false)}
+        >
+          <div
+            className="bg-white dark:bg-[#0B1317] border border-amber-200 dark:border-amber-900/60 rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="p-5 pb-4 border-b border-zinc-100 dark:border-zinc-800 flex items-start justify-between gap-3 bg-amber-50/60 dark:bg-amber-950/20">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700/60 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0">
+                  <AlertTriangle className="w-5 h-5 stroke-[2.2]" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-zinc-900 dark:text-white">
+                    Direct SSH Credentials Warning
+                  </h3>
+                  <p className="text-xs text-amber-800 dark:text-amber-300/90 font-medium mt-0.5">
+                    Security recommendation before proceeding
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowDirectCredWarning(false)}
+                className="w-7 h-7 rounded-lg text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-black/5 dark:hover:bg-white/5 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="p-5 space-y-4 text-xs text-zinc-600 dark:text-zinc-300">
+              <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/50 space-y-1.5">
+                <div className="flex items-center gap-2 font-semibold text-emerald-800 dark:text-emerald-300 text-xs">
+                  <Shield className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
+                  <span>Recommended: 1-Line Setup Script (Keyless)</span>
+                </div>
+                <p className="text-[11.5px] text-emerald-700 dark:text-emerald-400 leading-relaxed">
+                  With the automated 1-line script, you <strong>never share root passwords or private SSH keys</strong> with our platform. PortalOps sets up an isolated deploy user with scoped permissions.
+                </p>
+              </div>
+
+              <div className="space-y-2 leading-relaxed">
+                <p className="font-semibold text-zinc-900 dark:text-white">
+                  If you choose to use Direct SSH Credentials:
+                </p>
+                <ul className="list-disc pl-5 space-y-1.5 text-zinc-600 dark:text-zinc-400 text-[11.5px]">
+                  <li>
+                    Avoid sharing your <strong>root password</strong>; prefer using an isolated <code className="text-[#005459] dark:text-[#00DF8F] font-mono">deploy</code> user or an Ed25519 SSH private key.
+                  </li>
+                  <li>
+                    Ensure your server firewall (UFW / iptables) allows connections on your chosen port.
+                  </li>
+                  <li>
+                    Credentials are encrypted at rest using <strong>AES-256-GCM envelope encryption</strong>, but keyless connection is always our safest best practice.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Footer Buttons */}
+            <div className="p-4 bg-zinc-50 dark:bg-[#060D10] border-t border-zinc-100 dark:border-zinc-800 flex flex-col-reverse sm:flex-row items-center justify-end gap-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  setCustomMethod('manual')
+                  setShowDirectCredWarning(false)
+                }}
+                className="w-full sm:w-auto px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-xs font-medium transition-colors cursor-pointer"
+              >
+                Proceed with Direct SSH
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowDirectCredWarning(false)}
+                className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#005459] hover:bg-[#074549] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <Check className="w-3.5 h-3.5" />
+                <span>Keep 1-Line Script (Recommended)</span>
               </button>
             </div>
           </div>

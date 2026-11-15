@@ -7,7 +7,6 @@ export function EditProjectModal({ isOpen, onClose, project, onProjectUpdated })
   const [repoUrl, setRepoUrl] = useState('')
   const [defaultBranch, setDefaultBranch] = useState('main')
   const [url, setUrl] = useState('')
-  const [autoDeploy, setAutoDeploy] = useState(false)
   const [framework, setFramework] = useState('react')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState(null)
@@ -30,7 +29,6 @@ export function EditProjectModal({ isOpen, onClose, project, onProjectUpdated })
           ? 'node'
           : 'react')
       setFramework(storedFramework)
-      setAutoDeploy(project.autoDeploy ?? false)
       setError(null)
       setFieldErrors({})
       setSuccess(false)
@@ -90,7 +88,7 @@ export function EditProjectModal({ isOpen, onClose, project, onProjectUpdated })
         name: name.trim(),
         repoUrl: cleanRepoUrl,
         defaultBranch: defaultBranch.trim() || 'main',
-        autoDeploy: Boolean(autoDeploy),
+        autoDeploy: false,
       }
 
       const updated = await api(`/projects/${project.id}`, {
@@ -293,29 +291,6 @@ export function EditProjectModal({ isOpen, onClose, project, onProjectUpdated })
             <p className="text-[11px] text-[#565f6b] mt-1">
               Default address verified by post-deploy health probes and linked in the project header.
             </p>
-          </div>
-
-          {/* Auto-Deploy Toggle */}
-          <div className="pt-2 border-t border-[#E2E7E4] flex items-center justify-between">
-            <div>
-              <div className="text-[13px] font-semibold text-[#101d26]">Auto-Deploy on Push</div>
-              <div className="text-[11px] text-[#565f6b]">
-                Trigger automated releases when webhooks receive push events on the default branch.
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={() => setAutoDeploy(!autoDeploy)}
-              className={`w-9 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-colors duration-200 ${
-                autoDeploy ? 'bg-[#005459]' : 'bg-[#CDD4D0]'
-              }`}
-            >
-              <div
-                className={`bg-white w-4 h-4 rounded-full shadow-xs transform transition-transform duration-200 ${
-                  autoDeploy ? 'translate-x-4' : 'translate-x-0'
-                }`}
-              />
-            </button>
           </div>
 
           {/* Action Buttons */}

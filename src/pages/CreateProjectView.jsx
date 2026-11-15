@@ -21,7 +21,6 @@ import {
   Globe
 } from 'lucide-react'
 import { api } from '../services/api'
-import { OneTimeSecretModal } from '../components/OneTimeSecretModal'
 
 export const FRAMEWORKS = [
   {
@@ -64,7 +63,6 @@ export const FRAMEWORKS = [
 
 export function CreateProjectView() {
   const navigate = useNavigate()
-  const [webhookModal, setWebhookModal] = useState({ isOpen: false, secret: '', projectId: '' })
 
   // Framework selection
   const [selectedFramework, setSelectedFramework] = useState('react')
@@ -74,7 +72,6 @@ export function CreateProjectView() {
   const [defaultBranch, setDefaultBranch] = useState('main')
   const [repoUrl, setRepoUrl] = useState('')
   const [projectUrl, setProjectUrl] = useState('')
-  const [autoDeploy, setAutoDeploy] = useState(true)
   const [copiedKey, setCopiedKey] = useState(false)
   const [copiedRepo, setCopiedRepo] = useState(false)
   const [isTestingRepo, setIsTestingRepo] = useState(false)
@@ -172,7 +169,7 @@ export function CreateProjectView() {
           name: projectName.trim(),
           repoUrl: cleanRepoUrl,
           defaultBranch: defaultBranch.trim() || 'main',
-          autoDeploy: autoDeploy,
+          autoDeploy: false,
         },
       })
 
@@ -183,15 +180,7 @@ export function CreateProjectView() {
         }
       }
 
-      if (res?.webhookSecret) {
-        setWebhookModal({
-          isOpen: true,
-          secret: res.webhookSecret,
-          projectId: res.id,
-        })
-      } else {
-        navigate(`/projects/${res?.id || ''}`, { state: { framework: selectedFramework } })
-      }
+      navigate(`/projects/${res?.id || ''}`, { state: { framework: selectedFramework } })
     } catch (err) {
       console.error('Project creation failed:', err)
       const isDuplicateName =
@@ -564,28 +553,6 @@ export function CreateProjectView() {
                 </div>
               )}
 
-              {/* Auto Deploy Toggle */}
-              <div className="pt-3 border-t border-[#E2E7E4] flex items-center justify-between">
-                <div>
-                  <label className="text-[13px] font-medium text-[#101d26] flex items-center gap-1.5">
-                    <Zap className="w-4 h-4 text-[#005459]" />
-                    <span>Automatic Git Webhook Deployments</span>
-                  </label>
-                  <p className="text-[12px] text-[#565f6b] mt-0.5">
-                    Automatically trigger production build &amp; deploy whenever new commits are pushed.
-                  </p>
-                </div>
-                <label className="relative inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={autoDeploy}
-                    onChange={(e) => setAutoDeploy(e.target.checked)}
-                    className="sr-only peer"
-                  />
-                  <div className="w-9 h-5 bg-[#CDD4D0] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#005459]"></div>
-                </label>
-              </div>
-
               {/* Error Banner if any */}
               {submitError && (
                 <div className="p-3.5 rounded-[6px] bg-[#FAEBE9] border border-[#F1B5AC] text-[#BA1A1A] text-[13px] flex items-center gap-2">
@@ -727,32 +694,14 @@ export function CreateProjectView() {
           <div className="p-4 rounded-[8px] bg-[#F4F6F5] border border-[#CDD4D0] text-[11px] text-[#565f6b] space-y-1.5">
             <div className="flex items-center gap-1.5 text-[#101d26] font-medium">
               <Info className="w-3.5 h-3.5 text-[#005459]" />
-              <span>SSH Key Auto-Injection</span>
+              <span>Project Setup</span>
             </div>
             <p>
-              Once provisioned, PortalOps generates a cryptographically signed HMAC webhook secret and initiates initial checkout. Destination servers and target directories can be configured on the project details page.
+              Once provisioned, PortalOps connects to your repository and prepares the pipeline. Destination servers and target directories can be configured on the project details page.
             </p>
           </div>
         </div>
       </div>
-
-      {/* Webhook Secret One-Time Modal */}
-      <OneTimeSecretModal
-        isOpen={webhookModal.isOpen}
-        onClose={() => {
-          const pid = webhookModal.projectId
-          setWebhookModal({ isOpen: false, secret: '', projectId: '' })
-          if (pid) {
-            navigate(`/projects/${pid}`, { state: { framework: selectedFramework } })
-          } else {
-            navigate('/projects')
-          }
-        }}
-        title="Project Created — Webhook Secret"
-        subtitle={`Configure continuous deployment in GitHub or GitLab under Webhooks with target URL: https://${window.location.host}/api/v1/webhooks/github/${webhookModal.projectId}`}
-        secretLabel="Webhook Signing Secret (HMAC SHA-256)"
-        secretValue={webhookModal.secret}
-      />
     </div>
   )
 }

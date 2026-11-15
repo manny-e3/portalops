@@ -965,14 +965,13 @@ export function ProjectDetailView() {
         name: settingName.trim(),
         repoUrl: settingRepoUrl.trim(),
         defaultBranch: settingBranch.trim() || 'main',
-        autoDeploy: Boolean(settingAutoDeploy)
+        autoDeploy: false
       }
       const updated = await api(`/projects/${projectId}`, {
         method: 'PATCH',
         body: payload
       })
       setProject((prev) => ({ ...prev, ...payload, framework: settingFramework, url: settingUrl.trim() || null }))
-      setAutoDeploy(Boolean(settingAutoDeploy))
       setSettingsSuccess('Project settings updated successfully.')
       refreshProject()
     } catch (err) {
@@ -1046,8 +1045,6 @@ export function ProjectDetailView() {
         servers={servers}
         activeDeployment={activeDeployment}
         deploying={deploying}
-        autoDeploy={autoDeploy}
-        onToggleAutoDeploy={() => setAutoDeploy(!autoDeploy)}
         onDeploy={handleDeploy}
         onOpenRollback={() => {
           const prior = projectDeployments.find((d) => d.status === 'SUCCESS' && d.id !== activeDeployment?.id)
@@ -1828,27 +1825,6 @@ export function ProjectDetailView() {
                 </p>
               </div>
 
-              {/* Auto Deploy Toggle */}
-              <div className="p-3 bg-[#F8FAF9] border border-[#CDD4D0] rounded-[6px] flex items-center justify-between">
-                <div>
-                  <div className="text-[13px] font-semibold text-[#101d26]">Auto-Deploy on Push</div>
-                  <div className="text-[11px] text-[#565f6b]">
-                    Automatically trigger release pipeline whenever GitHub or GitLab sends a push webhook to the default branch.
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setSettingAutoDeploy(!settingAutoDeploy)}
-                  className={`w-9 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-colors duration-200 ${settingAutoDeploy ? 'bg-[#005459]' : 'bg-[#CDD4D0]'
-                    }`}
-                >
-                  <div
-                    className={`bg-white w-4 h-4 rounded-full shadow-xs transform transition-transform duration-200 ${settingAutoDeploy ? 'translate-x-4' : 'translate-x-0'
-                      }`}
-                  />
-                </button>
-              </div>
-
               {canManage && (
                 <div className="pt-2 flex justify-end">
                   <button
@@ -1862,59 +1838,6 @@ export function ProjectDetailView() {
                 </div>
               )}
             </form>
-          </div>
-
-          {/* Webhook & Automation Card */}
-          <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] p-6 shadow-xs space-y-3">
-            <h3 className="text-[15px] font-semibold text-[#101d26]">Git Webhook Automation</h3>
-            <p className="text-[12px] text-[#565f6b]">
-              Configure your GitHub or GitLab repository settings with this webhook payload URL to enable instantaneous auto-deployments on git push.
-            </p>
-
-            <div>
-              <label className="block text-[11px] font-mono uppercase tracking-wider font-semibold text-[#565f6b] mb-1">
-                WEBHOOK PAYLOAD URL
-              </label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="text"
-                  readOnly
-                  value={`${window.location.origin}/api/v1/webhooks/${projectId}`}
-                  className="flex-1 h-[34px] px-3 bg-[#F8FAF9] border border-[#CDD4D0] rounded-[6px] text-[12px] font-mono text-[#101d26] select-all outline-none"
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    navigator.clipboard.writeText(`${window.location.origin}/api/v1/webhooks/${projectId}`)
-                    setWebhookCopied(true)
-                    setTimeout(() => setWebhookCopied(false), 2000)
-                  }}
-                  className="h-[34px] px-3 rounded-[6px] border border-[#CDD4D0] bg-white hover:bg-[#F4F6F5] text-[12px] font-medium text-[#101d26] flex items-center gap-1.5 transition-colors cursor-pointer"
-                >
-                  {webhookCopied ? <Check className="w-3.5 h-3.5 text-[#2E8B57]" /> : <Copy className="w-3.5 h-3.5 text-[#565f6b]" />}
-                  <span>{webhookCopied ? 'Copied' : 'Copy'}</span>
-                </button>
-              </div>
-            </div>
-
-            {canManage && (
-              <div className="pt-2">
-                <button
-                  type="button"
-                  disabled={isRegeneratingSecret}
-                  onClick={handleRegenerateWebhookSecret}
-                  className="h-[30px] px-3 rounded-[6px] border border-[#CDD4D0] hover:bg-[#F4F6F5] text-[11px] font-medium text-[#101d26] inline-flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
-                >
-                  {isRegeneratingSecret ? <Loader2 className="w-3 h-3 animate-spin" /> : <RotateCcw className="w-3 h-3 text-[#565f6b]" />}
-                  <span>Regenerate Webhook Secret</span>
-                </button>
-                {webhookSecret && (
-                  <div className="mt-2 p-2.5 bg-[#FAF3E7] border border-[#F1D6A4] rounded-[4px] text-[11px] font-mono text-[#8C5D07]">
-                    New Webhook Secret: <strong className="text-[#101d26] select-all">{webhookSecret}</strong>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
 
           {/* Danger Zone: Delete Project Card */}

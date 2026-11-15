@@ -236,7 +236,7 @@ export function OnboardingChecklistCard({ serversCount = 0, onOpenAddServer }) {
             </div>
 
             <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-              Connect your Git account to enable automatic webhook deployments on every git push.
+              Connect your Git account to link your repositories with PortalOps.
             </p>
 
             <div className="space-y-2 pt-2">

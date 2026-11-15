@@ -8,7 +8,6 @@ import {
   AlertCircle,
   Loader2,
   Activity,
-  ShieldAlert,
   RefreshCw,
   Layers,
   CheckCircle2,
@@ -225,20 +224,66 @@ fi
 # ATOMIC SWITCH: Switch symlink to new release
 ln -sfn "$RELEASE_DIR" "$APP_DIR/current"
 
+# Auto-detect application entrypoint (package.json main, server.js, index.js, app.js, src/server.js, etc.)
+ENTRY=""
+if [ -f "$RELEASE_DIR/package.json" ]; then
+  ENTRY=$(node -e 'try { const p = require("./package.json"); process.stdout.write(p.main || (p.scripts && p.scripts.start ? p.scripts.start.replace(/^node\\s+/, "") : "")); } catch(e){}' 2>/dev/null || echo "")
+fi
+if [ -z "$ENTRY" ] || [ ! -f "$RELEASE_DIR/$ENTRY" ]; then
+  for candidate in server.js index.js app.js src/server.js src/index.js dist/index.js bin/www; do
+    if [ -f "$RELEASE_DIR/$candidate" ]; then
+      ENTRY="$candidate"
+      break
+    fi
+  done
+fi
+[ -z "$ENTRY" ] && ENTRY="index.js"
+echo "Detected application entrypoint: $ENTRY"
+
 # Resolve PM2 executable
 PM2_CMD="pm2"
 command -v pm2 >/dev/null 2>&1 || PM2_CMD="$HOME/.local/bin/pm2"
 command -v "$PM2_CMD" >/dev/null 2>&1 || PM2_CMD="npx --no-install pm2"
 
-# Restart or reload PM2 process
+# Restart, reload, or start PM2 process
 cd "$APP_DIR"
 if [ -f "ecosystem.config.js" ]; then
+  echo "Managing PM2 via ecosystem.config.js..."
   $PM2_CMD reload ecosystem.config.js 2>/dev/null || $PM2_CMD start ecosystem.config.js 2>/dev/null || true
 else
   APP_NAME="$(basename "$APP_DIR")"
-  $PM2_CMD reload "$APP_NAME" 2>/dev/null || $PM2_CMD restart "$APP_NAME" 2>/dev/null || $PM2_CMD start current/index.js --name "$APP_NAME" 2>/dev/null || true
+  if $PM2_CMD describe "$APP_NAME" >/dev/null 2>&1; then
+    echo "Reloading active PM2 process: $APP_NAME..."
+    $PM2_CMD reload "$APP_NAME" 2>/dev/null || $PM2_CMD restart "$APP_NAME" 2>/dev/null || true
+  else
+    echo "Starting PM2 process: $APP_NAME -> current/$ENTRY..."
+    $PM2_CMD start "current/$ENTRY" --name "$APP_NAME" 2>/dev/null || true
+  fi
 fi
 $PM2_CMD save 2>/dev/null || true
+
+# Auto-configure reverse proxy for LiteSpeed & Apache (cPanel, Hostinger, Linux VPS)
+NODE_PORT=$(grep -E '^[[:space:]]*PORT=' "$SHARED_DIR/.env" "$APP_DIR/.env" "$RELEASE_DIR/.env" 2>/dev/null | head -n 1 | cut -d '=' -f 2 | tr -d '"\r\n ' || echo "")
+[ -z "$NODE_PORT" ] && NODE_PORT="3000"
+
+if [ ! -f "$APP_DIR/.htaccess" ] || ! grep -q "127.0.0.1" "$APP_DIR/.htaccess" 2>/dev/null; then
+  echo "Configuring LiteSpeed/Apache reverse proxy to http://127.0.0.1:$NODE_PORT in .htaccess..."
+  cat << 'HTACCESS_NODE_EOF' > "$APP_DIR/.htaccess"
+Options -Indexes
+DirectoryIndex disabled
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP:Upgrade} websocket [NC]
+  RewriteCond %{HTTP:Connection} upgrade [NC]
+  RewriteRule ^(.*)$ ws://127.0.0.1:__PORT__/$1 [P,L]
+  RewriteRule ^(index\.php)?$ http://127.0.0.1:__PORT__/ [P,L]
+  RewriteRule ^(.*)$ http://127.0.0.1:__PORT__/$1 [P,L,QSA]
+</IfModule>
+HTACCESS_NODE_EOF
+  sed -i "s/__PORT__/$NODE_PORT/g" "$APP_DIR/.htaccess" 2>/dev/null || true
+  chmod 644 "$APP_DIR/.htaccess" 2>/dev/null || true
+fi
 
 # Prune old releases (keep 5)
 cd "$APP_DIR/releases"
@@ -688,18 +733,63 @@ echo "Windows Laravel deployment complete."`
     architecture: 'standard',
     isWindows: false,
     script: `export NO_UPDATE_NOTIFIER=1
-if [ -d "/opt/alt/alt-nodejs22/root/usr/bin" ]; then
-  export PATH="/opt/alt/alt-nodejs22/root/usr/bin:$PATH"
-elif [ -d "/opt/alt/alt-nodejs20/root/usr/bin" ]; then
-  export PATH="/opt/alt/alt-nodejs20/root/usr/bin:$PATH"
-elif [ -d "/opt/alt/alt-nodejs18/root/usr/bin" ]; then
-  export PATH="/opt/alt/alt-nodejs18/root/usr/bin:$PATH"
-fi
-for p in /opt/cpanel/ea-nodejs*/bin /usr/local/bin; do
-  [ -d "$p" ] && export PATH="$PATH:$p"
+for p in /opt/alt/alt-nodejs22/root/usr/bin /opt/alt/alt-nodejs20/root/usr/bin /opt/cpanel/ea-nodejs22/bin /opt/cpanel/ea-nodejs20/bin "$HOME/.local/bin" "$HOME/.npm-global/bin" /usr/local/bin; do
+  [ -d "$p" ] && export PATH="$p:$PATH"
 done
+if [ -d "$HOME/.nvm" ]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" 2>/dev/null || true
+  nvm use 22 2>/dev/null || nvm use 20 2>/dev/null || true
+fi
+
 npm ci 2>/dev/null || npm install
-pm2 restart all || pm2 start index.js --name "app" || true`
+
+ENTRY=""
+if [ -f "package.json" ]; then
+  ENTRY=$(node -e 'try { const p = require("./package.json"); process.stdout.write(p.main || (p.scripts && p.scripts.start ? p.scripts.start.replace(/^node\\s+/, "") : "")); } catch(e){}' 2>/dev/null || echo "")
+fi
+if [ -z "$ENTRY" ] || [ ! -f "$ENTRY" ]; then
+  for candidate in server.js index.js app.js src/server.js src/index.js dist/index.js bin/www; do
+    if [ -f "$candidate" ]; then
+      ENTRY="$candidate"
+      break
+    fi
+  done
+fi
+[ -z "$ENTRY" ] && ENTRY="index.js"
+
+PM2_CMD="pm2"
+command -v pm2 >/dev/null 2>&1 || PM2_CMD="$HOME/.local/bin/pm2"
+command -v "$PM2_CMD" >/dev/null 2>&1 || PM2_CMD="npx --no-install pm2"
+
+APP_NAME="$(basename "$(pwd)")"
+if $PM2_CMD describe "$APP_NAME" >/dev/null 2>&1; then
+  $PM2_CMD reload "$APP_NAME" 2>/dev/null || $PM2_CMD restart "$APP_NAME" 2>/dev/null || true
+else
+  $PM2_CMD start "$ENTRY" --name "$APP_NAME" 2>/dev/null || true
+fi
+$PM2_CMD save 2>/dev/null || true
+
+# Auto-configure reverse proxy for LiteSpeed & Apache
+NODE_PORT=$(grep -E '^[[:space:]]*PORT=' .env 2>/dev/null | head -n 1 | cut -d '=' -f 2 | tr -d '"\r\n ' || echo "")
+[ -z "$NODE_PORT" ] && NODE_PORT="3000"
+if [ ! -f ".htaccess" ] || ! grep -q "127.0.0.1" .htaccess 2>/dev/null; then
+  cat << 'HTACCESS_NODE_EOF' > .htaccess
+Options -Indexes
+DirectoryIndex disabled
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP:Upgrade} websocket [NC]
+  RewriteCond %{HTTP:Connection} upgrade [NC]
+  RewriteRule ^(.*)$ ws://127.0.0.1:__PORT__/$1 [P,L]
+  RewriteRule ^(index\.php)?$ http://127.0.0.1:__PORT__/ [P,L]
+  RewriteRule ^(.*)$ http://127.0.0.1:__PORT__/$1 [P,L,QSA]
+</IfModule>
+HTACCESS_NODE_EOF
+  sed -i "s/__PORT__/$NODE_PORT/g" .htaccess 2>/dev/null || true
+  chmod 644 .htaccess 2>/dev/null || true
+fi`
   }
 ]
 
@@ -769,7 +859,7 @@ export function AddTargetModal({
   const [preDeploy, setPreDeploy] = useState('')
   const [postDeploy, setPostDeploy] = useState('')
   const [healthCheckUrl, setHealthCheckUrl] = useState('')
-  const [autoRollbackOnFailure, setAutoRollbackOnFailure] = useState(true)
+  const [autoRollbackOnFailure, setAutoRollbackOnFailure] = useState(false)
   const [requiresApproval, setRequiresApproval] = useState(false)
   const [selectedPresetId, setSelectedPresetId] = useState('')
   const [isAtomicSymlink, setIsAtomicSymlink] = useState(false)
@@ -823,7 +913,7 @@ export function AddTargetModal({
     setBranch(defaultBranch || 'main')
     setPreDeploy('')
     setHealthCheckUrl('')
-    setAutoRollbackOnFailure(true)
+    setAutoRollbackOnFailure(false)
     setRequiresApproval(false)
 
     // Automatically match the preset for the project's selected framework
@@ -1332,33 +1422,6 @@ export function AddTargetModal({
                 Leave blank to automatically probe the Project Root URL (HTTP 200/302), or provide a specific domain or path.
               </p>
             </div>
-
-            {/* Auto-rollback on probe fail */}
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={autoRollbackOnFailure}
-                onChange={(e) => setAutoRollbackOnFailure(e.target.checked)}
-                className="rounded border-[#CDD4D0] text-[#005459] focus:ring-[#005459]"
-              />
-              <span className="text-[11px] text-[#101d26] font-medium">
-                Auto-rollback if health probe returns non-200 or times out (30s)
-              </span>
-            </label>
-
-            {/* Require Deployment Approval */}
-            <label className="flex items-center gap-2 cursor-pointer select-none pt-1 border-t border-[#E2E7E4]">
-              <input
-                type="checkbox"
-                checked={requiresApproval}
-                onChange={(e) => setRequiresApproval(e.target.checked)}
-                className="rounded border-[#CDD4D0] text-[#005459] focus:ring-[#005459]"
-              />
-              <div className="flex items-center gap-1.5 text-[11px] text-[#101d26] font-medium">
-                <ShieldAlert className="w-3.5 h-3.5 text-[#B87E0C]" />
-                <span>Require release sign-off before executing on this target</span>
-              </div>
-            </label>
           </div>
 
           {/* Footer Actions */}
