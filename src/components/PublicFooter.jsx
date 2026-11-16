@@ -14,7 +14,7 @@ export function PublicFooter() {
             </span>
           </div>
           <p className="mt-3 text-[12px] leading-relaxed max-w-sm text-zinc-400">
-            Self-sovereign server control plane and zero-downtime deployment platform. Connect any Linux VPS from Hetzner, DigitalOcean, or AWS with zero PaaS compute markup.
+            Zero-downtime deployments on your own Linux servers. Connect a VPS from Hetzner, DigitalOcean, or AWS with no PaaS compute markup.
           </p>
           <div className="mt-4 flex items-center gap-2 text-[11px] font-mono text-[#00DF8F]">
             <span className="w-2 h-2 rounded-full bg-[#00DF8F] animate-pulse" />

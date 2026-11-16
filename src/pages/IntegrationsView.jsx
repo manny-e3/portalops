@@ -41,27 +41,27 @@ export function IntegrationsView() {
       category: 'cloud',
       name: 'Hetzner Cloud',
       type: 'VPS & Dedicated',
-      desc: 'Connect ultra-affordable European & US cloud servers starting at €3.50/mo with 20TB included traffic.',
+      desc: 'Connect European & US cloud servers starting at €3.50/mo with 20TB included traffic.',
       badge: 'Official Partner',
-      badgeColor: 'text-rose-400 bg-rose-500/10 border-rose-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'digitalocean',
       category: 'cloud',
       name: 'DigitalOcean',
       type: 'Droplets & VPC',
-      desc: 'One-click compatibility with Standard, General Purpose, and CPU-Optimized droplets worldwide.',
+      desc: 'One-click setup for Standard, General Purpose, and CPU-Optimized droplets worldwide.',
       badge: 'Popular',
-      badgeColor: 'text-sky-400 bg-sky-500/10 border-sky-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'aws',
       category: 'cloud',
       name: 'Amazon EC2 & Lightsail',
       type: 'Compute Cloud',
-      desc: 'Seamlessly link t4g ARM64 or x86_64 EC2 instances and Lightsail VPS instances with VPC security groups.',
+      desc: 'Link t4g ARM64 or x86_64 EC2 instances and Lightsail VPS instances with VPC security groups.',
       badge: 'Enterprise',
-      badgeColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'vultr',
@@ -70,7 +70,7 @@ export function IntegrationsView() {
       type: 'High Frequency Compute',
       desc: 'Deploy on 32+ global data center regions with NVMe high-frequency compute instances.',
       badge: 'Global Edge',
-      badgeColor: 'text-blue-400 bg-blue-500/10 border-blue-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'linode',
@@ -79,7 +79,7 @@ export function IntegrationsView() {
       type: 'Developer Cloud',
       desc: 'Standard Linode instances, dedicated CPU, and Nanodes running Ubuntu or Debian.',
       badge: 'Standard',
-      badgeColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'baremetal',
@@ -88,7 +88,7 @@ export function IntegrationsView() {
       type: 'Dedicated Linux',
       desc: 'Any physical dedicated server, homelab, or Raspberry Pi with static public IPv4 and SSH access.',
       badge: 'Self-Hosted',
-      badgeColor: 'text-purple-400 bg-purple-500/10 border-purple-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'github',
@@ -97,7 +97,7 @@ export function IntegrationsView() {
       type: 'Git Provider',
       desc: 'Trigger automatic builds and zero-downtime releases on every git push or pull request merge.',
       badge: 'Native',
-      badgeColor: 'text-zinc-300 bg-white/10 border-white/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'gitlab',
@@ -106,7 +106,7 @@ export function IntegrationsView() {
       type: 'Git Provider',
       desc: 'Webhook triggers for gitlab.com and self-hosted GitLab Community/Enterprise editions.',
       badge: 'Verified',
-      badgeColor: 'text-orange-400 bg-orange-500/10 border-orange-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'bitbucket',
@@ -115,7 +115,7 @@ export function IntegrationsView() {
       type: 'Git Provider',
       desc: 'Connect Atlassian Bitbucket repositories with automated deployment push webhooks.',
       badge: 'Verified',
-      badgeColor: 'text-blue-400 bg-blue-500/10 border-blue-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'nodejs',
@@ -124,7 +124,7 @@ export function IntegrationsView() {
       type: 'Fullstack Runtime',
       desc: 'Next.js (App & Pages Router), Express, NestJS, Remix, Fastify, and Nuxt running under PM2 cluster mode.',
       badge: 'Cluster Mode',
-      badgeColor: 'text-teal-400 bg-teal-500/10 border-teal-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'laravel',
@@ -133,7 +133,7 @@ export function IntegrationsView() {
       type: 'Web Framework',
       desc: 'PHP 8.2 / 8.3 FPM, Composer optimization, automatic migration hooks, and artisan queue supervision.',
       badge: 'Automated',
-      badgeColor: 'text-rose-400 bg-rose-500/10 border-rose-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'vite',
@@ -142,7 +142,7 @@ export function IntegrationsView() {
       type: 'Frontend',
       desc: 'Single Page Apps compiled and served via Nginx with Brotli compression and cache headers.',
       badge: 'Ultra Fast',
-      badgeColor: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'postgres',
@@ -151,7 +151,7 @@ export function IntegrationsView() {
       type: 'Relational Database',
       desc: 'Automated installation, user creation, database provisioning, and local firewall protection.',
       badge: 'One-Click',
-      badgeColor: 'text-sky-400 bg-sky-500/10 border-sky-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'mysql',
@@ -160,16 +160,16 @@ export function IntegrationsView() {
       type: 'Relational Database',
       desc: 'Production-ready MySQL server with performance tuning and automated service restart guards.',
       badge: 'One-Click',
-      badgeColor: 'text-amber-400 bg-amber-500/10 border-amber-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     },
     {
       id: 'redis',
       category: 'databases',
       name: 'Redis 7',
       type: 'In-Memory Cache & Queue',
-      desc: 'High-speed in-memory store for session caching, BullMQ, and background job queues.',
+      desc: 'In-memory store for session caching, BullMQ, and background job queues.',
       badge: 'In-Memory',
-      badgeColor: 'text-red-400 bg-red-500/10 border-red-500/20'
+      badgeColor: 'text-teal-300 bg-teal-500/10 border-teal-500/20'
     }
   ]
 
@@ -192,15 +192,15 @@ export function IntegrationsView() {
       <section className="pt-16 pb-12 px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-teal-300 mb-6">
           <Layers className="w-3.5 h-3.5 text-[#00DF8F]" />
-          <span>Ecosystem &amp; Cloud Support</span>
+          <span>Integrations</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white max-w-3xl mx-auto">
-          Built to integrate seamlessly with your existing stack.
+          Works with your existing stack.
         </h1>
 
         <p className="mt-4 text-zinc-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-          Zero proprietary runtime restrictions. Connect your preferred cloud servers, Git repositories, databases, and application frameworks.
+          PortalOps has no proprietary runtime. Connect your cloud servers, Git repositories, databases, and application frameworks.
         </p>
 
         {/* Categories Bar */}

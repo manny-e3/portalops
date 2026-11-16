@@ -130,7 +130,7 @@ export function PublicNav() {
               onClick={() => setIsMobileMenuOpen(false)}
               className="hover:text-white transition-colors flex items-center gap-2"
             >
-              <Layers className="w-4 h-4 text-sky-400" />
+              <Layers className="w-4 h-4 text-[#00DF8F]" />
               <span>Integrations</span>
             </Link>
             <a
@@ -146,7 +146,7 @@ export function PublicNav() {
               onClick={() => setIsMobileMenuOpen(false)}
               className="hover:text-white transition-colors flex items-center gap-2"
             >
-              <BookOpen className="w-4 h-4 text-teal-400" />
+              <BookOpen className="w-4 h-4 text-[#00DF8F]" />
               <span>Documentation</span>
             </Link>
             <Link
@@ -162,7 +162,7 @@ export function PublicNav() {
               onClick={() => setIsMobileMenuOpen(false)}
               className="hover:text-white transition-colors flex items-center gap-2"
             >
-              <LifeBuoy className="w-4 h-4 text-amber-400" />
+              <LifeBuoy className="w-4 h-4 text-[#00DF8F]" />
               <span>Support &amp; Contact</span>
             </Link>
           </nav>

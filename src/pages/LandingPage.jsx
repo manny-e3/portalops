@@ -103,14 +103,14 @@ export function LandingPage() {
   const featurePillars = [
     {
       icon: ArrowRightLeft,
-      color: 'text-teal-400 bg-teal-500/10 border-teal-500/20',
+      color: 'text-[#00DF8F] bg-[#00DF8F]/10 border-[#00DF8F]/20',
       title: 'Zero-Downtime Atomic Symlinks',
       badge: '<1ms Swap',
       description: 'Each deployment builds inside a dedicated, timestamped directory. Once tests pass, the /current symlink swaps in less than 1 millisecond. If a build fails, live traffic stays untouched on the previous healthy release.'
     },
     {
       icon: Globe,
-      color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+      color: 'text-[#00DF8F] bg-[#00DF8F]/10 border-[#00DF8F]/20',
       title: 'Bring Your Own Server (BYOS)',
       badge: 'Zero Markup',
       description: 'Connect servers from Hetzner, DigitalOcean, AWS, Linode, or bare metal. Pay your provider wholesale prices directly without paying $250+/month PaaS memory or bandwidth markups.'
@@ -124,21 +124,21 @@ export function LandingPage() {
     },
     {
       icon: Terminal,
-      color: 'text-sky-400 bg-sky-500/10 border-sky-500/20',
+      color: 'text-[#00DF8F] bg-[#00DF8F]/10 border-[#00DF8F]/20',
       title: 'Automated Nginx, SSL & Daemons',
       badge: 'Full Automation',
       description: 'PortalOps provisions reverse proxies, auto-renewing Let\'s Encrypt SSL certificates, PM2 cluster managers, and Supervisor queue workers out of the box with zero manual config.'
     },
     {
       icon: Users,
-      color: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+      color: 'text-[#00DF8F] bg-[#00DF8F]/10 border-[#00DF8F]/20',
       title: 'Multi-Tenant Client Workspaces',
       badge: 'Agency Ready',
       description: 'Organize servers and projects into isolated workspaces for each client or team. Assign granular RBAC permissions (Owner, Admin, Member, Deployer) with non-repudiable audit logs.'
     },
     {
       icon: Database,
-      color: 'text-purple-400 bg-purple-500/10 border-purple-500/20',
+      color: 'text-[#00DF8F] bg-[#00DF8F]/10 border-[#00DF8F]/20',
       title: 'Database Migrations & Envs',
       badge: 'Encrypted Vault',
       description: 'Automate Prisma, Drizzle, and Laravel Artisan migrations on deploy. Manage environment variables with AES-256-GCM envelope encryption.'
@@ -172,27 +172,27 @@ export function LandingPage() {
   const faqItems = [
     {
       q: 'How does PortalOps connect to my server? Do I have to share my root password?',
-      a: 'No, it is completely optional. The recommended method is our 1-line bash setup script, which runs locally on your VPS to provision an isolated "portalops" system user with Ed25519 public keys—you never have to enter or transmit your root password to PortalOps. If you prefer direct SSH connections, PortalOps also supports direct key or password auth, protected by AES-256-GCM envelope encryption at rest.'
+      a: 'No, it is completely optional. The recommended method is our 1-line bash setup script, which runs locally on your VPS to provision an isolated "portalops" system user with Ed25519 public keys, so you never have to enter or transmit your root password to PortalOps. If you prefer direct SSH connections, PortalOps also supports direct key or password auth, protected by AES-256-GCM envelope encryption at rest.'
     },
     {
       q: 'Can I bring my existing servers from DigitalOcean, Hetzner, or AWS?',
-      a: 'Yes, 100%! PortalOps is built around the "Bring Your Own Server" (BYOS) philosophy. Whether you run a $4/mo Hetzner VPS, a DigitalOcean Droplet, an AWS Lightsail instance, or a dedicated bare-metal machine, as long as it runs Ubuntu 20.04/22.04/24.04 or Debian 11/12, it works seamlessly.'
+      a: 'Yes. PortalOps works with servers you already own: a $4/mo Hetzner VPS, a DigitalOcean Droplet, an AWS Lightsail instance, or a dedicated bare-metal machine. The server needs to run Ubuntu 20.04/22.04/24.04 or Debian 11/12.'
     },
     {
       q: 'What happens to my sites and applications if PortalOps goes offline?',
-      a: 'Your apps and sites keep running 24/7 without missing a beat! Unlike proprietary PaaS platforms, PortalOps does not proxy your production web traffic. Your Nginx configs, PM2 daemons, Node.js/PHP processes, and database instances run natively on your VPS. If PortalOps goes offline, your visitors experience zero interruption.'
+      a: 'Your apps and sites keep running. Unlike proprietary PaaS platforms, PortalOps does not proxy your production web traffic. Your Nginx configs, PM2 daemons, Node.js/PHP processes, and database instances run natively on your VPS, so your visitors see no interruption.'
     },
     {
       q: 'How does the zero-downtime deployment mechanism work?',
-      a: 'We use the industry-standard atomic symlink release pattern. Each build is assembled in an isolated directory (/releases/{timestamp}). Once dependencies install, assets compile, and database migrations pass, the /current symlink is atomically swapped in less than 1 millisecond. Visitors never see a broken page or half-uploaded assets.'
+      a: 'PortalOps uses the atomic symlink release pattern. Each build is assembled in an isolated directory (/releases/{timestamp}). Once dependencies install, assets compile, and database migrations pass, the /current symlink is atomically swapped in less than 1 millisecond. Visitors never see a broken page or half-uploaded assets.'
     },
     {
       q: 'Can I invite clients or coworkers without exposing other projects?',
-      a: 'Yes! PortalOps includes built-in Multi-Tenant Workspace isolation. You can spin up a dedicated workspace for each client or team, invite their members with role-based permissions (Owner, Admin, Member, Deployer), and ensure they only see their assigned servers, deployments, and environment variables.'
+      a: 'Yes. Create a separate workspace for each client or team and invite their members with role-based permissions (Owner, Admin, Member, Deployer). They only see the servers, deployments, and environment variables assigned to their workspace.'
     },
     {
       q: 'Do I need a credit card to use PortalOps?',
-      a: 'No. PortalOps provides a self-sovereign control plane with zero credit card requirements. You only pay your chosen cloud provider directly for your VPS compute.'
+      a: 'No. You only pay your chosen cloud provider directly for your VPS compute.'
     }
   ]
 
@@ -230,17 +230,17 @@ export function LandingPage() {
           <div className="lg:col-span-6 flex flex-col items-start text-left">
             {/* Live Status Pill */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-zinc-300 mb-6 backdrop-blur-xs select-none">
-              <span className="w-2 h-2 rounded-full bg-[#00DF8F] animate-pulse" />
-              <span className="font-semibold text-white">PortalOps BYOS Control Plane</span>
+              <span className="w-2 h-2 rounded-full bg-[#00DF8F]" />
+              <span className="font-semibold text-white">PortalOps Control Plane</span>
               <span className="text-zinc-500">•</span>
-              <span className="text-teal-300 font-mono text-[11px]">Keyless Setup &amp; Zero-Root Isolation</span>
+              <span className="text-teal-300 font-mono text-[11px]">Zero-Downtime Deployment Portal</span>
             </div>
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-white leading-[1.08] text-balance">
-              The developer experience of Vercel.{' '}
-              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#00DF8F] via-teal-300 to-sky-300">
-                On your own cloud servers.
+              Automated zero-downtime deployments.{' '}
+              <span className="relative inline-block text-[#00DF8F]">
+                On your own servers.
                 <svg
                   className="absolute -bottom-2 left-0 w-full h-3 text-[#005459]"
                   viewBox="0 0 250 20"
@@ -257,7 +257,7 @@ export function LandingPage() {
 
             {/* Subtitle */}
             <p className="mt-6 text-zinc-400 text-base sm:text-lg leading-relaxed max-w-lg">
-              Connect any VPS from Hetzner, DigitalOcean, AWS, or bare metal in 60 seconds. PortalOps automates Nginx reverse proxies, SSL certificates, PM2 daemons, and zero-downtime atomic symlinks with 0% compute markup.
+              Connect Linux VPS, Windows servers, or shared hosting in seconds. PortalOps automates Git push-to-deploy, atomic symlink releases, database migrations, and background process management with zero compute markup.
             </p>
 
             {/* Primary & Secondary CTAs */}
@@ -291,7 +291,7 @@ export function LandingPage() {
             <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-zinc-400 font-medium">
               <div className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-[#00DF8F] shrink-0" />
-                <span>100% BYOS Sovereignty</span>
+                <span>Runs on Your Own Servers</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-[#00DF8F] shrink-0" />
@@ -306,7 +306,6 @@ export function LandingPage() {
 
           {/* Right Column: High-Fidelity Interactive Mockup Card */}
           <div className="lg:col-span-6 relative">
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#005459]/40 to-[#00DF8F]/25 blur-2xl opacity-75 -z-10" />
 
             <div className="rounded-2xl border border-white/15 bg-[#081419]/95 backdrop-blur-xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden text-left relative">
               {/* Window Header */}
@@ -317,7 +316,7 @@ export function LandingPage() {
                   <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
                 </div>
 
-                <div className="px-3 py-1 rounded-md bg-[#020608] border border-white/10 text-[11px] text-zinc-400 font-mono flex items-center gap-1.5 mx-auto">
+                <div className="px-3 py-1 rounded-md bg-[#040A0D] border border-white/10 text-[11px] text-zinc-400 font-mono flex items-center gap-1.5 mx-auto">
                   <Lock className="w-3 h-3 text-[#00DF8F]" />
                   <span>portalops.online/servers/stellar-phoenix</span>
                 </div>
@@ -327,7 +326,7 @@ export function LandingPage() {
 
               {/* Window Body */}
               <div className="flex">
-                <div className="w-12 bg-[#040B0E] border-r border-white/5 py-4 flex flex-col items-center gap-4 text-zinc-500 shrink-0">
+                <div className="w-12 bg-[#040A0D] border-r border-white/5 py-4 flex flex-col items-center gap-4 text-zinc-500 shrink-0">
                   <Home className="w-4 h-4 hover:text-zinc-300 transition-colors" />
                   <div className="w-7 h-7 rounded-md bg-[#005459]/40 text-[#00DF8F] flex items-center justify-center">
                     <Server className="w-4 h-4" />
@@ -362,7 +361,7 @@ export function LandingPage() {
 
                   {/* Telemetry Stats */}
                   <div className="grid grid-cols-3 gap-2.5">
-                    <div className="p-2.5 rounded-lg bg-[#050D11] border border-white/5 space-y-1.5">
+                    <div className="p-2.5 rounded-lg bg-[#040A0D] border border-white/5 space-y-1.5">
                       <div className="flex items-center justify-between text-[11px] font-mono">
                         <span className="text-zinc-400 font-semibold">CPU</span>
                         <span className="text-white font-bold">18%</span>
@@ -372,7 +371,7 @@ export function LandingPage() {
                       </div>
                     </div>
 
-                    <div className="p-2.5 rounded-lg bg-[#050D11] border border-white/5 space-y-1.5">
+                    <div className="p-2.5 rounded-lg bg-[#040A0D] border border-white/5 space-y-1.5">
                       <div className="flex items-center justify-between text-[11px] font-mono">
                         <span className="text-zinc-400 font-semibold">MEMORY</span>
                         <span className="text-white font-bold">34%</span>
@@ -382,7 +381,7 @@ export function LandingPage() {
                       </div>
                     </div>
 
-                    <div className="p-2.5 rounded-lg bg-[#050D11] border border-white/5 space-y-1.5">
+                    <div className="p-2.5 rounded-lg bg-[#040A0D] border border-white/5 space-y-1.5">
                       <div className="flex items-center justify-between text-[11px] font-mono">
                         <span className="text-zinc-400 font-semibold">DISK</span>
                         <span className="text-white font-bold">22%</span>
@@ -408,7 +407,7 @@ export function LandingPage() {
                     <div className="text-zinc-400">• npx prisma migrate deploy</div>
                     <div className="text-purple-400">• ln -sfn /releases/20261112-143 /current</div>
                     <div className="text-[#00DF8F] font-semibold pt-1 flex items-center gap-1.5">
-                      <span>🚀 Atomic release live (&lt;1ms swap, 0 dropped packets)</span>
+                      <span>Atomic release live (&lt;1ms swap, 0 dropped packets)</span>
                     </div>
                   </div>
                 </div>
@@ -416,7 +415,7 @@ export function LandingPage() {
             </div>
 
             {/* Floating "Deployed in 38 seconds" Badge */}
-            <div className="absolute -bottom-4 -left-3 sm:-left-6 z-20 bg-[#0A161D]/95 border border-[#005459]/50 rounded-xl p-3 shadow-2xl flex items-center gap-3 backdrop-blur-md">
+            <div className="absolute -bottom-4 -left-3 sm:-left-6 z-20 bg-[#081419]/95 border border-[#005459]/50 rounded-xl p-3 shadow-2xl flex items-center gap-3 backdrop-blur-md">
               <div className="w-8 h-8 rounded-lg bg-[#00DF8F]/20 border border-[#00DF8F]/30 flex items-center justify-center text-[#00DF8F] font-bold shrink-0">
                 <Check className="w-4 h-4 stroke-[3]" />
               </div>
@@ -435,7 +434,7 @@ export function LandingPage() {
       <section id="providers" className="py-12 border-y border-white/10 bg-[#040A0D]/70 select-none">
         <div className="max-w-[1240px] mx-auto px-6 text-center space-y-6">
           <p className="text-xs uppercase tracking-widest font-mono text-zinc-400 font-semibold">
-            Seamlessly compatible with your preferred cloud infrastructure &amp; stacks
+            Works with these providers and stacks
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-85 hover:opacity-100 transition-opacity">
@@ -466,12 +465,12 @@ export function LandingPage() {
           </div>
 
           <div className="pt-2 flex flex-wrap items-center justify-center gap-2 text-[11px] font-mono text-zinc-400">
-            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-teal-300">Node.js / PM2</span>
-            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-rose-300">PHP / Laravel</span>
-            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-emerald-300">Next.js &amp; Vite</span>
-            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-sky-300">PostgreSQL</span>
-            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-red-300">Redis</span>
-            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-purple-300">Docker</span>
+            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-zinc-300">Node.js / PM2</span>
+            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-zinc-300">PHP / Laravel</span>
+            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-zinc-300">Next.js &amp; Vite</span>
+            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-zinc-300">PostgreSQL</span>
+            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-zinc-300">Redis</span>
+            <span className="px-2.5 py-1 rounded bg-white/5 border border-white/10 text-zinc-300">Docker</span>
           </div>
         </div>
       </section>
@@ -486,7 +485,7 @@ export function LandingPage() {
             [ WORKFLOW BLUEPRINT ]
           </span>
           <h2 className="text-[30px] sm:text-[38px] font-extrabold tracking-tight text-white mt-1.5">
-            How PortalOps Works in 3 Simple Steps
+            How PortalOps works
           </h2>
           <p className="mt-2 text-[14.5px] max-w-xl mx-auto text-zinc-400">
             From raw VPS to high-availability production application in under 2 minutes.
@@ -534,13 +533,13 @@ export function LandingPage() {
       <section id="features" className="py-20 px-6 max-w-[1240px] mx-auto w-full">
         <div className="text-center mb-12">
           <span className="text-[11px] font-mono font-semibold uppercase tracking-widest text-[#00DF8F]">
-            [ BUILT FOR PRODUCTIVE DEVELOPERS ]
+            [ PLATFORM FEATURES ]
           </span>
           <h2 className="text-[30px] sm:text-[40px] font-extrabold tracking-tight text-white mt-1.5">
-            Everything you need to ship and scale.
+            What PortalOps automates on your servers.
           </h2>
           <p className="mt-2 text-[14.5px] max-w-xl mx-auto text-zinc-400">
-            Ditch fragile custom scripts and expensive PaaS tiers. PortalOps automates the DevOps heavy lifting.
+            Use it instead of hand-maintained deploy scripts or a paid PaaS tier.
           </p>
         </div>
 
@@ -576,7 +575,7 @@ export function LandingPage() {
             to="/features"
             className="inline-flex items-center gap-2 text-xs font-semibold text-teal-300 hover:text-white transition-colors"
           >
-            <span>Explore all architectural specifications</span>
+            <span>See all features</span>
             <ArrowRight className="w-4 h-4 text-[#00DF8F]" />
           </Link>
         </div>
@@ -591,10 +590,10 @@ export function LandingPage() {
             [ INTERACTIVE PLATFORM SIMULATOR ]
           </span>
           <h2 className="text-[30px] sm:text-[38px] font-extrabold tracking-tight text-white mt-1.5">
-            Experience atomic zero-downtime releases live.
+            Watch a zero-downtime release step by step.
           </h2>
           <p className="mt-2 text-[14.5px] max-w-xl mx-auto text-zinc-400">
-            Click simulate below to test preflight checks, isolated builds, atomic symlink pointer swaps, and automated rollback guards in real time.
+            Press Simulate Trigger to replay a sample deploy: preflight checks, an isolated build, the atomic symlink swap, and the rollback guard.
           </p>
         </div>
 
@@ -641,7 +640,7 @@ export function LandingPage() {
         </div>
 
         {/* Main Terminal Window */}
-        <div className="w-full max-w-[1020px] mx-auto bg-[#050D11] border border-white/10 rounded-xl overflow-hidden shadow-2xl text-left font-mono text-[12px] text-zinc-300">
+        <div className="w-full max-w-[1020px] mx-auto bg-[#040A0D] border border-white/10 rounded-xl overflow-hidden shadow-2xl text-left font-mono text-[12px] text-zinc-300">
           <div className="h-[42px] px-4 bg-[#081419] border-b border-white/10 flex items-center justify-between text-zinc-400">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
@@ -697,17 +696,17 @@ export function LandingPage() {
                   </p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                  <div className="p-3 rounded-lg border border-white/10 bg-[#050D11]">
+                  <div className="p-3 rounded-lg border border-white/10 bg-[#040A0D]">
                     <div className="text-zinc-500 font-mono text-[10px]">STEP 1: ISOLATED BUILD</div>
                     <div className="font-bold text-white mt-1">Build Release</div>
                     <div className="text-zinc-400 text-[11px] mt-1">/releases/20261112-143</div>
                   </div>
-                  <div className="p-3 rounded-lg border border-white/10 bg-[#050D11]">
+                  <div className="p-3 rounded-lg border border-white/10 bg-[#040A0D]">
                     <div className="text-zinc-500 font-mono text-[10px]">STEP 2: ATOMIC SWAP</div>
                     <div className="font-bold text-[#00DF8F] mt-1">ln -sfn Pointer</div>
                     <div className="text-zinc-400 text-[11px] mt-1">Swaps to /current (&lt;1ms)</div>
                   </div>
-                  <div className="p-3 rounded-lg border border-white/10 bg-[#050D11]">
+                  <div className="p-3 rounded-lg border border-white/10 bg-[#040A0D]">
                     <div className="text-zinc-500 font-mono text-[10px]">STEP 3: ROLLBACK GUARD</div>
                     <div className="font-bold text-teal-400 mt-1">Instant Revert</div>
                     <div className="text-zinc-400 text-[11px] mt-1">Points back on 5xx error</div>
@@ -749,10 +748,10 @@ export function LandingPage() {
             <span>PARTNERSHIPS, HOSTING &amp; INTERNAL TOOLING</span>
           </div>
           <h2 className="text-[30px] sm:text-[40px] font-extrabold tracking-tight text-white mt-1.5">
-            Partner with PortalOps. Scale without limits.
+            Partnerships for hosts, companies, and tool builders.
           </h2>
           <p className="mt-2 text-[14.5px] max-w-2xl mx-auto text-zinc-400">
-            Whether you are a hosting company wanting to offer a turnkey push-to-deploy PaaS to your customers, or an engineering team looking for a sovereign Internal Developer Platform for company tools — collaborate with PortalOps.
+            Hosting companies can offer push-to-deploy to their customers, engineering teams can run PortalOps as an internal developer platform for company tools, and tool vendors can hook into the deploy lifecycle.
           </p>
         </div>
 
@@ -760,7 +759,6 @@ export function LandingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Track 1: Hosting & Cloud Infrastructure Companies */}
           <div className="p-7 sm:p-8 rounded-3xl border border-teal-500/30 bg-[#081419] hover:border-teal-400/60 transition-all text-left flex flex-col justify-between group relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -777,7 +775,7 @@ export function LandingPage() {
                   Turnkey PaaS Layer for Hosting Providers
                 </h3>
                 <p className="text-xs sm:text-[13.5px] text-zinc-300 leading-relaxed">
-                  Transform raw Ubuntu &amp; Debian VPS or Bare Metal instances into a modern Vercel-like push-to-deploy cloud. Eliminate customer churn to expensive PaaS vendors and increase server retention.
+                  Offer automated zero-downtime push-to-deploy on the Ubuntu, Debian, Windows, and shared servers you already manage, so teams stop paying expensive PaaS markups and maintain full control of their servers.
                 </p>
               </div>
 
@@ -805,8 +803,7 @@ export function LandingPage() {
           </div>
 
           {/* Track 2: Companies & Teams (Internal Developer Platform - IDP) */}
-          <div className="p-7 sm:p-8 rounded-3xl border border-[#00DF8F]/30 bg-gradient-to-b from-[#08171E] to-[#081419] shadow-xl text-left flex flex-col justify-between group relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-[#00DF8F]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="p-7 sm:p-8 rounded-3xl border border-[#00DF8F]/30 bg-[#081419] shadow-xl text-left flex flex-col justify-between group relative overflow-hidden">
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -830,7 +827,7 @@ export function LandingPage() {
               <ul className="space-y-2.5 pt-3 border-t border-white/10 text-xs text-zinc-200">
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>100% Data Sovereignty:</strong> Run internal services inside private corporate VPCs or air-gapped subnets without public cloud exposure.</span>
+                  <span><strong>Data Stays in Your Network:</strong> Run internal services inside private corporate VPCs or air-gapped subnets without public cloud exposure.</span>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
@@ -838,7 +835,7 @@ export function LandingPage() {
                 </li>
                 <li className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>Eliminate Per-User Seat Taxes:</strong> Ditch $50+/seat/month public PaaS tiers. Deploy unlimited internal tools with zero compute markups.</span>
+                  <span><strong>No Per-Seat Pricing:</strong> Skip public PaaS tiers that charge $50+ per seat per month, and deploy unlimited internal tools without a compute markup.</span>
                 </li>
               </ul>
             </div>
@@ -855,19 +852,19 @@ export function LandingPage() {
           </div>
 
           {/* Track 3: Developer Tools & Ecosystem Integrations */}
-          <div className="p-7 sm:p-8 rounded-3xl border border-white/10 bg-[#081419] hover:border-sky-500/40 transition-all text-left flex flex-col justify-between group">
+          <div className="p-7 sm:p-8 rounded-3xl border border-white/10 bg-[#081419] hover:border-teal-400/60 transition-all text-left flex flex-col justify-between group">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-2xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400">
+                <div className="w-12 h-12 rounded-2xl bg-[#005459]/40 border border-[#005459]/80 flex items-center justify-center text-[#00DF8F]">
                   <Layers className="w-6 h-6" />
                 </div>
-                <span className="font-mono text-[10.5px] px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-300 font-semibold uppercase tracking-wider">
+                <span className="font-mono text-[10.5px] px-3 py-1 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-300 font-bold uppercase tracking-wider">
                   DevTools &amp; Open Source
                 </span>
               </div>
 
               <div className="space-y-2">
-                <h3 className="text-xl font-bold text-white group-hover:text-sky-300 transition-colors">
+                <h3 className="text-xl font-bold text-white group-hover:text-teal-300 transition-colors">
                   Developer Tooling &amp; Integrations
                 </h3>
                 <p className="text-xs sm:text-[13.5px] text-zinc-400 leading-relaxed">
@@ -894,31 +891,31 @@ export function LandingPage() {
             <div className="pt-6">
               <Link
                 to="/contact?category=partnership&subject=Ecosystem%20Integration%20Proposal"
-                className="w-full h-11 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all group-hover:border-sky-400/40"
+                className="w-full h-11 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold text-xs flex items-center justify-center gap-2 transition-all group-hover:border-teal-400/40"
               >
                 <span>Propose an Integration</span>
-                <ArrowRight className="w-3.5 h-3.5 text-sky-400" />
+                <ArrowRight className="w-3.5 h-3.5 text-[#00DF8F]" />
               </Link>
             </div>
           </div>
         </div>
 
         {/* Bottom Direct Collaboration Box */}
-        <div className="p-7 sm:p-9 rounded-3xl bg-[#040B0E] border border-white/15 flex flex-col md:flex-row items-center justify-between gap-6 text-left shadow-2xl">
+        <div className="p-7 sm:p-9 rounded-3xl bg-[#040A0D] border border-white/15 flex flex-col md:flex-row items-center justify-between gap-6 text-left shadow-2xl">
           <div className="space-y-2 max-w-xl">
             <div className="flex items-center gap-2 text-xs font-mono text-[#00DF8F]">
-              <span className="w-2 h-2 rounded-full bg-[#00DF8F] animate-pulse" />
-              <span>DIRECT EXECUTIVE &amp; PARTNERSHIP CHANNEL</span>
+              <span className="w-2 h-2 rounded-full bg-[#00DF8F]" />
+              <span>PARTNERSHIPS</span>
             </div>
             <h4 className="text-lg sm:text-xl font-bold text-white">
-              Ready to partner or deploy PortalOps internally?
+              Partnership and internal deployment inquiries
             </h4>
             <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed">
-              Whether you manage a global hosting infrastructure fleet or need a secure internal deployment platform for company microservices, our partnership desk is ready to collaborate. Inquiries route directly to{' '}
+              Email{' '}
               <a href="mailto:info@portalops.online" className="text-teal-300 font-mono underline hover:text-white">
                 info@portalops.online
               </a>{' '}
-              with a guaranteed reply within 24 business hours.
+              about hosting partnerships or internal deployments. Replies are guaranteed within 24 business hours.
             </p>
           </div>
 
@@ -990,7 +987,7 @@ export function LandingPage() {
       {/* 9. Bottom High-Impact Conversion Banner */}
       {/* ============================================================== */}
       <section className="py-20 px-6 max-w-[1240px] mx-auto w-full text-center">
-        <div className="p-10 sm:p-16 rounded-3xl bg-gradient-to-b from-[#08171E] to-[#040A0D] border border-[#005459]/50 shadow-2xl relative overflow-hidden space-y-6">
+        <div className="p-10 sm:p-16 rounded-3xl bg-gradient-to-b from-[#081419] to-[#040A0D] border border-[#005459]/50 shadow-2xl relative overflow-hidden space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-[#00DF8F] font-mono">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Own Your Infrastructure</span>

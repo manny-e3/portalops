@@ -32,7 +32,7 @@ export function FeaturesView() {
 
   const featureTabs = [
     { id: 'atomic', label: 'Zero-Downtime Engine', icon: ArrowRightLeft },
-    { id: 'byos', label: 'BYOS Cloud Sovereignty', icon: Server },
+    { id: 'byos', label: 'Bring Your Own Server', icon: Server },
     { id: 'security', label: 'Keyless & Zero-Root', icon: KeyRound },
     { id: 'proxy', label: 'Nginx & SSL Automation', icon: Terminal },
     { id: 'daemons', label: 'PM2 & Background Workers', icon: Cpu },
@@ -62,18 +62,18 @@ export function FeaturesView() {
       <section className="pt-16 pb-12 px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-teal-300 mb-6 backdrop-blur-xs select-none">
           <Zap className="w-3.5 h-3.5 text-[#00DF8F]" />
-          <span>Engine Architecture &amp; Capabilities</span>
+          <span>Features &amp; Architecture</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white max-w-4xl mx-auto leading-tight">
-          Engineered for developers who demand{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00DF8F] via-teal-300 to-sky-300">
-            performance, privacy &amp; zero markup.
+          Deploy automation for your own servers,{' '}
+          <span className="text-[#00DF8F]">
+            with no compute markup.
           </span>
         </h1>
 
         <p className="mt-6 text-zinc-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-          PortalOps bridges the gap between raw unmanaged cloud VPS instances and modern developer experience. Here is how our architecture works under the hood.
+          PortalOps adds push-to-deploy, SSL, process management, and team workspaces to an unmanaged VPS. Below is how each part works.
         </p>
 
         {/* Feature Tab Navigation */}
@@ -109,7 +109,7 @@ export function FeaturesView() {
                 <span>Zero-Downtime Releases</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white">
-                Atomic Symlinks: The End of 502 Bad Gateways
+                Atomic Symlink Releases Without 502 Errors
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
                 Traditional deployments compile assets and install npm/composer packages directly in the live directory. If a build takes 45 seconds, your visitors experience broken pages or partial asset loads.
@@ -142,7 +142,7 @@ export function FeaturesView() {
               <div className="text-emerald-400">✓ 1,842 modules transformed (0 errors)</div>
               <div className="text-zinc-400"># 3. Atomic Symlink Swap (&lt;1ms)</div>
               <div className="text-purple-300">$ ln -sfn /releases/20261112-160 /var/www/site/current</div>
-              <div className="text-[#00DF8F] font-bold pt-2">✓ Swapped seamlessly with 0 dropped HTTP packets.</div>
+              <div className="text-[#00DF8F] font-bold pt-2">✓ Swapped with 0 dropped HTTP packets.</div>
             </div>
           </div>
         )}
@@ -150,12 +150,12 @@ export function FeaturesView() {
         {activeTab === 'byos' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase font-bold tracking-wider">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <Server className="w-4 h-4" />
-                <span>Cloud Sovereignty</span>
+                <span>Your Own Servers</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white">
-                Bring Your Own Server. Zero Compute Markup.
+                Bring Your Own Server, With No Compute Markup
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
                 Why pay $250+/month for 8GB of RAM on managed PaaS platforms when a top-tier Hetzner, DigitalOcean, or AWS VPS costs $10/month?
@@ -163,11 +163,11 @@ export function FeaturesView() {
               <div className="space-y-3 text-xs text-zinc-400">
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>100% Direct Provider Billing:</strong> You pay your cloud provider directly. PortalOps takes zero commission on bandwidth, CPU, or storage.</span>
+                  <span><strong>Direct Provider Billing:</strong> You pay your cloud provider directly. PortalOps takes zero commission on bandwidth, CPU, or storage.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>Zero Outage Dependency:</strong> PortalOps does not proxy your production traffic. If PortalOps is undergoing maintenance, your sites stay 100% online.</span>
+                  <span><strong>No Outage Dependency:</strong> PortalOps does not proxy your production traffic. If PortalOps is undergoing maintenance, your sites stay online.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
@@ -188,7 +188,7 @@ export function FeaturesView() {
                 <div className="text-xs text-zinc-500">Heavy bandwidth &amp; seat markups</div>
               </div>
               <div className="col-span-2 p-4 rounded-xl bg-teal-500/10 border border-teal-500/20 text-xs text-teal-300 leading-relaxed">
-                💡 <strong>True Independence:</strong> You maintain full root access to your machine at all times.
+                <strong>Full Root Access:</strong> You keep root access to your machine at all times.
               </div>
             </div>
           </div>
@@ -205,7 +205,7 @@ export function FeaturesView() {
                 Keyless Onboarding &amp; Principle of Least Privilege
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                PortalOps gives you total flexibility over server authentication. Under our recommended keyless setup, you run a 1-line script locally on your VPS without sharing or transmitting your root password. For teams connecting directly via SSH, credentials are encrypted with AES-256-GCM.
+                You can connect a server in two ways. With the recommended keyless setup, you run a 1-line script locally on your VPS without sharing or transmitting your root password. For teams connecting directly via SSH, credentials are encrypted with AES-256-GCM.
               </p>
               <div className="space-y-3 text-xs text-zinc-400">
                 <div className="flex items-start gap-2.5">
@@ -214,7 +214,7 @@ export function FeaturesView() {
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>Modern Ed25519 Cryptography:</strong> High-security elliptic curve SSH keys with strict directory permissions (0600 / 0700).</span>
+                  <span><strong>Ed25519 SSH Keys:</strong> Elliptic-curve keys with strict directory permissions (0600 / 0700).</span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
@@ -243,7 +243,7 @@ export function FeaturesView() {
         {activeTab === 'proxy' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-sky-400 uppercase font-bold tracking-wider">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <Terminal className="w-4 h-4" />
                 <span>Reverse Proxy &amp; SSL</span>
               </div>
@@ -251,7 +251,7 @@ export function FeaturesView() {
                 Automated Nginx, HTTP/2 &amp; Let's Encrypt SSL
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Writing manual Nginx virtual host configurations and renewing SSL certificates manually is error-prone. PortalOps automates the entire web server lifecycle.
+                Writing manual Nginx virtual host configurations and renewing SSL certificates manually is error-prone. PortalOps generates the virtual host config and requests and renews certificates for you.
               </p>
               <div className="space-y-3 text-xs text-zinc-400">
                 <div className="flex items-start gap-2.5">
@@ -264,7 +264,7 @@ export function FeaturesView() {
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>Brotli &amp; Gzip Compression:</strong> High-performance static asset caching for lightning-fast PageSpeed scores.</span>
+                  <span><strong>Brotli &amp; Gzip Compression:</strong> Static assets are compressed and served with cache headers to raise PageSpeed scores.</span>
                 </div>
               </div>
             </div>
@@ -298,7 +298,7 @@ export function FeaturesView() {
         {activeTab === 'daemons' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 text-xs font-mono text-teal-400 uppercase font-bold tracking-wider">
+              <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <Cpu className="w-4 h-4" />
                 <span>Daemon Management</span>
               </div>
@@ -345,7 +345,6 @@ export function FeaturesView() {
 
         {activeTab === 'idp' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-[#00DF8F]/30 rounded-3xl p-8 sm:p-12 text-left relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#00DF8F]/10 rounded-full blur-3xl pointer-events-none" />
 
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
@@ -353,15 +352,15 @@ export function FeaturesView() {
                 <span>Internal Developer Platform (IDP)</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white">
-                Self-Sovereign Deployment for Company Internal Tools
+                Deployments for Internal Company Tools
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Empower internal engineering teams to ship internal dashboards, cron workers, staging fleets, and microservices on private corporate servers with zero root key exposure and zero per-seat SaaS taxes.
+                Internal engineering teams ship dashboards, cron workers, staging fleets, and microservices to private corporate servers without receiving root keys, and without per-seat SaaS fees.
               </p>
               <div className="space-y-3 text-xs text-zinc-300">
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>Private Subnet &amp; VPN Support:</strong> Deploy internal services behind corporate VPNs or private VPC subnets with 100% data sovereignty.</span>
+                  <span><strong>Private Subnet &amp; VPN Support:</strong> Deploy internal services behind corporate VPNs or private VPC subnets, so data stays on your network.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
@@ -369,11 +368,11 @@ export function FeaturesView() {
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>No Per-Seat Multi-User Penalties:</strong> Public PaaS platforms charge $50+/seat/month for internal tool deployments. Run unlimited internal tools on your own hardware with 0% compute markup.</span>
+                  <span><strong>No Per-Seat Pricing:</strong> Public PaaS platforms charge $50+/seat/month for internal tool deployments. Run unlimited internal tools on your own hardware with 0% compute markup.</span>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-[#00DF8F] shrink-0 mt-0.5" />
-                  <span><strong>Immutable Rollback Safeguards:</strong> Prevent internal company operations or billing services from going down with 1-click automated rollbacks.</span>
+                  <span><strong>1-Click Rollbacks:</strong> Roll a failing internal or billing service back to its previous release in one click.</span>
                 </div>
               </div>
 
@@ -413,7 +412,7 @@ export function FeaturesView() {
                 <div className="p-3 rounded-xl bg-[#081419] border border-white/5 space-y-1">
                   <div className="flex justify-between text-white font-bold">
                     <span>Multi-Department Workspaces</span>
-                    <span className="text-indigo-300">RBAC Segregated</span>
+                    <span className="text-teal-300">RBAC Segregated</span>
                   </div>
                   <div className="text-[11px] text-zinc-400 font-sans">Operations, Finance, Data Engineering, and Staging each operate in isolated workspaces.</div>
                 </div>
@@ -425,9 +424,9 @@ export function FeaturesView() {
 
       {/* Bottom CTA */}
       <section className="py-20 px-6 max-w-[1240px] mx-auto w-full text-center">
-        <div className="p-10 sm:p-14 rounded-3xl bg-gradient-to-b from-[#08171E] to-[#040A0D] border border-[#005459]/40 space-y-6">
+        <div className="p-10 sm:p-14 rounded-3xl bg-gradient-to-b from-[#081419] to-[#040A0D] border border-[#005459]/40 space-y-6">
           <h2 className="text-3xl sm:text-4xl font-black text-white">
-            Ready to experience zero-markup deployment?
+            Deploy on your own VPS with no compute markup
           </h2>
           <p className="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto">
             Connect your first VPS and ship your production app in under 2 minutes.

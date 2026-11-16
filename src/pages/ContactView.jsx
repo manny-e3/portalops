@@ -279,7 +279,7 @@ export function ContactView() {
               </div>
               <h3 className="text-lg font-bold text-white">Turnkey PaaS Layer</h3>
               <p className="text-xs text-zinc-400 leading-relaxed">
-                Offer your VPS &amp; Bare Metal customers an automated Vercel-like push-to-deploy experience. Inquire about 1-click marketplace listing, cloud-init templates, and turnkey server onboarding.
+                Offer your VPS, Bare Metal, and hosting customers an automated zero-downtime push-to-deploy experience. Inquire about 1-click marketplace listing, cloud-init templates, and turnkey server onboarding.
               </p>
               <div className="pt-1">
                 <button

@@ -72,7 +72,7 @@ export function DocsView() {
       <PublicNav />
 
       {/* Header Banner */}
-      <div className="border-b border-white/10 bg-[#071319]/80 backdrop-blur-md py-12 px-6 md:px-12">
+      <div className="border-b border-white/10 bg-[#081419]/80 backdrop-blur-md py-12 px-6 md:px-12">
         <div className="max-w-[1240px] mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6 text-left">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-teal-300 mb-3">
@@ -157,7 +157,7 @@ export function DocsView() {
                 5-Minute Quickstart Guide
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                PortalOps operates as an out-of-band management control plane. Your actual production traffic flows directly to your VPS; PortalOps merely connects via encrypted SSH to provision services, run tests, and perform zero-downtime symlink swaps.
+                PortalOps is an out-of-band control plane. Production traffic goes straight to your VPS; PortalOps only connects over encrypted SSH to provision services, run tests, and perform zero-downtime symlink swaps.
               </p>
 
               <div className="space-y-4 pt-2">
@@ -170,7 +170,7 @@ export function DocsView() {
                     <span className="text-[11px] font-mono text-zinc-400">Hetzner / DO / AWS / Linode</span>
                   </div>
                   <p className="text-xs text-zinc-400 leading-relaxed">
-                    Provision an instance running <strong className="text-white">Ubuntu 24.04 LTS</strong> or <strong className="text-white">Debian 12</strong>. Even a $4/mo Hetzner or $6/mo DigitalOcean droplet is capable of hosting multiple production apps with zero issues.
+                    Provision an instance running <strong className="text-white">Ubuntu 24.04 LTS</strong> or <strong className="text-white">Debian 12</strong>. A $4/mo Hetzner server or a $6/mo DigitalOcean droplet can host multiple production apps.
                   </p>
                 </div>
 
@@ -183,7 +183,7 @@ export function DocsView() {
                     <span className="text-[11px] font-mono text-[#00DF8F]">Zero Root Storage</span>
                   </div>
                   <p className="text-xs text-zinc-400 leading-relaxed">
-                    SSH into your server once as root, and execute the initialization script. It provisions an unprivileged <code className="text-teal-300 bg-white/5 px-1 py-0.5 rounded font-mono">portalops</code> system user, places a unique Ed25519 key, and installs essential base dependencies (git, curl, ufw).
+                    SSH into your server once as root, and execute the initialization script. It provisions an unprivileged <code className="text-teal-300 bg-white/5 px-1 py-0.5 rounded font-mono">portalops</code> system user, places a unique Ed25519 key, and installs base dependencies (git, curl, ufw).
                   </p>
 
                   <div className="relative mt-2 p-3.5 rounded-xl bg-[#040A0D] border border-white/10 font-mono text-xs text-teal-300 flex items-center justify-between">
@@ -233,7 +233,7 @@ export function DocsView() {
                 Server &amp; Operating System Requirements
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                PortalOps is designed to work with virtually any modern Linux distribution with zero proprietary vendor lock-in.
+                PortalOps supports the Ubuntu and Debian releases below, with no proprietary vendor lock-in.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
@@ -243,7 +243,7 @@ export function DocsView() {
                     <span>Supported Linux Distributions</span>
                   </div>
                   <ul className="text-xs text-zinc-400 space-y-1 list-disc list-inside">
-                    <li>Ubuntu 24.04 LTS (Noble Numbat) — Recommended</li>
+                    <li>Ubuntu 24.04 LTS (Noble Numbat), recommended</li>
                     <li>Ubuntu 22.04 LTS (Jammy Jellyfish)</li>
                     <li>Ubuntu 20.04 LTS (Focal Fossa)</li>
                     <li>Debian 12 (Bookworm) &amp; Debian 11 (Bullseye)</li>
@@ -360,7 +360,7 @@ export function DocsView() {
                 Atomic Symlink Directory Architecture
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                PortalOps achieves true zero-downtime releases by never building or installing dependencies inside the active webroot. Instead, we use timestamped release directories and atomic symlink swaps:
+                PortalOps never builds or installs dependencies inside the active webroot. It builds each release in a timestamped directory and goes live with an atomic symlink swap:
               </p>
 
               <div className="p-5 rounded-2xl bg-[#040A0D] border border-white/10 font-mono text-xs text-zinc-300 space-y-2">
@@ -391,7 +391,7 @@ export function DocsView() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
                 <div className="p-4 rounded-xl bg-[#081419] border border-white/10 space-y-2">
                   <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Code2 className="w-4 h-4 text-teal-400" />
+                    <Code2 className="w-4 h-4 text-[#00DF8F]" />
                     <span>Node.js / PM2 Ecosystem</span>
                   </h3>
                   <p className="text-xs text-zinc-400 leading-relaxed">
@@ -401,7 +401,7 @@ export function DocsView() {
 
                 <div className="p-4 rounded-xl bg-[#081419] border border-white/10 space-y-2">
                   <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-purple-400" />
+                    <Layers className="w-4 h-4 text-[#00DF8F]" />
                     <span>PHP &amp; Laravel Ecosystem</span>
                   </h3>
                   <p className="text-xs text-zinc-400 leading-relaxed">
@@ -411,7 +411,7 @@ export function DocsView() {
 
                 <div className="p-4 rounded-xl bg-[#081419] border border-white/10 space-y-2">
                   <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-emerald-400" />
+                    <Zap className="w-4 h-4 text-[#00DF8F]" />
                     <span>Static Single Page Apps (SPA)</span>
                   </h3>
                   <p className="text-xs text-zinc-400 leading-relaxed">
@@ -431,12 +431,12 @@ export function DocsView() {
                 Environment Variables &amp; Database Migrations
               </h2>
               <p className="text-sm text-zinc-300 leading-relaxed">
-                Environment secrets are stored in PortalOps using <strong className="text-white">AES-256-GCM envelope encryption</strong>. During deployment, the variables are securely injected into <code className="text-teal-300 bg-white/5 px-1 py-0.5 rounded font-mono">shared/.env</code> on your server.
+                Environment secrets are stored in PortalOps using <strong className="text-white">AES-256-GCM envelope encryption</strong>. During deployment, the variables are written to <code className="text-teal-300 bg-white/5 px-1 py-0.5 rounded font-mono">shared/.env</code> on your server.
               </p>
               <div className="p-4 rounded-xl bg-[#081419] border border-white/10 space-y-2 text-xs text-zinc-400">
                 <div className="font-semibold text-white">Automated Database Migration Hooks:</div>
                 <p>
-                  You can specify migration commands that execute strictly after dependencies build, but <em>before</em> the symlink swap. If the migration fails, the deploy halts, and traffic stays on the previous stable release.
+                  You can specify migration commands that run after dependencies build, but <em>before</em> the symlink swap. If the migration fails, the deploy halts, and traffic stays on the previous stable release.
                 </p>
                 <div className="font-mono text-teal-300 bg-[#040A0D] p-2.5 rounded-lg border border-white/5">
                   # Node (Prisma)<br />
@@ -466,7 +466,7 @@ export function DocsView() {
                   <span>1-Click Symlink Rollback (&lt;100ms)</span>
                 </div>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  PortalOps keeps the last 5 successful releases preserved on your server. Clicking <strong className="text-white">Rollback</strong> simply points the <code className="text-teal-300 bg-white/5 px-1 font-mono">/current</code> symlink back to the prior release folder and signals PM2 or Nginx to reload. Zero rebuild required.
+                  PortalOps keeps the last 5 successful releases preserved on your server. Clicking <strong className="text-white">Rollback</strong> points the <code className="text-teal-300 bg-white/5 px-1 font-mono">/current</code> symlink back to the prior release folder and signals PM2 or Nginx to reload. No rebuild is needed.
                 </p>
               </div>
             </section>
