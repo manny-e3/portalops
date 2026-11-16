@@ -238,7 +238,7 @@ export function LandingPage() {
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-black tracking-tight text-white leading-[1.08] text-balance">
-              Automated zero-downtime deployments.{' '}
+              The zero-downtime deployment portal.{' '}
               <span className="relative inline-block text-[#00DF8F]">
                 On your own servers.
                 <svg
