@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # If an existing asset, file, or directory is requested, serve directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Stop rewrite if index.html is directly requested
+  RewriteRule ^index\.html$ - [L]
+
+  # BYOS Zero-Friction 1-Line Server Setup Script & Callback Bridge
+  RewriteRule ^setup/(.*)$ setup.php?file=$1 [QSA,L]
+
+  # All Single Page Application routes rewrite to /index.html
+  RewriteRule . /index.html [L]
+</IfModule>

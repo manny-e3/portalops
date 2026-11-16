@@ -489,18 +489,23 @@ if [ -d "$HOME/.nvm" ]; then
   fi
 fi
 
-# 2. Install dependencies & build production bundle (single-thread mode for shared hosting)
-export NO_UPDATE_NOTIFIER=1
-export RAYON_NUM_THREADS=1
-export ROLLDOWN_WORKERS=1
-export UV_THREADPOOL_SIZE=1
-export NODE_OPTIONS="--max-old-space-size=512"
-npm ci 2>/dev/null || npm install
-npm run build
-
-# 3. Copy compiled static bundle from dist/ to web root
-if [ -d "dist" ]; then
+# 2. Deploy pre-compiled static bundle or fallback to server build
+if [ -d "dist" ] && [ -f "dist/index.html" ]; then
+  echo "⚡ Pre-compiled static assets detected in dist/. Syncing directly (0s build, 0% CPU)..."
   cp -rf dist/* .
+  rm -rf node_modules package-lock.json 2>/dev/null || true
+else
+  echo "📦 Compiling production bundle on server..."
+  export NO_UPDATE_NOTIFIER=1
+  export RAYON_NUM_THREADS=1
+  export ROLLDOWN_WORKERS=1
+  export UV_THREADPOOL_SIZE=1
+  export NODE_OPTIONS="--max-old-space-size=512"
+  npm ci --omit=dev 2>/dev/null || npm install --omit=dev 2>/dev/null || true
+  npm run build
+  if [ -d "dist" ]; then
+    cp -rf dist/* .
+  fi
 fi
 
 # 4. Standard SPA client-side fallback routing (.htaccess)
