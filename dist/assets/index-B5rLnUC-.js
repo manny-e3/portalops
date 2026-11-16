@@ -446,8 +446,22 @@ else
   fi
 fi
 
-# 4. Standard SPA client-side fallback routing (.htaccess)
+# 4. Standard SPA client-side fallback routing (.htaccess) with cache prevention
 cat << 'HTACCESS' > .htaccess
+<Files "index.html">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </IfModule>
+</Files>
+
+<IfModule mod_headers.c>
+  <FilesMatch ".(js|css|png|jpg|jpeg|gif|svg|woff|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
