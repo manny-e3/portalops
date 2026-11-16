@@ -571,8 +571,8 @@ export function ProjectDetailView() {
                 message: `Target ${targetObj.name} returned ${statusMsg} post-deployment!`,
               })
 
-              // Trigger Automatic Rollback if enabled on target
-              const shouldRollback = targetObj?.autoRollbackOnFailure !== false
+              // Auto-rollback disabled per user instruction
+              const shouldRollback = false
               if (shouldRollback) {
                 setLogs((prev) => [
                   ...prev,

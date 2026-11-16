@@ -272,7 +272,7 @@ export function PipelineStepper({
           </div>
           <div className="flex items-center gap-3 text-[10px] text-[#A0AEC0]">
             <span>Threshold: &lt; 1.0% HTTP 5xx</span>
-            <span className="text-emerald-400 font-semibold">Auto-Rollback: ARMED</span>
+            <span className="text-zinc-400 font-semibold">Auto-Rollback: DISABLED</span>
           </div>
         </div>
       )}

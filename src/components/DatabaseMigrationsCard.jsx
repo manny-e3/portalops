@@ -27,7 +27,7 @@ export function DatabaseMigrationsCard({
     migrationCommand: 'npm run db:migrate',
     rollbackCommand: 'npm run db:migrate:undo',
     snapshotStrategy: 'automated_snapshot', // 'automated_snapshot' | 'transaction_savepoint'
-    autoRollbackOnFailure: true,
+    autoRollbackOnFailure: false,
     preFlightHealthCheck: true
   })
   const [migrations, setMigrations] = useState([])

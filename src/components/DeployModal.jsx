@@ -42,7 +42,7 @@ export function DeployModal({
   const [imageTag, setImageTag] = useState('latest')
   const [strategy, setStrategy] = useState('canary') // 'canary' | 'rolling' | 'blue-green'
   const [canaryPercent, setCanaryPercent] = useState(10)
-  const [autoRollbackOnFailure, setAutoRollbackOnFailure] = useState(true)
+  const [autoRollbackOnFailure, setAutoRollbackOnFailure] = useState(false)
   const [emergencyBypassNote, setEmergencyBypassNote] = useState('')
   const [preflightEvaluation, setPreflightEvaluation] = useState(null)
   const [isPreflightOpen, setIsPreflightOpen] = useState(false)

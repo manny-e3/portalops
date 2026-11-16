@@ -300,7 +300,7 @@ export function SettingsView() {
   // ==========================================
   const [security, setSecurity] = useState({
     enforceApprovalGate: true,
-    autoRollback: true,
+    autoRollback: false,
     strictBranchLockdown: true,
     sessionTimeout: '60m',
     auditRetention: '90 days',
