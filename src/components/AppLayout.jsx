@@ -41,27 +41,25 @@ export function AppLayout() {
   }, [])
 
   return (
-    <div className="min-h-screen flex flex-col bg-zinc-50 dark:bg-[#07090D] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-zinc-900 selection:text-white dark:selection:bg-emerald-500/20 dark:selection:text-emerald-300 transition-colors duration-200">
-      <div className="flex-1 flex min-h-0">
-        {/* 1. Sidebar Navigation (Desktop sticky + Mobile slide-over drawer) */}
-        <DashboardSidebar
-          isMobileOpen={isMobileSidebarOpen}
-          onCloseMobile={() => setIsMobileSidebarOpen(false)}
+    <div className="h-screen flex bg-zinc-50 dark:bg-[#07090D] text-zinc-900 dark:text-zinc-100 font-sans selection:bg-zinc-900 selection:text-white dark:selection:bg-emerald-500/20 dark:selection:text-emerald-300 transition-colors duration-200 overflow-hidden">
+      {/* 1. Sidebar Navigation (Desktop persistent + Mobile slide-over drawer) */}
+      <DashboardSidebar
+        isMobileOpen={isMobileSidebarOpen}
+        onCloseMobile={() => setIsMobileSidebarOpen(false)}
+      />
+
+      {/* 2. Main Content Canvas */}
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+        <DashboardTopBar
+          onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+          onToggleMobileSidebar={() => setIsMobileSidebarOpen((prev) => !prev)}
         />
 
-        {/* 2. Main Content Canvas */}
-        <div className="flex-1 flex flex-col min-w-0">
-          <DashboardTopBar
-            onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-            onToggleMobileSidebar={() => setIsMobileSidebarOpen((prev) => !prev)}
-          />
-
-          <main className="flex-1 p-3 sm:p-5 md:p-8 max-w-[1600px] w-full mx-auto">
-            <ErrorBoundary>
-              <Outlet />
-            </ErrorBoundary>
-          </main>
-        </div>
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-3 sm:p-5 md:p-8 w-full max-w-[1600px]">
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
+        </main>
       </div>
 
       {/* 3. Global Command Palette Modal */}

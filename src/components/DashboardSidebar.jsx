@@ -168,7 +168,7 @@ export function DashboardSidebar({ isMobileOpen = false, onCloseMobile }) {
       {/* Top Section */}
       <div>
         {/* Brand Header */}
-        <div className="h-[64px] px-4 flex items-center justify-between border-b border-[#253241]">
+        <div className="h-[52px] px-4 flex items-center justify-between border-b border-[#253241]">
           <Link
             to="/dashboard"
             onClick={handleNavClick}
@@ -411,7 +411,7 @@ export function DashboardSidebar({ isMobileOpen = false, onCloseMobile }) {
   return (
     <>
       {/* 1. Desktop Persistent Sidebar (hidden on mobile, visible md+) */}
-      <aside className="w-[240px] bg-[#1B2430] text-[#8F9CA7] flex-col justify-between h-screen sticky top-0 shrink-0 select-none border-r border-[#24313E] hidden md:flex">
+      <aside className="w-[240px] bg-[#1B2430] text-[#8F9CA7] flex flex-col justify-between h-full shrink-0 select-none border-r border-[#24313E] hidden md:flex overflow-y-auto scrollbar-none z-30">
         {renderContent(false)}
       </aside>
 
@@ -426,7 +426,7 @@ export function DashboardSidebar({ isMobileOpen = false, onCloseMobile }) {
           />
 
           {/* Drawer Panel */}
-          <aside className="relative w-[270px] max-w-[85vw] bg-[#1B2430] text-[#8F9CA7] flex flex-col justify-between h-full shadow-2xl border-r border-[#24313E] z-10 animate-in slide-in-from-left duration-200">
+          <aside className="relative w-[270px] max-w-[85vw] bg-[#1B2430] text-[#8F9CA7] flex flex-col justify-between h-full shadow-2xl border-r border-[#24313E] z-10 animate-in slide-in-from-left duration-200 overflow-y-auto scrollbar-none">
             {renderContent(true)}
           </aside>
         </div>
