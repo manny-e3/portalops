@@ -332,13 +332,13 @@ export function PlatformAdminView() {
         </div>
 
         {/* Global Action Toolbar */}
-        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 shrink-0 w-full sm:w-auto">
           <button
             type="button"
             onClick={loadPlatformData}
             disabled={refreshing}
             title="Refresh platform metrics"
-            className="h-[36px] px-3 rounded-[6px] bg-white dark:bg-[#141820] hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs disabled:opacity-50"
+            className="flex-1 sm:flex-initial justify-center h-[36px] px-3 rounded-[6px] bg-white dark:bg-[#141820] hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs disabled:opacity-50"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-[#005459]' : ''}`} />
             <span>{refreshing ? 'Syncing...' : 'Refresh'}</span>
@@ -348,7 +348,7 @@ export function PlatformAdminView() {
             type="button"
             onClick={handleTriggerBackup}
             disabled={isBackingUp}
-            className="h-[36px] px-3.5 rounded-[6px] bg-white dark:bg-[#141820] hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium flex items-center gap-2 transition-colors cursor-pointer shadow-2xs disabled:opacity-50"
+            className="flex-1 sm:flex-initial justify-center h-[36px] px-3.5 rounded-[6px] bg-white dark:bg-[#141820] hover:bg-zinc-50 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium flex items-center gap-2 transition-colors cursor-pointer shadow-2xs disabled:opacity-50"
           >
             <Archive className={`w-4 h-4 ${isBackingUp ? 'animate-bounce text-amber-500' : 'text-[#005459]'}`} />
             <span>{isBackingUp ? 'Backing Up...' : 'Trigger Backup'}</span>
@@ -357,7 +357,7 @@ export function PlatformAdminView() {
           <button
             type="button"
             onClick={() => setIsCreateOrgOpen(true)}
-            className="h-[36px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+            className="w-full sm:w-auto justify-center h-[36px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>New Workspace</span>
@@ -366,7 +366,7 @@ export function PlatformAdminView() {
       </div>
 
       {/* 2. Platform KPI Metrics Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Workspaces */}
         <div className="p-4 rounded-xl bg-white dark:bg-[#141820] border border-zinc-200 dark:border-zinc-800 shadow-2xs">
           <div className="flex items-center justify-between text-xs text-zinc-500">
@@ -446,7 +446,7 @@ export function PlatformAdminView() {
 
       {/* 3. Tabbed Navigation Bar */}
       <div className="border-b border-zinc-200 dark:border-zinc-800">
-        <nav className="flex items-center gap-1 overflow-x-auto pb-px">
+        <nav className="flex items-center gap-1 overflow-x-auto scrollbar-none pb-px">
           {[
             { id: 'tenants', label: 'Workspaces & Tenants', icon: Building2, count: organizations.length },
             { id: 'users', label: 'Global Users', icon: Users, count: platformUsers.length },
@@ -528,7 +528,7 @@ export function PlatformAdminView() {
           {/* Tenants Table */}
           <div className="rounded-xl bg-white dark:bg-[#141820] border border-zinc-200 dark:border-zinc-800 shadow-2xs overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[720px]">
                 <thead className="bg-zinc-50 dark:bg-[#0F131A] border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 font-mono uppercase text-[10px]">
                   <tr>
                     <th className="px-4 py-3">Tenant Workspace</th>
@@ -681,7 +681,7 @@ export function PlatformAdminView() {
           {/* Users Table */}
           <div className="rounded-xl bg-white dark:bg-[#141820] border border-zinc-200 dark:border-zinc-800 shadow-2xs overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[720px]">
                 <thead className="bg-zinc-50 dark:bg-[#0F131A] border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 font-mono uppercase text-[10px]">
                   <tr>
                     <th className="px-4 py-3">User & Identity</th>
@@ -831,7 +831,7 @@ export function PlatformAdminView() {
 
           <div className="rounded-xl bg-white dark:bg-[#141820] border border-zinc-200 dark:border-zinc-800 shadow-2xs overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[720px]">
                 <thead className="bg-zinc-50 dark:bg-[#0F131A] border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 font-mono uppercase text-[10px]">
                   <tr>
                     <th className="px-4 py-3">Run #</th>
@@ -993,7 +993,7 @@ export function PlatformAdminView() {
 
           <div className="rounded-xl bg-white dark:bg-[#141820] border border-zinc-200 dark:border-zinc-800 shadow-2xs overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[720px]">
                 <thead className="bg-zinc-50 dark:bg-[#0F131A] border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 font-mono uppercase text-[10px]">
                   <tr>
                     <th className="px-4 py-3">Archive File</th>
@@ -1054,7 +1054,7 @@ export function PlatformAdminView() {
 
           <div className="rounded-xl bg-white dark:bg-[#141820] border border-zinc-200 dark:border-zinc-800 shadow-2xs overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+              <table className="w-full text-left text-xs min-w-[720px]">
                 <thead className="bg-zinc-50 dark:bg-[#0F131A] border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 font-mono uppercase text-[10px]">
                   <tr>
                     <th className="px-4 py-3">Timestamp</th>

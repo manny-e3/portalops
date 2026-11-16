@@ -598,11 +598,11 @@ export function LandingPage() {
         </div>
 
         {/* Tab Controls Bar */}
-        <div className="flex items-center justify-center gap-2 mb-4">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-2 mb-4">
           <button
             type="button"
             onClick={() => setActiveSimTab('pipeline')}
-            className={`px-4 py-2 rounded-lg text-[12.5px] font-semibold transition-colors cursor-pointer border flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-lg text-[12.5px] font-semibold transition-colors cursor-pointer border flex items-center justify-center gap-2 ${
               activeSimTab === 'pipeline'
                 ? 'bg-[#005459]/40 border-teal-500/50 text-[#00DF8F]'
                 : 'bg-[#081419] border-white/10 text-zinc-400 hover:text-white'
@@ -615,7 +615,7 @@ export function LandingPage() {
           <button
             type="button"
             onClick={() => setActiveSimTab('symlink')}
-            className={`px-4 py-2 rounded-lg text-[12.5px] font-semibold transition-colors cursor-pointer border flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-lg text-[12.5px] font-semibold transition-colors cursor-pointer border flex items-center justify-center gap-2 ${
               activeSimTab === 'symlink'
                 ? 'bg-[#005459]/40 border-teal-500/50 text-[#00DF8F]'
                 : 'bg-[#081419] border-white/10 text-zinc-400 hover:text-white'
@@ -628,7 +628,7 @@ export function LandingPage() {
           <button
             type="button"
             onClick={() => setActiveSimTab('telemetry')}
-            className={`px-4 py-2 rounded-lg text-[12.5px] font-semibold transition-colors cursor-pointer border flex items-center gap-2 ${
+            className={`px-4 py-2 rounded-lg text-[12.5px] font-semibold transition-colors cursor-pointer border flex items-center justify-center gap-2 ${
               activeSimTab === 'telemetry'
                 ? 'bg-[#005459]/40 border-teal-500/50 text-[#00DF8F]'
                 : 'bg-[#081419] border-white/10 text-zinc-400 hover:text-white'
@@ -641,15 +641,15 @@ export function LandingPage() {
 
         {/* Main Terminal Window */}
         <div className="w-full max-w-[1020px] mx-auto bg-[#040A0D] border border-white/10 rounded-xl overflow-hidden shadow-2xl text-left font-mono text-[12px] text-zinc-300">
-          <div className="h-[42px] px-4 bg-[#081419] border-b border-white/10 flex items-center justify-between text-zinc-400">
+          <div className="min-h-[42px] py-2 px-3 sm:px-4 bg-[#081419] border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-zinc-400">
             <div className="flex items-center gap-2">
               <span className="w-3 h-3 rounded-full bg-[#FF5F56]" />
               <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
               <span className="w-3 h-3 rounded-full bg-[#27C93F]" />
-              <span className="ml-2 text-[11.5px] text-zinc-400 font-medium">portalops-runner@hetzner-fsn1-01</span>
+              <span className="ml-2 text-[11px] sm:text-[11.5px] text-zinc-400 font-medium truncate">portalops-runner@hetzner-fsn1-01</span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between sm:justify-end gap-3">
               <span className="text-[11px] text-zinc-400">STATUS: READY</span>
               <button
                 type="button"

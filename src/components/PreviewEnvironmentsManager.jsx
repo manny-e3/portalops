@@ -294,7 +294,7 @@ export function PreviewEnvironmentsManager({
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-1">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-mono font-bold text-[11px] px-2 py-0.5 rounded bg-[#E2F0FD] text-[#005459] border border-[#BEDDF7]">
                         PR #{env.prNumber}
                       </span>
@@ -310,11 +310,11 @@ export function PreviewEnvironmentsManager({
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-3 text-[11px] font-mono text-[#565f6b]">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] font-mono text-[#565f6b]">
                       <span>Branch: <strong>{env.branch}</strong></span>
-                      <span>·</span>
+                      <span className="hidden sm:inline">·</span>
                       <span>Port: <strong>{env.allocatedPort}</strong></span>
-                      <span>·</span>
+                      <span className="hidden sm:inline">·</span>
                       <span className="flex items-center gap-1 text-[#005459]">
                         <Clock className="w-3 h-3" />
                         TTL: {timeLeft}
@@ -323,7 +323,7 @@ export function PreviewEnvironmentsManager({
                   </div>
 
                   {/* Right Actions */}
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex flex-wrap items-center gap-2 shrink-0">
                     <a
                       href={env.url}
                       target="_blank"
@@ -355,7 +355,7 @@ export function PreviewEnvironmentsManager({
                 </div>
 
                 {/* Subdomain URL Ribbon */}
-                <div className="px-3 py-1.5 bg-[#F4F6F5] border border-[#E2E7E4] rounded-[4px] flex items-center justify-between text-[11px] font-mono text-[#565f6b]">
+                <div className="px-3 py-1.5 bg-[#F4F6F5] border border-[#E2E7E4] rounded-[4px] flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] font-mono text-[#565f6b]">
                   <span className="truncate max-w-[420px] text-[#005459]">{env.url}</span>
                   <span>Provisioned: {new Date(env.createdAt).toLocaleDateString()}</span>
                 </div>

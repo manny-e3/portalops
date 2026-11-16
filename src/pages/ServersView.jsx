@@ -262,16 +262,16 @@ export function ServersView() {
         </div>
 
         {/* Filter controls & Create button */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
           {servers.length > 0 && (
-            <div className="relative">
+            <div className="relative flex-1 sm:flex-initial">
               <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-[#565f6b]" />
               <input
                 type="text"
                 placeholder="Search fleet..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-[34px] pl-8 pr-3 text-[12px] bg-[#FFFFFF] dark:bg-[#060D10] border border-[#CDD4D0] dark:border-zinc-700 rounded-[6px] text-[#101d26] dark:text-white placeholder-[#565f6b] focus:outline-none focus:border-[#005459] w-[160px] md:w-[190px]"
+                className="h-[34px] pl-8 pr-3 text-[12px] bg-[#FFFFFF] dark:bg-[#060D10] border border-[#CDD4D0] dark:border-zinc-700 rounded-[6px] text-[#101d26] dark:text-white placeholder-[#565f6b] focus:outline-none focus:border-[#005459] w-full sm:w-[190px]"
               />
             </div>
           )}
@@ -279,7 +279,7 @@ export function ServersView() {
           {can(role, 'servers:manage') && (
             <Link
               to="/servers/create"
-              className="h-[34px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#084246] active:bg-[#003538] text-white text-[12px] font-semibold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer ml-1"
+              className="h-[34px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#084246] active:bg-[#003538] text-white text-[12px] font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer sm:ml-1 shrink-0"
             >
               <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Create server</span>
@@ -340,7 +340,7 @@ export function ServersView() {
 
           {/* Table Content */}
           <div className="overflow-x-auto min-h-[220px]">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse min-w-[760px]">
               <thead>
                 <tr className="border-b border-[#E2E7E4] dark:border-zinc-800 bg-[#F4F6F5] dark:bg-[#060D10] text-[10px] font-mono font-semibold text-[#565f6b] uppercase tracking-wider">
                   <th className="py-2.5 px-5">NODE NAME &amp; OS</th>

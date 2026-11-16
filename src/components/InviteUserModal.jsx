@@ -39,7 +39,7 @@ export function InviteUserModal({ isOpen, onClose, onInviteUser }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#101d26]/60 backdrop-blur-xs select-none">
       <div className="w-full max-w-[480px] bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150">
-        <div className="px-6 py-4 border-b border-[#E2E7E4] flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#E2E7E4] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-[4px] bg-[#E2F0FD] text-[#005459] flex items-center justify-center">
               <UserPlus className="w-4 h-4" />
@@ -59,13 +59,13 @@ export function InviteUserModal({ isOpen, onClose, onInviteUser }) {
         </div>
 
         {errorMessage && (
-          <div className="mx-6 mt-4 p-3 rounded-[6px] bg-[#FAEBE9] border border-[#F1B5AC] text-[#BA1A1A] text-[12px] flex items-center gap-2.5">
+          <div className="mx-4 sm:mx-6 mt-4 p-3 rounded-[6px] bg-[#FAEBE9] border border-[#F1B5AC] text-[#BA1A1A] text-[12px] flex items-center gap-2.5">
             <AlertCircle className="w-4 h-4 shrink-0 text-[#BA1A1A]" />
             <span>{errorMessage}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4">
           <div>
             <label className="block text-[12px] font-medium text-[#101d26] mb-1">
               Email Address <span className="text-[#BA1A1A]">*</span>
@@ -136,19 +136,19 @@ export function InviteUserModal({ isOpen, onClose, onInviteUser }) {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-[#E2E7E4] flex items-center justify-end gap-2">
+          <div className="pt-4 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2">
             <button
               type="button"
               disabled={isSubmitting}
               onClick={onClose}
-              className="h-[34px] px-3 rounded-[6px] text-[12px] font-medium text-[#565f6b] hover:text-[#101d26] hover:bg-[#F4F6F5] transition-colors cursor-pointer disabled:opacity-60"
+              className="h-[34px] px-3 rounded-[6px] text-[12px] font-medium text-[#565f6b] hover:text-[#101d26] hover:bg-[#F4F6F5] transition-colors cursor-pointer disabled:opacity-60 text-center w-full sm:w-auto"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="h-[34px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-75"
+              className="h-[34px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-75 w-full sm:w-auto"
             >
               {isSubmitting ? (
                 <>

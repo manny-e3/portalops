@@ -79,7 +79,7 @@ export function ProjectHeroCard({
   return (
     <div className="bg-white border border-zinc-200/90 rounded-[8px] shadow-[0_1px_3px_rgba(0,0,0,0.03)] overflow-hidden">
       {/* 1. Header Bar: Service Title, Framework Tag & Primary Actions */}
-      <div className="px-6 py-5 border-b border-zinc-200/80 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white">
+      <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-zinc-200/80 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white">
         <div>
           <div className="flex flex-wrap items-center gap-3">
             <h1 className="text-[20px] font-semibold text-zinc-950 tracking-tight">
@@ -186,7 +186,7 @@ export function ProjectHeroCard({
       </div>
 
       {/* 2. Body: Production Domain & Commit Intelligence */}
-      <div className="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white">
+      <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 bg-white">
         {/* Left Column (7 cols): Live Production URL & Status */}
         <div className="lg:col-span-7 flex flex-col justify-between space-y-4">
           <div>
@@ -195,19 +195,21 @@ export function ProjectHeroCard({
             </div>
 
             {liveUrl ? (
-              <div className="flex items-center gap-2 p-2.5 rounded-[6px] bg-zinc-50 border border-zinc-200 group">
-                <Globe className="w-4 h-4 text-zinc-500 shrink-0" />
-                <a
-                  href={liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[13px] font-mono font-medium text-zinc-900 hover:underline truncate flex-1 flex items-center gap-1.5"
-                >
-                  <span className="truncate">{liveUrl}</span>
-                  <ExternalLink className="w-3 h-3 text-zinc-400 group-hover:text-zinc-600 shrink-0" />
-                </a>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-2.5 rounded-[6px] bg-zinc-50 border border-zinc-200 group">
+                <div className="flex items-center gap-2 truncate flex-1 min-w-0">
+                  <Globe className="w-4 h-4 text-zinc-500 shrink-0" />
+                  <a
+                    href={liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[13px] font-mono font-medium text-zinc-900 hover:underline truncate flex-1 flex items-center gap-1.5"
+                  >
+                    <span className="truncate">{liveUrl}</span>
+                    <ExternalLink className="w-3 h-3 text-zinc-400 group-hover:text-zinc-600 shrink-0" />
+                  </a>
+                </div>
 
-                <div className="flex items-center gap-1.5 shrink-0">
+                <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
                   <button
                     type="button"
                     onClick={handleCopyUrl}

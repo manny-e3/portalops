@@ -438,7 +438,7 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs select-none">
       <div className="w-full max-w-[620px] bg-white dark:bg-[#0B1317] border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-zinc-100 dark:border-zinc-800 flex items-start justify-between shrink-0">
+        <div className="px-4 sm:px-6 py-4 border-b border-zinc-100 dark:border-zinc-800 flex items-start justify-between shrink-0">
           <div className="flex items-start gap-3">
             <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 bg-[#005459]/10 text-[#005459] dark:text-[#00DF8F]">
               {serverType === 'WINDOWS' ? (
@@ -491,8 +491,8 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
 
         {/* Handshake Screen when Creating a Server */}
         {onboardingStep === 'handshake' && createdServer ? (
-          <div className="p-6 space-y-5 overflow-y-auto flex-1">
-            <div className="flex items-center justify-between">
+          <div className="p-4 sm:p-6 space-y-5 overflow-y-auto flex-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-base font-bold text-zinc-900 dark:text-white">
@@ -508,12 +508,12 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
               </div>
 
               {handshakeStatus === 'completed' ? (
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 text-xs font-semibold self-start sm:self-auto">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>Verified &amp; Online</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 text-xs font-medium animate-pulse">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 text-xs font-medium animate-pulse self-start sm:self-auto">
                   <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-600 dark:text-amber-400" />
                   <span>Listening for handshake...</span>
                 </div>
@@ -521,7 +521,7 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
             </div>
 
             {/* Method Tabs */}
-            <div className="flex rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-1 gap-1">
+            <div className="flex flex-col sm:flex-row rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-1 gap-1">
               <button
                 type="button"
                 onClick={() => setSetupMethodTab('script')}
@@ -679,7 +679,7 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
           </div>
         ) : (
           /* Form for Editing or Setting Details */
-          <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-1">
+          <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
             {formError && (
               <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 rounded-lg text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0" />
@@ -1083,14 +1083,14 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
             )}
 
             {/* Footer Actions */}
-            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+            <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <div>
                 {serverToEdit && (
                   <button
                     type="button"
                     onClick={handleTestConnection}
                     disabled={testStatus === 'testing'}
-                    className="px-3.5 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-semibold text-zinc-800 dark:text-zinc-200 flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                    className="w-full sm:w-auto justify-center px-3.5 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-700 text-xs font-semibold text-zinc-800 dark:text-zinc-200 flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
                   >
                     {testStatus === 'testing' ? (
                       <>
@@ -1112,14 +1112,14 @@ export function AddServerModal({ isOpen, onClose, onSaveServer, serverToEdit = n
                   type="button"
                   onClick={onClose}
                   disabled={isSubmitting}
-                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer disabled:opacity-50"
+                  className="flex-1 sm:flex-initial justify-center px-3.5 py-2 rounded-lg text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 rounded-lg bg-[#005459] hover:bg-[#064347] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                  className="flex-1 sm:flex-initial justify-center px-4 py-2 rounded-lg bg-[#005459] hover:bg-[#064347] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>

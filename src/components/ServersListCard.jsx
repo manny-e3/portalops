@@ -130,9 +130,9 @@ export function ServersListCard({ servers = [], loading = false, onManageServers
                 className="p-3.5 hover:bg-[#F8FAF9] transition-colors flex flex-col gap-2"
               >
                 {/* Top line: Name, Status & Host */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="relative flex h-2 w-2 shrink-0">
                       {isOnline && (
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                       )}
@@ -142,12 +142,12 @@ export function ServersListCard({ servers = [], loading = false, onManageServers
                         }`}
                       />
                     </span>
-                    <span className="font-bold text-[13px] text-[#101d26] flex items-center gap-1.5">
-                      {isWin && <WindowsLogo className="w-3.5 h-3.5 text-[#0078D4]" />}
-                      <span>{srv.name}</span>
+                    <span className="font-bold text-[13px] text-[#101d26] flex items-center gap-1.5 truncate">
+                      {isWin && <WindowsLogo className="w-3.5 h-3.5 text-[#0078D4] shrink-0" />}
+                      <span className="truncate">{srv.name}</span>
                     </span>
                     <span
-                      className={`px-1.5 py-0.2 rounded-[3px] border text-[10px] font-mono ${
+                      className={`px-1.5 py-0.2 rounded-[3px] border text-[10px] font-mono shrink-0 ${
                         isWin
                           ? 'bg-[#EBF3FC] text-[#0078D4] border-[#C5DCFA]'
                           : 'bg-[#F4F6F5] text-[#565f6b] border-[#CDD4D0]'
@@ -162,7 +162,7 @@ export function ServersListCard({ servers = [], loading = false, onManageServers
                   </div>
 
                   {/* Host with copy button */}
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 self-start sm:self-auto">
                     <button
                       type="button"
                       onClick={(e) => handleCopyHost(e, srv)}

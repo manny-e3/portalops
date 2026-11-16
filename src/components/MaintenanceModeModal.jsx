@@ -449,12 +449,12 @@ export function MaintenanceModeModal({
 
         {/* Footer */}
         {!isDraining && (
-          <div className="h-[56px] px-5 bg-[#F9FBFA] border-t border-[#E2E7E4] flex items-center justify-end gap-2.5 shrink-0">
+          <div className="min-h-[56px] h-auto py-2.5 px-4 sm:px-5 bg-[#F9FBFA] border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5 shrink-0">
             <button
               type="button"
               onClick={onClose}
               disabled={saving}
-              className="px-3.5 h-[34px] rounded-[6px] border border-[#CDD4D0] bg-white hover:bg-[#F4F6F5] text-[12px] font-medium text-[#565f6b] cursor-pointer"
+              className="px-3.5 h-[34px] rounded-[6px] border border-[#CDD4D0] bg-white hover:bg-[#F4F6F5] text-[12px] font-medium text-[#565f6b] cursor-pointer w-full sm:w-auto text-center"
             >
               Cancel
             </button>
@@ -464,7 +464,7 @@ export function MaintenanceModeModal({
                 type="button"
                 onClick={handleDisableMaintenance}
                 disabled={saving}
-                className="px-4 h-[34px] rounded-[6px] bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                className="px-4 h-[34px] rounded-[6px] bg-emerald-600 hover:bg-emerald-700 text-white text-[12px] font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs w-full sm:w-auto"
               >
                 {saving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 <span>Restore Live Traffic</span>
@@ -474,7 +474,7 @@ export function MaintenanceModeModal({
                 type="button"
                 onClick={handleStartEnable}
                 disabled={saving}
-                className="px-4 h-[34px] rounded-[6px] bg-[#C2412D] hover:bg-[#A33423] text-white text-[12px] font-semibold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                className="px-4 h-[34px] rounded-[6px] bg-[#C2412D] hover:bg-[#A33423] text-white text-[12px] font-semibold flex items-center justify-center gap-1.5 cursor-pointer shadow-xs w-full sm:w-auto"
               >
                 {saving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 <span>{drainSeconds > 0 ? `Start ${drainSeconds}s Drain & 503` : 'Enable 503 Maintenance'}</span>

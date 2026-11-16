@@ -75,7 +75,7 @@ export function NewProjectModal({ isOpen, onClose, onCreateProject }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-[12px] font-mono uppercase font-semibold text-[#565f6b] mb-1.5">
                 DEFAULT BRANCH
@@ -110,17 +110,17 @@ export function NewProjectModal({ isOpen, onClose, onCreateProject }) {
             </div>
           </div>
 
-          <div className="pt-3 border-t border-[#E2E7E4] flex items-center justify-end gap-2.5">
+          <div className="pt-3 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="h-[32px] px-3.5 rounded-[6px] bg-[#FFFFFF] hover:bg-[#F4F6F5] border border-[#CDD4D0] text-[13px] text-[#101d26] font-medium transition-colors cursor-pointer"
+              className="h-[34px] px-3.5 rounded-[6px] bg-[#FFFFFF] hover:bg-[#F4F6F5] border border-[#CDD4D0] text-[13px] text-[#101d26] font-medium transition-colors cursor-pointer w-full sm:w-auto"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="h-[32px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
+              className="h-[34px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer w-full sm:w-auto"
             >
               <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>Create Project</span>

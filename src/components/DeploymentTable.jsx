@@ -8,8 +8,8 @@ export function DeploymentTable({
   onRollback,
 }) {
   return (
-    <div className="w-full overflow-x-auto">
-      <table className="w-full text-left border-collapse select-none">
+    <div className="w-full overflow-x-auto scrollbar-none">
+      <table className="w-full min-w-[760px] text-left border-collapse select-none">
         <thead>
           <tr className="h-[32px] bg-[#F4F6F5] border-b border-[#CDD4D0] text-[#5E6B76] font-semibold text-[11px] tracking-[0.04em] uppercase">
             <th className="px-3.5 w-[130px] font-sans">STATUS</th>

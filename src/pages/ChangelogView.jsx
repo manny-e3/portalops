@@ -103,13 +103,13 @@ export function ChangelogView() {
       <PublicNav />
 
       {/* Header */}
-      <section className="pt-16 pb-12 px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
+      <section className="pt-16 pb-12 px-4 sm:px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-teal-300 mb-6">
           <Sparkles className="w-3.5 h-3.5 text-[#00DF8F]" />
           <span>Product Updates &amp; Releases</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white max-w-3xl mx-auto">
+        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white max-w-3xl mx-auto">
           Changelog &amp; Release Notes
         </h1>
 
@@ -119,7 +119,7 @@ export function ChangelogView() {
       </section>
 
       {/* Timeline Section */}
-      <section className="py-8 pb-24 px-6 max-w-[900px] mx-auto w-full">
+      <section className="py-8 pb-24 px-4 sm:px-6 max-w-[900px] mx-auto w-full">
         <div className="relative border-l border-white/10 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-16 text-left">
           {releases.map((rel, index) => (
             <div key={rel.version} className="relative group">

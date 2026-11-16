@@ -223,20 +223,20 @@ export function LogModal({
   // 1. MINIMIZED FLOATING PILL STATE (Allows zero-distraction browsing while watching deploy)
   if (dockMode === 'minimized') {
     return (
-      <aside aria-label="Deployment Status Bar" className="fixed bottom-4 right-6 z-50 pointer-events-auto">
-        <div className="flex items-center gap-3 px-4 py-2.5 rounded-[10px] bg-[#0E151D] border border-slate-700/90 text-white shadow-2xl font-mono text-[12px] animate-in slide-in-from-bottom-2 duration-150">
-          <div className="flex items-center gap-2">
-            <span className={`w-2.5 h-2.5 rounded-full ${isRunning ? 'bg-amber-400 animate-ping' : isSuccess ? 'bg-emerald-400' : isFailed ? 'bg-rose-400' : 'bg-slate-400'}`} />
-            <span className="font-semibold text-slate-200">{serviceName}</span>
-            <span className="text-slate-500">•</span>
-            {getStatusBadge()}
+      <aside aria-label="Deployment Status Bar" className="fixed bottom-3 right-3 left-3 sm:left-auto sm:right-6 sm:bottom-4 z-50 pointer-events-auto">
+        <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 rounded-[10px] bg-[#0E151D] border border-slate-700/90 text-white shadow-2xl font-mono text-[12px] animate-in slide-in-from-bottom-2 duration-150">
+          <div className="flex items-center gap-2 truncate">
+            <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${isRunning ? 'bg-amber-400 animate-ping' : isSuccess ? 'bg-emerald-400' : isFailed ? 'bg-rose-400' : 'bg-slate-400'}`} />
+            <span className="font-semibold text-slate-200 truncate">{serviceName}</span>
+            <span className="text-slate-500 hidden sm:inline">•</span>
+            <div className="shrink-0">{getStatusBadge()}</div>
           </div>
 
-          <div className="flex items-center gap-1.5 pl-2 border-l border-slate-800">
+          <div className="flex items-center gap-1.5 pl-2 border-l border-slate-800 shrink-0">
             <button
               type="button"
               onClick={() => setDockMode('docked')}
-              className="h-7 px-2.5 rounded-[5px] bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-sans font-medium flex items-center gap-1 transition-colors cursor-pointer"
+              className="h-7 px-2 sm:px-2.5 rounded-[5px] bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-sans font-medium flex items-center gap-1 transition-colors cursor-pointer"
               title="Expand Docked Console"
             >
               <ChevronUp className="w-3.5 h-3.5 text-zinc-400" />
@@ -265,38 +265,38 @@ export function LogModal({
       className={
         isDocked
           ? 'fixed inset-x-0 bottom-0 z-50 pointer-events-none flex flex-col justify-end p-2 sm:p-4 select-none'
-          : 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0A0E14]/60 backdrop-blur-xs select-none'
+          : 'fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#0A0E14]/60 backdrop-blur-xs select-none'
       }
     >
       <div
         className={`w-full bg-[#0E151D] border border-[#24313E] overflow-hidden shadow-2xl flex flex-col font-mono text-[12px] pointer-events-auto transition-all duration-200 ${
           isDocked
-            ? 'max-w-[1400px] mx-auto rounded-t-[12px] border-b-0 h-[440px] shadow-[0_-8px_30px_rgba(0,0,0,0.5)] animate-in slide-in-from-bottom-4'
+            ? 'max-w-[1400px] mx-auto rounded-t-[12px] border-b-0 h-[400px] sm:h-[440px] max-h-[85vh] shadow-[0_-8px_30px_rgba(0,0,0,0.5)] animate-in slide-in-from-bottom-4'
             : 'max-w-[920px] rounded-[10px] max-h-[88vh] animate-in zoom-in-95'
         }`}
       >
         {/* Title Bar */}
-        <div className="h-[46px] px-4 bg-[#141C26] border-b border-[#24313E] flex items-center justify-between text-white shrink-0">
-          <div className="flex items-center gap-2.5 truncate">
+        <div className="h-[46px] px-3 sm:px-4 bg-[#141C26] border-b border-[#24313E] flex items-center justify-between text-white shrink-0 gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 truncate min-w-0">
             <Terminal className="w-4 h-4 text-zinc-400 shrink-0" />
             <span className="font-semibold text-[13px] text-white tracking-tight truncate">{serviceName}</span>
-            <span className="text-zinc-500">→</span>
-            <span className="text-zinc-400 text-[11px] truncate">{serverName}</span>
-            {commitSha && <span className="text-zinc-400 text-[11px] font-mono">({commitSha.slice(0, 7)})</span>}
-            {getStatusBadge()}
+            <span className="text-zinc-500 hidden sm:inline">→</span>
+            <span className="text-zinc-400 text-[11px] truncate hidden sm:inline">{serverName}</span>
+            {commitSha && <span className="text-zinc-400 text-[11px] font-mono hidden md:inline">({commitSha.slice(0, 7)})</span>}
+            <div className="shrink-0">{getStatusBadge()}</div>
           </div>
 
           {/* Action Tools */}
-          <div className="flex items-center gap-1.5 shrink-0">
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             {onRetry && isFailed && (
               <button
                 type="button"
                 onClick={handleRetry}
                 disabled={isRetrying}
-                className="h-[26px] px-2.5 rounded-[5px] bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white text-[10.5px] uppercase font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
+                className="h-[26px] px-2 sm:px-2.5 rounded-[5px] bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white text-[10.5px] uppercase font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
               >
                 {isRetrying ? <Loader2 className="w-3 h-3 animate-spin" /> : <RotateCcw className="w-3 h-3" />}
-                <span>Retry Run</span>
+                <span className="hidden sm:inline">Retry Run</span>
               </button>
             )}
 
@@ -307,7 +307,7 @@ export function LogModal({
               title="Copy all logs"
             >
               {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
-              <span>{copied ? 'Copied' : 'Copy'}</span>
+              <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
             </button>
 
             <button
@@ -344,7 +344,7 @@ export function LogModal({
             <button
               type="button"
               onClick={onClose}
-              className="w-7 h-7 rounded-[5px] text-[#8F9CA7] hover:text-rose-400 hover:bg-[#253242] flex items-center justify-center transition-colors cursor-pointer ml-1"
+              className="w-7 h-7 rounded-[5px] text-[#8F9CA7] hover:text-rose-400 hover:bg-[#253242] flex items-center justify-center transition-colors cursor-pointer ml-0.5 sm:ml-1"
               title="Close log viewer"
             >
               <X className="w-4 h-4" />
@@ -353,7 +353,7 @@ export function LogModal({
         </div>
 
         {/* Visual Pipeline Stage Stepper */}
-        <div className="px-4 py-2.5 bg-[#101720] border-b border-[#24313E] shrink-0">
+        <div className="px-4 py-2.5 bg-[#101720] border-b border-[#24313E] shrink-0 overflow-x-auto scrollbar-none">
           <PipelineStepper
             status={status}
             logs={logs}
@@ -365,7 +365,7 @@ export function LogModal({
         </div>
 
         {/* Filter View Selector Bar */}
-        <div className="px-4 py-2 bg-[#121922] border-b border-[#24313E] flex flex-wrap items-center justify-between gap-2 text-[11px] shrink-0">
+        <div className="px-3 sm:px-4 py-2 bg-[#121922] border-b border-[#24313E] flex flex-wrap items-center justify-between gap-2 text-[11px] shrink-0 overflow-x-auto scrollbar-none">
           <div className="flex items-center gap-1 p-0.5 bg-zinc-900 border border-zinc-800 rounded-[5px]">
             <button
               type="button"

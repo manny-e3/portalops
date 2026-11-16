@@ -235,21 +235,18 @@ export function DashboardView() {
   return (
     <div className="space-y-6">
       {/* 1. Welcome Header (Ploi.io layout) */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#101d26] dark:text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#101d26] dark:text-white tracking-tight">
             Welcome back, {displayName}!
           </h1>
-          {/* <p className="text-xs sm:text-[13px] text-[#565f6b] dark:text-zinc-400 mt-1.5 max-w-3xl leading-relaxed">
-            Ready to dive in? Our onboarding guide will walk you through the essentials, from setting up your first server to deploying apps like a pro. If you ever get stuck, we're just a click away. Let's make something awesome together!
-          </p> */}
         </div>
 
-        <div className="shrink-0">
+        <div className="shrink-0 w-full sm:w-auto">
           <button
             type="button"
             onClick={() => navigate('/servers/create')}
-            className="h-10 px-4 rounded-lg bg-[#005459] hover:bg-[#004246] active:bg-[#003538] text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-xs"
+            className="w-full sm:w-auto h-10 px-4 rounded-lg bg-[#005459] hover:bg-[#004246] active:bg-[#003538] text-white text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
           >
             <Server className="w-4 h-4" />
             <span>Create server</span>
@@ -257,12 +254,11 @@ export function DashboardView() {
         </div>
       </div>
 
-
       {/* Workspace Title & Toolbar Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 pt-2">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 pt-1 sm:pt-2">
         <div>
           <div className="flex items-baseline gap-3 mt-1">
-            <h2 className="text-[24px] font-bold text-[#101d26] dark:text-white tracking-tight leading-tight">
+            <h2 className="text-[20px] sm:text-[24px] font-bold text-[#101d26] dark:text-white tracking-tight leading-tight">
               Platform Activity
             </h2>
             <span className="text-[13px] text-[#565f6b] dark:text-zinc-400 hidden sm:inline">
@@ -272,7 +268,7 @@ export function DashboardView() {
         </div>
 
         {/* Action Controls Bar */}
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 w-full lg:w-auto">
           {/* View Mode Switcher: Overview vs DORA */}
           <div className="flex items-center bg-[#F4F6F5] p-0.5 rounded-[6px] border border-[#CDD4D0]">
             <button
@@ -286,22 +282,10 @@ export function DashboardView() {
               <Activity className="w-3.5 h-3.5" />
               <span>Overview</span>
             </button>
-            {/* <button
-              type="button"
-              onClick={() => setActiveViewTab('dora')}
-              className={`px-3 py-1 rounded-[5px] text-[12px] font-medium transition-all cursor-pointer flex items-center gap-1.5 ${
-                activeViewTab === 'dora'
-                  ? 'bg-white text-[#005459] shadow-2xs font-semibold'
-                  : 'text-[#565f6b] hover:text-[#101d26]'
-              }`}
-            >
-              <Zap className="w-3.5 h-3.5" />
-              <span>DORA Telemetry</span>
-            </button> */}
           </div>
 
           {/* Search Box */}
-          <div className="relative flex items-center w-[180px] sm:w-[220px]">
+          <div className="relative flex items-center flex-1 sm:flex-initial min-w-[150px] sm:w-[220px]">
             <Search className="w-3.5 h-3.5 text-[#565f6b] absolute left-3 pointer-events-none" />
             <input
               ref={searchInputRef}
@@ -309,7 +293,7 @@ export function DashboardView() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search deployments..."
-              className="w-full h-[36px] pl-8 pr-12 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[13px] text-[#101d26] placeholder-[#565f6b] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15 transition-all shadow-2xs"
+              className="w-full h-[36px] pl-8 pr-10 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[13px] text-[#101d26] placeholder-[#565f6b] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15 transition-all shadow-2xs"
             />
             {searchQuery ? (
               <button
@@ -320,7 +304,7 @@ export function DashboardView() {
                 <X className="w-3.5 h-3.5" />
               </button>
             ) : (
-              <span className="absolute right-2 px-1.5 py-0.5 rounded-[4px] bg-[#F4F6F5] border border-[#CDD4D0] text-[10px] font-mono text-[#565f6b] pointer-events-none flex items-center gap-0.5">
+              <span className="absolute right-2 px-1.5 py-0.5 rounded-[4px] bg-[#F4F6F5] border border-[#CDD4D0] text-[10px] font-mono text-[#565f6b] pointer-events-none hidden xs:flex items-center gap-0.5">
                 <Command className="w-2.5 h-2.5" />K
               </span>
             )}
@@ -330,7 +314,7 @@ export function DashboardView() {
           <button
             type="button"
             onClick={() => setIsQuickDeployOpen(true)}
-            className="h-[36px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-all shadow-xs hover:shadow-sm cursor-pointer shrink-0"
+            className="w-full sm:w-auto h-[36px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center justify-center gap-1.5 transition-all shadow-xs hover:shadow-sm cursor-pointer shrink-0"
             title="Trigger a new deployment (Cmd+B)"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />

@@ -98,26 +98,26 @@ export function OnboardingView() {
     <div className="min-h-screen bg-[#EDF0EE] flex flex-col items-center justify-center p-4 selection:bg-[#005459]/15 selection:text-[#005459]">
       <div className="w-full max-w-[680px] bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] overflow-hidden shadow-[0_4px_24px_rgba(16,29,38,0.08)]">
         {/* Top Header */}
-        <div className="px-8 pt-7 pb-5 border-b border-[#E2E7E4]">
-          <div className="flex items-center justify-between">
+        <div className="px-4 sm:px-8 pt-6 pb-5 border-b border-[#E2E7E4]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <SlipwayLogo size="md" />
-            <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FAF3E7] border border-[#F1D6A4] text-[#B87E0C] text-[11px] font-semibold">
+            <div className="self-start sm:self-auto flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FAF3E7] border border-[#F1D6A4] text-[#B87E0C] text-[11px] font-semibold">
               <Crown className="w-3.5 h-3.5 text-[#B87E0C]" />
               <span>Super Admin Onboarding</span>
             </div>
           </div>
 
           {/* Stepper Indicator */}
-          <div className="mt-6 flex items-center justify-between">
+          <div className="mt-5 flex items-center justify-between">
             {[
-              { num: 1, title: 'Workspace Setup' },
-              { num: 2, title: 'Onboard Team' },
-              { num: 3, title: 'Ready to Deploy' }
+              { num: 1, title: 'Workspace' },
+              { num: 2, title: 'Team' },
+              { num: 3, title: 'Ready' }
             ].map((s, idx) => {
               const isCurrent = step === s.num
               const isPast = step > s.num
               return (
-                <div key={s.num} className="flex items-center gap-2 flex-1">
+                <div key={s.num} className="flex items-center gap-1.5 sm:gap-2 flex-1">
                   <div
                     className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-mono font-bold shrink-0 transition-colors ${
                       isPast
@@ -130,7 +130,7 @@ export function OnboardingView() {
                     {isPast ? <Check className="w-3.5 h-3.5" /> : s.num}
                   </div>
                   <span
-                    className={`text-[12px] font-medium truncate ${
+                    className={`text-[11px] sm:text-[12px] font-medium truncate ${
                       isCurrent ? 'text-[#101d26] font-semibold' : 'text-[#8F9CA7]'
                     }`}
                   >
@@ -138,7 +138,7 @@ export function OnboardingView() {
                   </span>
                   {idx < 2 && (
                     <div
-                      className={`h-[1px] flex-1 mx-2 ${
+                      className={`h-[1px] flex-1 mx-1 sm:mx-2 ${
                         step > idx + 1 ? 'bg-[#2E8B57]' : 'bg-[#E2E7E4]'
                       }`}
                     />
@@ -151,7 +151,7 @@ export function OnboardingView() {
 
         {/* STEP 1: Workspace Setup */}
         {step === 1 && (
-          <form onSubmit={handleSaveWorkspace} className="p-8 space-y-6">
+          <form onSubmit={handleSaveWorkspace} className="p-4 sm:p-8 space-y-6">
             <div>
               <h2 className="text-[20px] font-bold text-[#101d26] tracking-tight">
                 Welcome, {user?.name || 'Super Admin'}!
@@ -183,7 +183,7 @@ export function OnboardingView() {
               <label className="block text-[12px] font-medium text-[#101d26] mb-1.5">
                 Primary Technology Focus
               </label>
-              <div className="grid grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {[
                   { id: 'react', label: 'React / Vite SPA', icon: '⚛️' },
                   { id: 'laravel', label: 'Laravel PHP', icon: '🐘' },
@@ -209,7 +209,7 @@ export function OnboardingView() {
             <div className="pt-4 border-t border-[#E2E7E4] flex items-center justify-end">
               <button
                 type="submit"
-                className="h-[38px] px-5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                className="w-full sm:w-auto justify-center h-[38px] px-5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
               >
                 <span>Continue to Onboard Team</span>
                 <ArrowRight className="w-4 h-4" />
@@ -220,9 +220,9 @@ export function OnboardingView() {
 
         {/* STEP 2: Onboard Team Members */}
         {step === 2 && (
-          <form onSubmit={handleOnboardTeam} className="p-8 space-y-6">
+          <form onSubmit={handleOnboardTeam} className="p-4 sm:p-8 space-y-6">
             <div>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h2 className="text-[20px] font-bold text-[#101d26] tracking-tight">
                     Onboard Team Members
@@ -234,7 +234,7 @@ export function OnboardingView() {
                 <button
                   type="button"
                   onClick={handleAddMember}
-                  className="h-[30px] px-2.5 rounded-[4px] bg-[#E2F0FD] hover:bg-[#D0E7FC] text-[#005459] text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                  className="self-start sm:self-auto h-[30px] px-2.5 rounded-[4px] bg-[#E2F0FD] hover:bg-[#D0E7FC] text-[#005459] text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
                 >
                   <UserPlus className="w-3.5 h-3.5" />
                   <span>+ Add Colleague</span>
@@ -249,7 +249,7 @@ export function OnboardingView() {
                   key={idx}
                   className="p-3 bg-[#F4F6F5] border border-[#CDD4D0] rounded-[6px] flex flex-col md:flex-row md:items-center gap-2.5 text-[12px]"
                 >
-                  <div className="flex-1">
+                  <div className="w-full md:flex-1">
                     <input
                       type="text"
                       placeholder="Name (e.g. Jordan Lee)"
@@ -258,7 +258,7 @@ export function OnboardingView() {
                       className="w-full h-[32px] px-2.5 bg-white border border-[#CDD4D0] focus:border-[#005459] rounded-[4px] text-[#101d26] outline-none"
                     />
                   </div>
-                  <div className="flex-1">
+                  <div className="w-full md:flex-1">
                     <input
                       type="email"
                       placeholder="Work Email (e.g. jordan@company.internal)"
@@ -267,7 +267,7 @@ export function OnboardingView() {
                       className="w-full h-[32px] px-2.5 bg-white border border-[#CDD4D0] focus:border-[#005459] font-mono rounded-[4px] text-[#101d26] outline-none"
                     />
                   </div>
-                  <div className="w-[120px]">
+                  <div className="w-full md:w-[120px]">
                     <select
                       value={m.role}
                       onChange={(e) => handleMemberChange(idx, 'role', e.target.value)}
@@ -282,7 +282,7 @@ export function OnboardingView() {
                     <button
                       type="button"
                       onClick={() => handleRemoveMember(idx)}
-                      className="w-8 h-8 rounded-[4px] text-[#8F9CA7] hover:text-[#BA1A1A] hover:bg-[#FAEBE9] flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                      className="self-end md:self-auto w-8 h-8 rounded-[4px] text-[#8F9CA7] hover:text-[#BA1A1A] hover:bg-[#FAEBE9] flex items-center justify-center transition-colors cursor-pointer shrink-0"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -298,27 +298,27 @@ export function OnboardingView() {
               <div><strong className="text-[#101d26]">Viewer:</strong> Read-only access to metrics, deployment stream, and audit trail.</div>
             </div>
 
-            <div className="pt-4 border-t border-[#E2E7E4] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="h-[36px] px-3 rounded-[6px] text-[#565f6b] hover:text-[#101d26] text-[12px] font-medium flex items-center gap-1 transition-colors cursor-pointer"
+                className="justify-center h-[36px] px-3 rounded-[6px] text-[#565f6b] hover:text-[#101d26] text-[12px] font-medium flex items-center gap-1 transition-colors cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
               </button>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setStep(3)}
-                  className="text-[12px] text-[#565f6b] hover:text-[#101d26] font-medium hover:underline cursor-pointer"
+                  className="text-center text-[12px] text-[#565f6b] hover:text-[#101d26] font-medium hover:underline cursor-pointer py-1 sm:py-0"
                 >
                   Skip for now
                 </button>
                 <button
                   type="submit"
-                  className="h-[38px] px-5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+                  className="justify-center h-[38px] px-5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Onboard Team &amp; Generate Invites</span>
@@ -330,7 +330,7 @@ export function OnboardingView() {
 
         {/* STEP 3: Completed / Invite Links */}
         {step === 3 && (
-          <div className="p-8 space-y-6">
+          <div className="p-4 sm:p-8 space-y-6">
             <div className="text-center space-y-2">
               <div className="w-12 h-12 rounded-full bg-[#EAF5EE] text-[#2E8B57] mx-auto flex items-center justify-center">
                 <CheckCircle2 className="w-7 h-7" />

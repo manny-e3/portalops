@@ -51,10 +51,10 @@ export function GuardrailsPreflightModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#101d26]/50 backdrop-blur-xs select-none">
       <div className="w-full max-w-[620px] bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] overflow-hidden shadow-xl animate-in fade-in zoom-in-95 duration-150 flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="h-[52px] px-5 border-b border-[#E2E7E4] flex items-center justify-between shrink-0 bg-[#FAFBFB]">
-          <div className="flex items-center gap-2.5">
+        <div className="h-[52px] px-4 sm:px-5 border-b border-[#E2E7E4] flex items-center justify-between shrink-0 bg-[#FAFBFB] gap-2">
+          <div className="flex items-center gap-2.5 truncate">
             <div
-              className={`w-7 h-7 rounded-[4px] flex items-center justify-center text-white ${
+              className={`w-7 h-7 rounded-[4px] flex items-center justify-center text-white shrink-0 ${
                 hasBlockingViolation
                   ? 'bg-[#C2412D]'
                   : hasWarning
@@ -70,11 +70,11 @@ export function GuardrailsPreflightModal({
                 <ShieldCheck className="w-4 h-4" />
               )}
             </div>
-            <div>
-              <h2 className="text-[14px] font-bold text-[#101d26] leading-tight">
+            <div className="truncate">
+              <h2 className="text-[14px] font-bold text-[#101d26] leading-tight truncate">
                 Policy Pre-Flight Verification
               </h2>
-              <p className="text-[11px] text-[#565f6b]">
+              <p className="text-[11px] text-[#565f6b] truncate">
                 Target: <span className="font-mono font-semibold text-[#101d26]">{target?.name || 'All Targets'}</span> · Environment: <span className="font-mono font-semibold text-[#005459] uppercase">{environment}</span>
               </p>
             </div>
@@ -83,7 +83,7 @@ export function GuardrailsPreflightModal({
           <button
             type="button"
             onClick={onClose}
-            className="w-7 h-7 flex items-center justify-center rounded-[4px] hover:bg-[#F4F6F5] text-[#565f6b] hover:text-[#101d26] transition-colors cursor-pointer"
+            className="w-7 h-7 flex items-center justify-center rounded-[4px] hover:bg-[#F4F6F5] text-[#565f6b] hover:text-[#101d26] transition-colors cursor-pointer shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
@@ -243,11 +243,11 @@ export function GuardrailsPreflightModal({
         </div>
 
         {/* Footer Actions */}
-        <div className="h-[52px] px-5 border-t border-[#E2E7E4] flex items-center justify-between bg-[#FAFBFB] shrink-0">
+        <div className="min-h-[52px] h-auto py-2.5 px-4 sm:px-5 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2 bg-[#FAFBFB] shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="h-[34px] px-3.5 rounded-[4px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium cursor-pointer transition-colors"
+            className="h-[34px] px-3.5 rounded-[4px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium cursor-pointer transition-colors w-full sm:w-auto text-center"
           >
             Cancel
           </button>
@@ -257,7 +257,7 @@ export function GuardrailsPreflightModal({
               type="button"
               disabled={!isAdmin || !bypassReason.trim()}
               onClick={handleConfirm}
-              className="h-[34px] px-4 rounded-[4px] bg-[#C2412D] hover:bg-[#A93422] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-[34px] px-4 rounded-[4px] bg-[#C2412D] hover:bg-[#A93422] text-white text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
             >
               <ShieldAlert className="w-3.5 h-3.5" />
               <span>Override &amp; Release</span>
@@ -266,7 +266,7 @@ export function GuardrailsPreflightModal({
             <button
               type="button"
               onClick={handleConfirm}
-              className="h-[34px] px-4 rounded-[4px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+              className="h-[34px] px-4 rounded-[4px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs w-full sm:w-auto"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
               <span>Confirm &amp; Dispatch Release</span>

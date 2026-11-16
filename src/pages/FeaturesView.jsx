@@ -59,7 +59,7 @@ export function FeaturesView() {
       <PublicNav />
 
       {/* Header Hero */}
-      <section className="pt-16 pb-12 px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
+      <section className="pt-16 pb-12 px-4 sm:px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-teal-300 mb-6 backdrop-blur-xs select-none">
           <Zap className="w-3.5 h-3.5 text-[#00DF8F]" />
           <span>Features &amp; Architecture</span>
@@ -102,7 +102,7 @@ export function FeaturesView() {
       {/* Dynamic Tab Deep-Dive Content */}
       <section className="py-10 px-6 max-w-[1240px] mx-auto w-full">
         {activeTab === 'atomic' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-5 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <ArrowRightLeft className="w-4 h-4" />
@@ -148,7 +148,7 @@ export function FeaturesView() {
         )}
 
         {activeTab === 'byos' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-5 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <Server className="w-4 h-4" />
@@ -195,7 +195,7 @@ export function FeaturesView() {
         )}
 
         {activeTab === 'security' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-5 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <KeyRound className="w-4 h-4" />
@@ -241,7 +241,7 @@ export function FeaturesView() {
         )}
 
         {activeTab === 'proxy' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-5 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <Terminal className="w-4 h-4" />
@@ -296,7 +296,7 @@ export function FeaturesView() {
         )}
 
         {activeTab === 'daemons' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-12 text-left">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-white/10 rounded-3xl p-5 sm:p-12 text-left">
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">
                 <Cpu className="w-4 h-4" />
@@ -344,7 +344,7 @@ export function FeaturesView() {
         )}
 
         {activeTab === 'idp' && (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-[#00DF8F]/30 rounded-3xl p-8 sm:p-12 text-left relative overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#081419] border border-[#00DF8F]/30 rounded-3xl p-5 sm:p-12 text-left relative overflow-hidden">
 
             <div className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 text-xs font-mono text-[#00DF8F] uppercase font-bold tracking-wider">

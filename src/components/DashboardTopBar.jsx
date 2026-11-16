@@ -1,22 +1,38 @@
-import { Search, Bell, HelpCircle, Sun, Moon } from 'lucide-react'
+import { Search, Bell, HelpCircle, Sun, Moon, Menu } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
+import { SlipwayLogo } from './SlipwayLogo'
 
-export function DashboardTopBar({ onOpenCommandPalette }) {
+export function DashboardTopBar({ onOpenCommandPalette, onToggleMobileSidebar }) {
   const { isDark, toggleTheme } = useTheme()
 
   return (
-    <header className="h-[52px] px-6 bg-white/95 dark:bg-[#090C10]/95 backdrop-blur-xs border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-4 sticky top-0 z-20 select-none transition-colors duration-200">
-      {/* Left: Cluster Indicator */}
-      <div className="flex items-center gap-3">
+    <header className="h-[52px] px-3 sm:px-6 bg-white/95 dark:bg-[#090C10]/95 backdrop-blur-xs border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between gap-2 sm:gap-4 sticky top-0 z-20 select-none transition-colors duration-200">
+      {/* Left: Mobile Toggle & Logo */}
+      <div className="flex items-center gap-2 sm:gap-3">
+        <button
+          type="button"
+          onClick={onToggleMobileSidebar}
+          className="md:hidden p-1.5 -ml-1 text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white rounded-[6px] hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+          title="Toggle Navigation Menu"
+          aria-label="Toggle Navigation Menu"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
 
+        <div className="flex md:hidden items-center gap-2">
+          <SlipwayLogo size="sm" />
+          <span className="font-bold text-sm tracking-tight text-zinc-900 dark:text-white">
+            PortalOps
+          </span>
+        </div>
       </div>
 
       {/* Right: Search Bar & Utilities */}
-      <div className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2 sm:gap-2.5">
         {/* Global Command Palette / Search Input */}
         <div
           onClick={onOpenCommandPalette}
-          className="relative flex items-center w-[220px] sm:w-[280px] cursor-pointer group"
+          className="relative flex items-center w-[140px] sm:w-[220px] md:w-[280px] cursor-pointer group"
           title="Open Command Palette (⌘K or Ctrl+K)"
         >
           <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 pointer-events-none group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors" />
@@ -24,10 +40,10 @@ export function DashboardTopBar({ onOpenCommandPalette }) {
             type="text"
             readOnly
             onClick={onOpenCommandPalette}
-            placeholder="Search projects, commits..."
-            className="w-full h-[32px] pl-8 pr-11 bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-[5px] text-[12px] text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 outline-none group-hover:border-zinc-300 dark:group-hover:border-zinc-700 group-hover:bg-white dark:group-hover:bg-zinc-900 cursor-pointer transition-all"
+            placeholder="Search projects..."
+            className="w-full h-[32px] pl-8 pr-8 sm:pr-11 bg-zinc-50 dark:bg-zinc-900/80 border border-zinc-200 dark:border-zinc-800 rounded-[5px] text-[12px] text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 outline-none group-hover:border-zinc-300 dark:group-hover:border-zinc-700 group-hover:bg-white dark:group-hover:bg-zinc-900 cursor-pointer transition-all"
           />
-          <div className="absolute right-1.5 flex items-center pointer-events-none">
+          <div className="absolute right-1.5 hidden sm:flex items-center pointer-events-none">
             <kbd className="text-[10px] font-mono font-medium bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-500 dark:text-zinc-400 px-1.5 py-0.2 rounded shadow-2xs">
               ⌘K
             </kbd>
@@ -59,7 +75,7 @@ export function DashboardTopBar({ onOpenCommandPalette }) {
         <button
           type="button"
           onClick={onOpenCommandPalette}
-          className="w-7.5 h-7.5 rounded-[5px] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center transition-colors cursor-pointer"
+          className="w-7.5 h-7.5 rounded-[5px] text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 flex items-center justify-center transition-colors cursor-pointer hidden xs:flex"
           title="Commands & Documentation"
         >
           <HelpCircle className="w-4 h-4" />

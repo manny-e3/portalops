@@ -3,10 +3,10 @@ import { SlipwayLogo } from './SlipwayLogo'
 
 export function PublicFooter() {
   return (
-    <footer className="mt-auto py-14 px-6 md:px-12 border-t border-white/10 select-none text-[12.5px] bg-[#03080A] text-zinc-500">
-      <div className="max-w-[1240px] mx-auto grid grid-cols-2 md:grid-cols-5 gap-8 mb-10 text-left">
+    <footer className="mt-auto py-12 sm:py-14 px-4 sm:px-6 md:px-12 border-t border-white/10 select-none text-[12.5px] bg-[#03080A] text-zinc-500">
+      <div className="max-w-[1240px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10 text-left">
         {/* Col 1: Brand Info */}
-        <div className="col-span-2">
+        <div className="sm:col-span-2">
           <div className="flex items-center gap-2.5">
             <SlipwayLogo size="sm" />
             <span className="font-bold text-[15px] text-white">
@@ -54,14 +54,14 @@ export function PublicFooter() {
       </div>
 
       {/* Footer Bottom Bar */}
-      <div className="max-w-[1240px] mx-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px]">
+      <div className="max-w-[1240px] mx-auto pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-center sm:text-left">
         <div>
           &copy; {new Date().getFullYear()} PortalOps Control Plane. All rights reserved.
         </div>
-        <div className="flex items-center gap-4 text-zinc-400">
-          <span>BYOS Cloud Architecture</span>
+        <div className="flex flex-wrap items-center justify-center sm:justify-end gap-x-3 gap-y-1 text-zinc-400">
+          <span>BYOS Architecture</span>
           <span>•</span>
-          <span>Zero Root Key Storage</span>
+          <span>Zero Root Storage</span>
           <span>•</span>
           <span>AES-256-GCM Encrypted</span>
         </div>

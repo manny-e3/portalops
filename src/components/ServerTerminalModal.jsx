@@ -228,27 +228,27 @@ export function ServerTerminalModal({
         }`}
       >
         {/* Terminal Header */}
-        <div className="h-[46px] px-4 bg-[#17202A] border-b border-[#24313E] flex items-center justify-between text-white select-none">
-          <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded-[4px] bg-[#005459] text-white flex items-center justify-center">
+        <div className="h-[46px] px-3 sm:px-4 bg-[#17202A] border-b border-[#24313E] flex items-center justify-between text-white select-none gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 truncate min-w-0">
+            <div className="w-6 h-6 rounded-[4px] bg-[#005459] text-white flex items-center justify-center shrink-0">
               <Terminal className="w-3.5 h-3.5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-semibold text-[13px] text-white tracking-tight">
+            <div className="truncate">
+              <div className="flex items-center gap-2 truncate">
+                <span className="font-semibold text-[13px] text-white tracking-tight truncate">
                   {server.name}
                 </span>
-                <span className="px-1.5 py-0.2 rounded-[3px] bg-[#24313E] text-[#85d3da] font-mono text-[10px] font-bold">
+                <span className="px-1.5 py-0.2 rounded-[3px] bg-[#24313E] text-[#85d3da] font-mono text-[10px] font-bold shrink-0">
                   {isWin ? 'WINDOWS · WINRM' : 'LINUX · SSH'}
                 </span>
-                <span className="text-[11px] font-mono text-[#8F9CA7]">
+                <span className="text-[11px] font-mono text-[#8F9CA7] hidden sm:inline truncate">
                   {server.address}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
             <button
               type="button"
               onClick={handleCopyAll}
@@ -285,7 +285,7 @@ export function ServerTerminalModal({
         </div>
 
         {/* Quick Diagnostic Shortcuts Bar */}
-        <div className="px-4 py-2 bg-[#121921] border-b border-[#24313E] flex items-center gap-1.5 overflow-x-auto text-[11px] font-mono select-none">
+        <div className="px-3 sm:px-4 py-2 bg-[#121921] border-b border-[#24313E] flex items-center gap-1.5 overflow-x-auto scrollbar-none text-[11px] font-mono select-none">
           <span className="text-[#8F9CA7] text-[10px] uppercase font-bold mr-1 shrink-0">
             QUICK RUN:
           </span>
@@ -294,7 +294,7 @@ export function ServerTerminalModal({
               key={sc.label}
               type="button"
               onClick={() => runCommand(sc.cmd)}
-              className="px-2 py-0.5 rounded-[4px] bg-[#1E293B] hover:bg-[#005459] text-[#CDD4D0] hover:text-white border border-[#24313E] transition-all cursor-pointer whitespace-nowrap"
+              className="px-2 py-0.5 rounded-[4px] bg-[#1E293B] hover:bg-[#005459] text-[#CDD4D0] hover:text-white border border-[#24313E] transition-all cursor-pointer whitespace-nowrap shrink-0"
             >
               {sc.label}
             </button>
@@ -362,16 +362,16 @@ export function ServerTerminalModal({
         </div>
 
         {/* Terminal Footer */}
-        <div className="h-[30px] px-4 bg-[#17202A] border-t border-[#24313E] flex items-center justify-between text-[11px] font-mono text-[#8F9CA7] select-none">
+        <div className="h-[30px] px-3 sm:px-4 bg-[#17202A] border-t border-[#24313E] flex items-center justify-between text-[11px] font-mono text-[#8F9CA7] select-none">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5 text-[#2E8B57]">
               <span className="w-1.5 h-1.5 rounded-full bg-[#2E8B57] animate-pulse" />
               Connected (0ms)
             </span>
-            <span>Encoding: UTF-8</span>
+            <span className="hidden sm:inline">Encoding: UTF-8</span>
           </div>
           <div>
-            <span>Press Enter to execute · Up/Down for history</span>
+            <span className="hidden sm:inline">Press Enter to execute · Up/Down for history</span>
           </div>
         </div>
       </div>

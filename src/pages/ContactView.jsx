@@ -95,13 +95,13 @@ export function ContactView() {
       <PublicNav />
 
       {/* Header */}
-      <section className="pt-16 pb-12 px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
+      <section className="pt-16 pb-12 px-4 sm:px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-teal-300 mb-6">
           <LifeBuoy className="w-3.5 h-3.5 text-[#00DF8F]" />
           <span>Support &amp; Inquiries</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white max-w-3xl mx-auto">
+        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white max-w-3xl mx-auto">
           We're here to help you ship.
         </h1>
 
@@ -111,11 +111,11 @@ export function ContactView() {
       </section>
 
       {/* Content Form & Channels Grid */}
-      <section className="py-8 pb-24 px-6 max-w-[1240px] mx-auto w-full">
+      <section className="py-8 pb-24 px-4 sm:px-6 max-w-[1240px] mx-auto w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
           {/* Left Column: Form */}
-          <div className="lg:col-span-7 bg-[#081419] border border-white/10 rounded-3xl p-8 sm:p-10 text-left">
+          <div className="lg:col-span-7 bg-[#081419] border border-white/10 rounded-3xl p-4 sm:p-8 sm:p-10 text-left">
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-xl font-bold text-white">Send us a message</h2>
 

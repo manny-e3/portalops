@@ -192,11 +192,11 @@ export function RecentDeploymentsTable({
           <div className="h-4 w-px bg-[#CDD4D0] hidden sm:block" />
 
           {/* Status Tabs */}
-          <div className="flex items-center gap-1 bg-[#F4F6F5] p-0.5 rounded-[6px] border border-[#CDD4D0]/80">
+          <div className="flex items-center gap-1 bg-[#F4F6F5] p-0.5 rounded-[6px] border border-[#CDD4D0]/80 overflow-x-auto scrollbar-none max-w-full">
             <button
               type="button"
               onClick={() => handleFilterSelect('ALL')}
-              className={`px-2.5 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer ${
+              className={`shrink-0 whitespace-nowrap px-2.5 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer ${
                 currentFilter === 'ALL'
                   ? 'bg-white text-[#101d26] font-semibold shadow-2xs'
                   : 'text-[#565f6b] hover:text-[#101d26]'
@@ -207,7 +207,7 @@ export function RecentDeploymentsTable({
             <button
               type="button"
               onClick={() => handleFilterSelect('SUCCESS')}
-              className={`px-2 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer flex items-center gap-1 ${
+              className={`shrink-0 whitespace-nowrap px-2 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer flex items-center gap-1 ${
                 currentFilter === 'SUCCESS'
                   ? 'bg-white text-emerald-700 font-semibold shadow-2xs'
                   : 'text-[#565f6b] hover:text-emerald-700'
@@ -219,7 +219,7 @@ export function RecentDeploymentsTable({
             <button
               type="button"
               onClick={() => handleFilterSelect('FAILED')}
-              className={`px-2 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer flex items-center gap-1 ${
+              className={`shrink-0 whitespace-nowrap px-2 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer flex items-center gap-1 ${
                 currentFilter === 'FAILED'
                   ? 'bg-white text-rose-700 font-semibold shadow-2xs'
                   : 'text-[#565f6b] hover:text-rose-700'
@@ -232,7 +232,7 @@ export function RecentDeploymentsTable({
               <button
                 type="button"
                 onClick={() => handleFilterSelect('RUNNING')}
-                className={`px-2 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer flex items-center gap-1 ${
+                className={`shrink-0 whitespace-nowrap px-2 py-1 rounded-[5px] text-[11px] font-medium font-sans transition-colors cursor-pointer flex items-center gap-1 ${
                   currentFilter === 'RUNNING'
                     ? 'bg-white text-amber-700 font-semibold shadow-2xs'
                     : 'text-[#565f6b] hover:text-amber-700'
@@ -262,7 +262,7 @@ export function RecentDeploymentsTable({
 
       {/* Deployments Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse select-none">
+        <table className="w-full text-left border-collapse select-none min-w-[680px]">
           <thead>
             {compact ? (
               <tr className="h-[36px] bg-[#F4F6F5] border-b border-[#CDD4D0] text-[#565f6b] font-semibold text-[11px] font-mono tracking-wider uppercase">

@@ -300,11 +300,11 @@ export function TeamDetailView() {
   const assignedServersList = availableServers.filter((s) => teamServerIds.includes(s.id))
 
   return (
-    <div className="flex flex-col md:flex-row min-h-[calc(100vh-120px)] -m-6 bg-white dark:bg-[#070D14]">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-120px)] -m-3 sm:-m-5 md:-m-8 bg-white dark:bg-[#070D14]">
       {/* ============================================================== */}
       {/* SECONDARY SUB-SIDEBAR (Overview, Members, Logs, Settings) */}
       {/* ============================================================== */}
-      <aside className="w-full md:w-[230px] shrink-0 border-r border-zinc-200 dark:border-zinc-800 bg-[#FAFBFB] dark:bg-[#0A1017] p-4 space-y-4 select-none">
+      <aside className="w-full md:w-[230px] shrink-0 border-b md:border-b-0 md:border-r border-zinc-200 dark:border-zinc-800 bg-[#FAFBFB] dark:bg-[#0A1017] p-3 sm:p-4 space-y-3 md:space-y-4 select-none">
         {/* Team Name Header */}
         <div className="px-3 py-1">
           <div className="text-sm font-bold text-zinc-900 dark:text-white truncate">
@@ -316,11 +316,11 @@ export function TeamDetailView() {
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="space-y-1">
+        <nav className="flex md:flex-col overflow-x-auto gap-1 md:gap-0 md:space-y-1 scrollbar-none pb-1 md:pb-0">
           <button
             type="button"
             onClick={() => handleTabChange('overview')}
-            className={`w-full px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
+            className={`w-auto md:w-full shrink-0 whitespace-nowrap px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
               activeTab === 'overview'
                 ? 'bg-[#EBF3FC] dark:bg-[#005459]/20 text-[#005459] dark:text-[#00DF8F] font-bold shadow-2xs'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
@@ -333,7 +333,7 @@ export function TeamDetailView() {
           <button
             type="button"
             onClick={() => handleTabChange('members')}
-            className={`w-full px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
+            className={`w-auto md:w-full shrink-0 whitespace-nowrap px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
               activeTab === 'members'
                 ? 'bg-[#EBF3FC] dark:bg-[#005459]/20 text-[#005459] dark:text-[#00DF8F] font-bold shadow-2xs'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
@@ -346,7 +346,7 @@ export function TeamDetailView() {
           <button
             type="button"
             onClick={() => handleTabChange('logs')}
-            className={`w-full px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
+            className={`w-auto md:w-full shrink-0 whitespace-nowrap px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
               activeTab === 'logs'
                 ? 'bg-[#EBF3FC] dark:bg-[#005459]/20 text-[#005459] dark:text-[#00DF8F] font-bold shadow-2xs'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
@@ -359,7 +359,7 @@ export function TeamDetailView() {
           <button
             type="button"
             onClick={() => handleTabChange('settings')}
-            className={`w-full px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
+            className={`w-auto md:w-full shrink-0 whitespace-nowrap px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-2.5 transition-all text-left cursor-pointer ${
               activeTab === 'settings'
                 ? 'bg-[#EBF3FC] dark:bg-[#005459]/20 text-[#005459] dark:text-[#00DF8F] font-bold shadow-2xs'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50'
@@ -374,7 +374,7 @@ export function TeamDetailView() {
       {/* ============================================================== */}
       {/* MAIN CONTENT AREA */}
       {/* ============================================================== */}
-      <main className="flex-1 p-6 md:p-8 space-y-6 overflow-y-auto">
+      <main className="flex-1 p-3 sm:p-5 md:p-8 space-y-6 overflow-y-auto">
         {/* ============================================================ */}
         {/* TAB 1: OVERVIEW (Image 1) */}
         {/* ============================================================ */}
@@ -407,7 +407,7 @@ export function TeamDetailView() {
             </div>
 
             {/* Select server to add Card (Matches Image 1) */}
-            <div className="bg-white dark:bg-[#0B131D] border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-xs space-y-4">
+            <div className="bg-white dark:bg-[#0B131D] border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 sm:p-6 shadow-xs space-y-4">
               <div>
                 <label className="block text-xs font-bold text-zinc-800 dark:text-zinc-200 mb-2">
                   Select server to add
@@ -577,7 +577,7 @@ export function TeamDetailView() {
             </div>
 
             {/* Settings Card (Matches Images 2 & 3) */}
-            <div className="bg-white dark:bg-[#0B131D] border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 sm:p-8 shadow-xs space-y-8">
+            <div className="bg-white dark:bg-[#0B131D] border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 sm:p-8 shadow-xs space-y-8">
               {/* Top Section: Details & Title/Description */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                 {/* Left Description Column */}

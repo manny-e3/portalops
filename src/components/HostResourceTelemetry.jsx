@@ -326,8 +326,8 @@ export function HostResourceTelemetry({
   // Embedded card rendering
   return (
     <div className="bg-white border border-[#CDD4D0] rounded-[8px] p-4 shadow-xs space-y-3">
-      <div className="flex items-center justify-between pb-2 border-b border-[#E2E7E4]">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-[#E2E7E4] gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Cpu className="w-4 h-4 text-[#005459]" />
           <span className="font-bold text-[13px] text-[#101d26]">
             Host Infrastructure &amp; Container Telemetry
@@ -341,7 +341,7 @@ export function HostResourceTelemetry({
           type="button"
           onClick={fetchTelemetry}
           disabled={loading}
-          className="text-[11px] font-mono text-[#005459] hover:underline flex items-center gap-1 cursor-pointer"
+          className="text-[11px] font-mono text-[#005459] hover:underline flex items-center gap-1 cursor-pointer self-end sm:self-auto"
         >
           <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
           <span>Refresh</span>

@@ -165,31 +165,28 @@ export function ProjectsView({ onNewProject }) {
         </div>
 
         {/* Right Toolbar */}
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full md:w-auto">
           {/* Search projects input with ⌘K */}
-          <div className="relative flex items-center w-[260px] sm:w-[290px]">
+          <div className="relative flex items-center flex-1 sm:flex-initial w-full sm:w-[290px]">
             <Search className="w-3.5 h-3.5 text-[#565f6b] absolute left-3 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search projects by name, repo, or branch.."
+              placeholder="Search projects..."
               className="w-full h-[36px] pl-8 pr-11 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[13px] text-[#101d26] placeholder-[#565f6b] outline-none focus:border-[#005459] focus:ring-2 focus:ring-[#005459]/15 shadow-2xs"
             />
-            <span className="absolute right-2 px-1.5 py-0.5 rounded-[4px] bg-[#F4F6F5] border border-[#CDD4D0] text-[10px] font-mono text-[#565f6b] pointer-events-none">
+            <span className="absolute right-2 px-1.5 py-0.5 rounded-[4px] bg-[#F4F6F5] border border-[#CDD4D0] text-[10px] font-mono text-[#565f6b] pointer-events-none hidden xs:inline">
               ⌘K
             </span>
           </div>
-
-
-
 
           {/* + New project Button */}
           {canManage && (
             <button
               type="button"
               onClick={() => navigate('/projects/new')}
-              className="h-[36px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer shrink-0"
+              className="h-[36px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer shrink-0 w-full sm:w-auto"
             >
               <Plus className="w-4 h-4 stroke-[2.5]" />
               <span>New project</span>
@@ -219,7 +216,7 @@ export function ProjectsView({ onNewProject }) {
               : 'Supports GitHub, GitLab, and self-hosted Git repositories over SSH/HTTPS. Setup takes less than two minutes.'}
           </p>
 
-          <div className="flex items-center gap-3 mt-5">
+          <div className="flex flex-wrap items-center justify-center gap-3 mt-5">
             {canManage && (
               <button
                 type="button"
@@ -242,7 +239,7 @@ export function ProjectsView({ onNewProject }) {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredProjects.map((p) => (
             <div
               key={p.id}

@@ -385,11 +385,11 @@ jobs:
     <div className="space-y-6">
       {/* 1. Header */}
       <div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="text-[11px] font-mono uppercase tracking-wider text-[#565f6b] font-semibold">
             Platform <span className="text-[#8F9CA7]">/</span> Configuration <span className="text-[#8F9CA7]">/</span> Settings
           </div>
-          <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] bg-[#E2F0FD] border border-[#BEDDF7] text-[#005459] font-mono text-[11px] font-semibold">
+          <span className="self-start sm:self-auto flex items-center gap-1.5 px-2 py-0.5 rounded-[4px] bg-[#E2F0FD] border border-[#BEDDF7] text-[#005459] font-mono text-[11px] font-semibold">
             <span className="w-1.5 h-1.5 rounded-full bg-[#005459]" />
             WH-SUITE: ACTIVE (v2.1.8)
           </span>
@@ -408,7 +408,7 @@ jobs:
         {/* Left Sub-nav & Status Panel (3 cols) */}
         <div className="lg:col-span-3 space-y-4">
           {/* Subnav links */}
-          <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] p-2 shadow-xs space-y-1">
+          <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] p-2 shadow-xs flex lg:flex-col overflow-x-auto scrollbar-none gap-1 lg:space-y-1">
             {[
               { id: 'General', label: 'General', icon: Sliders, badge: 'Core' },
               { id: 'Webhooks', label: 'Webhooks', icon: Webhook, badge: 'ACTIVE', badgeTeal: true },
@@ -424,7 +424,7 @@ jobs:
                   key={item.id}
                   type="button"
                   onClick={() => setActiveSubTab(item.id)}
-                  className={`w-full h-[38px] px-3 rounded-[6px] text-[13px] font-medium flex items-center justify-between transition-colors cursor-pointer ${
+                  className={`whitespace-nowrap shrink-0 lg:w-full h-[38px] px-3 rounded-[6px] text-[13px] font-medium flex items-center justify-between gap-3 transition-colors cursor-pointer ${
                     isActive
                       ? 'bg-[#E2F0FD] text-[#005459] font-semibold border border-[#BEDDF7]'
                       : 'text-[#565f6b] hover:bg-[#F4F6F5] hover:text-[#101d26]'

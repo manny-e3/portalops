@@ -214,7 +214,7 @@ export function CommandPaletteModal({ isOpen, onClose }) {
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-zinc-700">
+                    <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-zinc-700">
                       {item.category}
                     </span>
                     {isSelected && (
@@ -228,13 +228,13 @@ export function CommandPaletteModal({ isOpen, onClose }) {
         </div>
 
         {/* Keyboard Helper Footer */}
-        <div className="h-[34px] px-4 bg-zinc-50 dark:bg-[#0A0F17] border-t border-zinc-200 dark:border-[#1A222D] flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
-          <div className="flex items-center gap-3">
+        <div className="h-[34px] px-3 sm:px-4 bg-zinc-50 dark:bg-[#0A0F17] border-t border-zinc-200 dark:border-[#1A222D] flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
+          <div className="flex items-center gap-2 sm:gap-3">
             <span><strong className="text-zinc-700 dark:text-zinc-300">↑↓</strong> Navigate</span>
             <span><strong className="text-zinc-700 dark:text-zinc-300">↵</strong> Select</span>
             <span><strong className="text-zinc-700 dark:text-zinc-300">ESC</strong> Close</span>
           </div>
-          <span className="text-zinc-500 dark:text-zinc-500 font-mono text-[10px]">COMMAND CENTER</span>
+          <span className="text-zinc-500 dark:text-zinc-500 font-mono text-[10px] hidden sm:inline">COMMAND CENTER</span>
         </div>
       </div>
     </div>

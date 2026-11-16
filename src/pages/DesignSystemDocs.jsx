@@ -147,7 +147,7 @@ export function DesignSystemDocs() {
                 {group.colors.map((c, cIdx) => (
                   <div
                     key={cIdx}
-                    className="p-3 flex items-center justify-between hover:bg-[#F9FAF9] transition-colors"
+                    className="p-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 hover:bg-[#F9FAF9] transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <div

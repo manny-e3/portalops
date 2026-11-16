@@ -257,7 +257,7 @@ export function ProfileView() {
       </div>
 
       {/* 2. Hero Profile Identity Card */}
-      <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-6 shadow-xs">
+      <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-4 sm:p-6 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
             <div className="relative">
@@ -323,7 +323,7 @@ export function ProfileView() {
       </div>
 
       {/* 3. Navigation Sub-Tabs */}
-      <div className="flex items-center gap-1 border-b border-zinc-200 dark:border-zinc-800 pb-px">
+      <div className="flex items-center gap-1 border-b border-zinc-200 dark:border-zinc-800 pb-px overflow-x-auto scrollbar-none">
         {[
           { id: 'details', label: 'General Details', icon: User },
           { id: 'security', label: 'Security & Password', icon: KeyRound },
@@ -337,7 +337,7 @@ export function ProfileView() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`h-[38px] px-3.5 rounded-t-[6px] text-[13px] font-medium flex items-center gap-2 transition-colors cursor-pointer relative ${isActive
+              className={`h-[38px] px-3.5 rounded-t-[6px] text-[13px] font-medium flex items-center gap-2 transition-colors cursor-pointer relative shrink-0 whitespace-nowrap ${isActive
                 ? 'bg-white dark:bg-[#0D1219] text-[#005459] dark:text-teal-300 font-bold border-t border-x border-zinc-200 dark:border-zinc-800 shadow-2xs'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800/40'
                 }`}
@@ -354,7 +354,7 @@ export function ProfileView() {
 
       {/* 4. Tab 1: General Details Form */}
       {activeTab === 'details' && (
-        <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-6 shadow-xs space-y-6">
+        <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-4 sm:p-6 shadow-xs space-y-6">
           <div>
             <h3 className="text-[16px] font-bold text-zinc-900 dark:text-white">
               Personal Information
@@ -454,7 +454,7 @@ export function ProfileView() {
       {activeTab === 'security' && (
         <div className="space-y-6">
           {/* Password Change Card */}
-          <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-6 shadow-xs space-y-5">
+          <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-4 sm:p-6 shadow-xs space-y-5">
             <div>
               <h3 className="text-[16px] font-bold text-zinc-900 dark:text-white">
                 Change Password
@@ -577,7 +577,7 @@ export function ProfileView() {
 
       {/* 6. Tab 3: Permissions Matrix */}
       {activeTab === 'permissions' && (
-        <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-6 shadow-xs space-y-5">
+        <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-4 sm:p-6 shadow-xs space-y-5">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-[16px] font-bold text-zinc-900 dark:text-white">
@@ -628,7 +628,7 @@ export function ProfileView() {
 
       {/* 7. Tab 4: Preferences */}
       {activeTab === 'preferences' && (
-        <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-6 shadow-xs space-y-6">
+        <div className="bg-white dark:bg-[#0D1219] border border-zinc-200 dark:border-zinc-800 rounded-[8px] p-4 sm:p-6 shadow-xs space-y-6">
           <div>
             <h3 className="text-[16px] font-bold text-zinc-900 dark:text-white">
               Interface &amp; Notification Preferences

@@ -233,11 +233,11 @@ export function CreateProjectView() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => navigate('/projects')}
-              className="h-[34px] px-3.5 rounded-[6px] bg-[#FFFFFF] border border-[#CDD4D0] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="flex-1 sm:flex-initial justify-center h-[34px] px-3.5 rounded-[6px] bg-[#FFFFFF] border border-[#CDD4D0] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Cancel</span>
@@ -246,7 +246,7 @@ export function CreateProjectView() {
               type="button"
               onClick={handleCreateProject}
               disabled={isSubmitting}
-              className="h-[34px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-50"
+              className="flex-1 sm:flex-initial justify-center h-[34px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
@@ -269,9 +269,9 @@ export function CreateProjectView() {
         {/* Left Column: Project Form (8 cols) */}
         <div className="lg:col-span-8 space-y-6">
           <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] overflow-hidden shadow-xs">
-            <div className="px-6 py-4 border-b border-[#E2E7E4] flex items-center justify-between bg-[#FAFBFB]">
+            <div className="px-4 sm:px-6 py-4 border-b border-[#E2E7E4] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#FAFBFB]">
               <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-[5px] bg-[#E2F0FD] text-[#005459] flex items-center justify-center">
+                <div className="w-7 h-7 rounded-[5px] bg-[#E2F0FD] text-[#005459] flex items-center justify-center shrink-0">
                   <FolderGit2 className="w-4 h-4" />
                 </div>
                 <div>
@@ -284,7 +284,7 @@ export function CreateProjectView() {
                 </div>
               </div>
               <span
-                className={`px-2 py-0.5 rounded-[4px] font-mono text-[10px] font-semibold border ${isFormValid
+                className={`self-start sm:self-auto px-2 py-0.5 rounded-[4px] font-mono text-[10px] font-semibold border ${isFormValid
                     ? 'bg-[#EAF5EE] text-[#2E8B57] border-[#B8E0C5]'
                     : 'bg-[#F4F6F5] text-[#565f6b] border-[#CDD4D0]'
                   }`}
@@ -293,7 +293,7 @@ export function CreateProjectView() {
               </span>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-4 sm:p-6 space-y-6">
               {/* Top Submit Error Banner */}
               {submitError && (
                 <div className="p-3.5 rounded-[6px] bg-[#FAEBE9] border border-[#F1B5AC] text-[#C2412D] text-[13px] flex items-center gap-2 animate-in fade-in">
@@ -563,11 +563,11 @@ export function CreateProjectView() {
             </div>
 
             {/* Form Footer */}
-            <div className="px-6 py-4 bg-[#FAFBFB] border-t border-[#E2E7E4] flex items-center justify-between">
+            <div className="px-4 sm:px-6 py-4 bg-[#FAFBFB] border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={() => navigate('/projects')}
-                className="h-[36px] px-3.5 rounded-[6px] bg-[#FFFFFF] border border-[#CDD4D0] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="justify-center h-[36px] px-3.5 rounded-[6px] bg-[#FFFFFF] border border-[#CDD4D0] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Cancel</span>
@@ -576,7 +576,7 @@ export function CreateProjectView() {
                 type="button"
                 onClick={handleCreateProject}
                 disabled={isSubmitting}
-                className="h-[36px] px-5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[12px] font-medium flex items-center gap-2 transition-colors shadow-xs cursor-pointer disabled:opacity-50"
+                className="justify-center h-[36px] px-5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[12px] font-medium flex items-center gap-2 transition-colors shadow-xs cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>

@@ -239,12 +239,12 @@ export function ChatOpsSimulatorModal({
         </div>
 
         {/* Platform Selection Ribbon */}
-        <div className="px-5 py-2.5 border-b border-[#E2E7E4] bg-[#FFFFFF] flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="px-4 sm:px-5 py-2.5 border-b border-[#E2E7E4] bg-[#FFFFFF] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
             <button
               type="button"
               onClick={() => setActivePlatform('slack')}
-              className={`h-[28px] px-3 rounded-[4px] text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
+              className={`h-[28px] px-3 rounded-[4px] text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
                 activePlatform === 'slack'
                   ? 'bg-[#4A154B] text-white'
                   : 'bg-[#F4F6F5] text-[#565f6b] hover:bg-[#E2E7E4]'
@@ -256,7 +256,7 @@ export function ChatOpsSimulatorModal({
             <button
               type="button"
               onClick={() => setActivePlatform('teams')}
-              className={`h-[28px] px-3 rounded-[4px] text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
+              className={`h-[28px] px-3 rounded-[4px] text-[11px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 ${
                 activePlatform === 'teams'
                   ? 'bg-[#5059C9] text-white'
                   : 'bg-[#F4F6F5] text-[#565f6b] hover:bg-[#E2E7E4]'
@@ -269,7 +269,7 @@ export function ChatOpsSimulatorModal({
           <button
             type="button"
             onClick={() => setShowJson(!showJson)}
-            className="text-[11px] text-[#005459] font-mono flex items-center gap-1 hover:underline cursor-pointer"
+            className="text-[11px] text-[#005459] font-mono flex items-center gap-1 hover:underline cursor-pointer self-end sm:self-center"
           >
             <Code className="w-3.5 h-3.5" />
             <span>{showJson ? 'View Visual Card' : 'View Raw JSON'}</span>
@@ -458,11 +458,11 @@ export function ChatOpsSimulatorModal({
         </div>
 
         {/* Footer Actions */}
-        <div className="h-[52px] px-5 border-t border-[#E2E7E4] flex items-center justify-between bg-[#FAFBFB] shrink-0">
+        <div className="min-h-[52px] h-auto py-2.5 px-4 sm:px-5 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2 bg-[#FAFBFB] shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="h-[34px] px-3.5 rounded-[4px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium cursor-pointer"
+            className="h-[34px] px-3.5 rounded-[4px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[#101d26] text-[12px] font-medium cursor-pointer w-full sm:w-auto"
           >
             Close
           </button>
@@ -471,7 +471,7 @@ export function ChatOpsSimulatorModal({
             type="button"
             disabled={isSendingRealWebhook || !webhookUrl}
             onClick={handleSendRealWebhook}
-            className="h-[34px] px-4 rounded-[4px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs disabled:opacity-50"
+            className="h-[34px] px-4 rounded-[4px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-xs disabled:opacity-50 w-full sm:w-auto"
             title={!webhookUrl ? 'Configure a Webhook URL in Settings first' : 'Send actual HTTP payload'}
           >
             {isSendingRealWebhook ? (

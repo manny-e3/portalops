@@ -231,13 +231,13 @@ export function AuditLogView() {
       {/* 1. Header & Live Stream Bar */}
       <div>
         {/* Breadcrumb */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="text-[11px] font-mono uppercase tracking-wider text-[#565f6b] font-semibold">
             Platform <span className="text-[#8F9CA7]">&gt;</span> Compliance <span className="text-[#8F9CA7]">&gt;</span> Audit Log
           </div>
 
           {/* Top-Right: Live Stream Toggle & Export Buttons */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             {/* Live Stream Switch */}
             <div className="flex items-center gap-2">
               <span className="flex items-center gap-1.5 font-mono text-[11px] font-semibold text-[#101d26]">
@@ -315,7 +315,7 @@ export function AuditLogView() {
         </div>
 
         {/* Title & Badges */}
-        <div className="flex items-center gap-3 mt-1.5">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-2">
           <h1 className="text-[26px] font-bold text-[#101d26] tracking-tight leading-tight">
             Audit Log
           </h1>
@@ -329,7 +329,7 @@ export function AuditLogView() {
         </div>
 
         {/* 3 Metrics row */}
-        <div className="flex items-center gap-6 mt-3 text-[12px] font-mono">
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-3 text-[12px] font-mono">
           <div>
             <span className="text-[#565f6b] uppercase text-[10px] tracking-wider">
               TOTAL RECORDED
@@ -358,9 +358,9 @@ export function AuditLogView() {
 
       {/* 2. Filter Bar */}
       <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] p-3 shadow-xs space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2">
           {/* Search */}
-          <div className="relative flex-1 min-w-[220px]">
+          <div className="relative flex-1 min-w-[200px]">
             <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#565f6b]" />
             <input
               type="text"
@@ -374,48 +374,50 @@ export function AuditLogView() {
             </span>
           </div>
 
-          {/* User dropdown */}
-          <select
-            value={userFilter}
-            onChange={(e) => setUserFilter(e.target.value)}
-            className="h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
-          >
-            {userOptions.map((u) => (
-              <option key={u} value={u}>{u === 'All users' ? 'User: All users' : u}</option>
-            ))}
-          </select>
-
-          {/* Action dropdown */}
-          <select
-            value={actionFilter}
-            onChange={(e) => setActionFilter(e.target.value)}
-            className="h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
-          >
-            <option value="All actions">Action: All actions</option>
-            <option value="deployment">Deployments</option>
-            <option value="access">Access &amp; Roles</option>
-            <option value="infrastructure">Infrastructure</option>
-            <option value="security">Security &amp; Keys</option>
-          </select>
-
-          {/* Time range */}
-          <div className="flex items-center gap-1.5 h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26]">
-            <Calendar className="w-3.5 h-3.5 text-[#565f6b]" />
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
+            {/* User dropdown */}
             <select
-              value={timeFilter}
-              onChange={(e) => setTimeFilter(e.target.value)}
-              className="bg-transparent outline-none cursor-pointer text-[12px]"
+              value={userFilter}
+              onChange={(e) => setUserFilter(e.target.value)}
+              className="flex-1 sm:flex-initial h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
             >
-              <option value="Last 7 days">Last 7 days</option>
-              <option value="Last 24 hours">Last 24 hours</option>
-              <option value="Last 30 days">Last 30 days</option>
-              <option value="Last 90 days">Last 90 days</option>
+              {userOptions.map((u) => (
+                <option key={u} value={u}>{u === 'All users' ? 'User: All users' : u}</option>
+              ))}
             </select>
+
+            {/* Action dropdown */}
+            <select
+              value={actionFilter}
+              onChange={(e) => setActionFilter(e.target.value)}
+              className="flex-1 sm:flex-initial h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
+            >
+              <option value="All actions">Action: All actions</option>
+              <option value="deployment">Deployments</option>
+              <option value="access">Access &amp; Roles</option>
+              <option value="infrastructure">Infrastructure</option>
+              <option value="security">Security &amp; Keys</option>
+            </select>
+
+            {/* Time range */}
+            <div className="flex-1 sm:flex-initial flex items-center gap-1.5 h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26]">
+              <Calendar className="w-3.5 h-3.5 text-[#565f6b]" />
+              <select
+                value={timeFilter}
+                onChange={(e) => setTimeFilter(e.target.value)}
+                className="w-full bg-transparent outline-none cursor-pointer text-[12px]"
+              >
+                <option value="Last 7 days">Last 7 days</option>
+                <option value="Last 24 hours">Last 24 hours</option>
+                <option value="Last 30 days">Last 30 days</option>
+                <option value="Last 90 days">Last 90 days</option>
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-1 pt-1 border-t border-[#F0F2F1]">
+        <div className="flex items-center gap-1 pt-1 border-t border-[#F0F2F1] overflow-x-auto scrollbar-none pb-1 sm:pb-0">
           {[
             { id: 'All', label: 'All', count: tabCounts.All },
             { id: 'Deployments', label: 'Deployments', count: tabCounts.Deployments },
@@ -427,7 +429,7 @@ export function AuditLogView() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`h-[28px] px-3 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer ${
+              className={`h-[28px] px-3 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer shrink-0 whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-[#005459] text-white font-semibold'
                   : 'bg-[#F4F6F5] hover:bg-[#EAEAEA] text-[#565f6b]'
@@ -439,11 +441,10 @@ export function AuditLogView() {
         </div>
       </div>
 
-
       {/* 3. Audit Log Timeline Table */}
       <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse min-w-[720px]">
             <thead>
               <tr className="border-b border-[#E2E7E4] bg-[#F4F6F5] text-[10px] font-mono font-semibold text-[#565f6b] uppercase tracking-wider">
                 <th className="py-2.5 px-5">TIMESTAMP</th>

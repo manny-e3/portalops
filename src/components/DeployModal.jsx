@@ -264,7 +264,7 @@ export function DeployModal({
             <label className="block text-[11px] font-mono uppercase font-semibold text-[#5E6B76] mb-1.5">
               ARTIFACT SOURCE
             </label>
-            <div className="grid grid-cols-2 gap-2 text-[12px]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[12px]">
               <button
                 type="button"
                 onClick={() => setSourceType('git')}
@@ -294,7 +294,7 @@ export function DeployModal({
 
           {sourceType === 'git' ? (
             /* Git Branch Configuration */
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[11px] font-mono uppercase font-semibold text-[#5E6B76] mb-1.5">
                   GIT BRANCH
@@ -363,7 +363,7 @@ export function DeployModal({
             <label className="block text-[11px] font-mono uppercase font-semibold text-[#5E6B76] mb-1.5">
               DEPLOYMENT STRATEGY
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {[
                 { id: 'canary', label: 'Canary Rollout', desc: '10% Traffic slice + verification' },
                 { id: 'rolling', label: 'Rolling Update', desc: 'Sequential container restart' },
@@ -417,8 +417,8 @@ export function DeployModal({
           </div>
 
           {/* Modal Actions */}
-          <div className="pt-3 border-t border-[#E2E7E4] flex items-center justify-between">
-            <span className="text-[11px] text-[#565f6b]">
+          <div className="pt-3 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
+            <span className="text-[11px] text-[#565f6b] text-center sm:text-left">
               {isLocked ? (
                 <span className="text-[#C2412D] font-medium">Locked by change freeze</span>
               ) : (
@@ -427,7 +427,7 @@ export function DeployModal({
             </span>
 
             <div className="flex items-center gap-2">
-              <Button variant="secondary" size="compact" onClick={onClose}>
+              <Button variant="secondary" size="compact" onClick={onClose} className="flex-1 sm:flex-initial">
                 Cancel
               </Button>
               <Button
@@ -436,6 +436,7 @@ export function DeployModal({
                 size="compact"
                 disabled={isLocked || (requiresBypassNote && !emergencyBypassNote.trim())}
                 icon={<Play className="w-3 h-3 fill-current" />}
+                className="flex-1 sm:flex-initial"
               >
                 {requiresBypassNote ? 'Confirm Emergency Release' : 'Confirm & Dispatch'}
               </Button>

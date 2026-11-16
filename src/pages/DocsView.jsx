@@ -106,30 +106,32 @@ export function DocsView() {
 
           {/* Left Sticky Sidebar Nav */}
           <aside className="lg:col-span-3">
-            <div className="sticky top-28 space-y-1 bg-[#081419] p-3 rounded-2xl border border-white/10 text-left">
-              <div className="px-3 py-2 text-[11px] font-mono uppercase tracking-wider text-zinc-500 font-bold">
+            <div className="sticky top-20 lg:top-28 bg-[#081419] p-2.5 sm:p-3 rounded-2xl border border-white/10 text-left">
+              <div className="px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider text-zinc-500 font-bold">
                 Table of Contents
               </div>
-              {docNavItems.map((item) => {
-                const Icon = item.icon
-                const isActive = activeDocSection === item.id
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => scrollTo(item.id)}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${isActive
-                      ? 'bg-[#005459]/40 text-[#00DF8F] font-semibold border border-teal-500/30'
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5'
-                      }`}
-                  >
-                    <Icon className="w-4 h-4 shrink-0" />
-                    <span className="truncate">{item.label}</span>
-                  </button>
-                )
-              })}
+              <div className="flex lg:flex-col overflow-x-auto scrollbar-none gap-1 py-1">
+                {docNavItems.map((item) => {
+                  const Icon = item.icon
+                  const isActive = activeDocSection === item.id
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => scrollTo(item.id)}
+                      className={`whitespace-nowrap shrink-0 lg:w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium transition-all text-left cursor-pointer ${isActive
+                        ? 'bg-[#005459]/40 text-[#00DF8F] font-semibold border border-teal-500/30'
+                        : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                        }`}
+                    >
+                      <Icon className="w-4 h-4 shrink-0" />
+                      <span>{item.label}</span>
+                    </button>
+                  )
+                })}
+              </div>
 
-              <div className="pt-4 mt-3 border-t border-white/10 px-3 pb-1">
+              <div className="hidden lg:block pt-4 mt-3 border-t border-white/10 px-3 pb-1">
                 <Link
                   to="/security"
                   className="text-xs text-teal-300 hover:text-white flex items-center justify-between group"

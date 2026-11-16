@@ -211,14 +211,14 @@ export function DeploymentsView() {
           />
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[12px] font-medium text-[#565f6b]">Status:</span>
+        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none w-full sm:w-auto pb-1 sm:pb-0">
+          <span className="text-[12px] font-medium text-[#565f6b] shrink-0">Status:</span>
           {['ALL', 'SUCCESS', 'RUNNING', 'FAILED', 'QUEUED'].map((st) => (
             <button
               key={st}
               type="button"
               onClick={() => setStatusFilter(st)}
-              className={`h-[28px] px-2.5 rounded-[4px] font-mono text-[11px] font-medium transition-colors cursor-pointer ${
+              className={`h-[28px] px-2.5 rounded-[4px] font-mono text-[11px] font-medium transition-colors cursor-pointer shrink-0 ${
                 statusFilter === st
                   ? 'bg-[#005459] text-white font-bold'
                   : 'bg-[#F4F6F5] hover:bg-[#EAEAEA] text-[#565f6b]'

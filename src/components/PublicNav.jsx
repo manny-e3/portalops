@@ -25,15 +25,14 @@ export function PublicNav() {
   }
 
   return (
-    <header className="h-[74px] px-6 md:px-12 backdrop-blur-md bg-[#061014]/95 border-b border-white/10 flex items-center justify-between sticky top-0 z-50 w-full select-none shadow-lg shadow-black/20">
+    <header className="h-[74px] px-4 sm:px-6 md:px-12 backdrop-blur-md bg-[#061014]/95 border-b border-white/10 flex items-center justify-between sticky top-0 z-50 w-full select-none shadow-lg shadow-black/20">
       {/* Brand Logo */}
-      <Link to="/" className="flex items-center gap-2.5 group">
+      <Link to="/" className="flex items-center gap-2 sm:gap-2.5 group">
         <SlipwayLogo size="md" />
         <div className="flex items-center gap-2">
-          <span className="font-bold text-lg tracking-tight text-white">
+          <span className="font-bold text-base sm:text-lg tracking-tight text-white">
             portalops<span className="text-[#00DF8F]">.online</span>
           </span>
-
         </div>
       </Link>
 
@@ -77,11 +76,11 @@ export function PublicNav() {
       </nav>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3">
         {isAuthenticated ? (
           <Link
             to="/dashboard"
-            className="h-9 px-4 rounded-lg text-xs font-bold bg-[#005459] hover:bg-[#004246] text-white inline-flex items-center gap-1.5 transition-all shadow-md shadow-teal-950/40"
+            className="h-9 px-3.5 sm:px-4 rounded-lg text-xs font-bold bg-[#005459] hover:bg-[#004246] text-white inline-flex items-center gap-1.5 transition-all shadow-md shadow-teal-950/40"
           >
             <span>Console</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -90,15 +89,15 @@ export function PublicNav() {
           <>
             <Link
               to="/login"
-              className="text-[13.5px] font-medium text-zinc-300 hover:text-white transition-colors px-2 py-1"
+              className="text-[13px] sm:text-[13.5px] font-medium text-zinc-300 hover:text-white transition-colors px-1.5 sm:px-2 py-1"
             >
               Log In
             </Link>
             <Link
               to="/register"
-              className="h-[38px] px-4 rounded-lg text-xs font-bold bg-[#00DF8F] hover:bg-[#00c57d] text-zinc-950 inline-flex items-center gap-1.5 transition-all shadow-md shadow-emerald-950/40"
+              className="hidden sm:inline-flex h-[38px] px-4 rounded-lg text-xs font-bold bg-[#00DF8F] hover:bg-[#00c57d] text-zinc-950 items-center gap-1.5 transition-all shadow-md shadow-emerald-950/40"
             >
-              <span>Get Started Free</span>
+              <span>Get Started</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </>
@@ -109,6 +108,7 @@ export function PublicNav() {
           type="button"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="lg:hidden w-8 h-8 rounded-lg border border-white/10 bg-white/5 flex items-center justify-center text-zinc-300 hover:text-white"
+          aria-label="Toggle Navigation Menu"
         >
           {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
         </button>
@@ -116,7 +116,7 @@ export function PublicNav() {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-[74px] left-0 w-full bg-[#061014] border-b border-white/10 p-6 space-y-4 shadow-2xl z-50">
+        <div className="lg:hidden absolute top-[74px] left-0 w-full bg-[#061014] border-b border-white/10 p-5 sm:p-6 space-y-4 shadow-2xl z-50 animate-in slide-in-from-top-2 duration-150">
           <nav className="flex flex-col space-y-3 text-sm font-medium text-zinc-300 text-left">
             <a
               href={getSectionHref('#how-it-works')}
@@ -165,6 +165,26 @@ export function PublicNav() {
               <LifeBuoy className="w-4 h-4 text-[#00DF8F]" />
               <span>Support &amp; Contact</span>
             </Link>
+
+            {!isAuthenticated && (
+              <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+                <Link
+                  to="/register"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="h-10 w-full rounded-lg text-xs font-bold bg-[#00DF8F] hover:bg-[#00c57d] text-zinc-950 flex items-center justify-center gap-2 transition-all shadow-md"
+                >
+                  <span>Get Started Free</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                <Link
+                  to="/login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="h-9 w-full rounded-lg text-xs font-medium text-zinc-300 hover:text-white flex items-center justify-center border border-white/10"
+                >
+                  Log In
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       )}

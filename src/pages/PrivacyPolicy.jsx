@@ -98,20 +98,20 @@ export function PrivacyPolicy() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Left Sticky Table of Contents */}
           <aside className="lg:col-span-4">
-            <div className="sticky top-28 p-5 rounded-2xl border border-white/10 bg-[#081419]/95 backdrop-blur-md shadow-2xl space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+            <div className="sticky top-20 lg:top-28 p-3 sm:p-5 rounded-2xl border border-white/10 bg-[#081419]/95 backdrop-blur-md shadow-2xl space-y-3 lg:space-y-4">
+              <div className="flex items-center justify-between pb-2 sm:pb-3 border-b border-white/10">
                 <span className="text-xs font-bold uppercase tracking-wider text-teal-300 font-mono">
                   [ PRIVACY INDEX ]
                 </span>
                 <span className="w-2 h-2 rounded-full bg-[#00DF8F] animate-pulse" />
               </div>
 
-              <nav className="space-y-1">
+              <nav className="flex lg:flex-col overflow-x-auto scrollbar-none gap-1 py-1">
                 {sections.map((s) => (
                   <button
                     key={s.id}
                     onClick={() => scrollTo(s.id)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer truncate ${
+                    className={`whitespace-nowrap shrink-0 lg:w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-colors cursor-pointer truncate ${
                       activeSection === s.id
                         ? 'bg-[#005459]/50 text-[#00DF8F] border border-teal-500/40 font-semibold shadow-xs'
                         : 'text-zinc-400 hover:text-white hover:bg-white/5'
@@ -122,7 +122,7 @@ export function PrivacyPolicy() {
                 ))}
               </nav>
 
-              <div className="pt-4 border-t border-white/10 text-xs text-zinc-400 space-y-2">
+              <div className="hidden lg:block pt-4 border-t border-white/10 text-xs text-zinc-400 space-y-2">
                 <div className="flex items-center gap-1.5 font-semibold text-white">
                   <Shield className="w-3.5 h-3.5 text-[#00DF8F]" />
                   <span>Zero Data Snooping</span>

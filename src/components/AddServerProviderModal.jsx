@@ -104,8 +104,8 @@ export function AddServerProviderModal({ isOpen, onClose, onSaveProvider }) {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-6 py-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between shrink-0">
-          <h2 className="text-base font-bold text-zinc-900 dark:text-white">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-zinc-100 dark:border-zinc-800 flex items-center justify-between shrink-0">
+          <h2 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-white">
             Add server provider
           </h2>
           <div className="flex items-center gap-1.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200">
@@ -129,7 +129,7 @@ export function AddServerProviderModal({ isOpen, onClose, onSaveProvider }) {
         </div>
 
         {/* Body Content */}
-        <form onSubmit={handleSave} className="p-6 overflow-y-auto space-y-5 flex-1">
+        <form onSubmit={handleSave} className="p-4 sm:p-6 overflow-y-auto space-y-5 flex-1">
           {/* Subtitle description */}
           <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
             You can add a server provider here to be able to create servers with, you can get the API keys at the provider. If you want to use your own vendor that's no problem, just click 'Custom VPS' and follow the steps.
@@ -249,7 +249,7 @@ export function AddServerProviderModal({ isOpen, onClose, onSaveProvider }) {
             <button
               type="submit"
               disabled={isSaving}
-              className="px-6 py-2 rounded-lg bg-[#005459] hover:bg-[#064347] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+              className="w-full sm:w-auto px-6 py-2 rounded-lg bg-[#005459] hover:bg-[#064347] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               {isSaving ? 'Saving...' : 'Save'}
             </button>

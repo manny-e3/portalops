@@ -68,7 +68,7 @@ export function AcceptInvite() {
 
   return (
     <div className="min-h-screen bg-[#EDF0EE] flex flex-col items-center justify-center p-4 selection:bg-[#005459]/15 selection:text-[#005459]">
-      <div className="w-full max-w-[460px] bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] p-8 shadow-[0_4px_24px_rgba(16,29,38,0.08)]">
+      <div className="w-full max-w-[460px] bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] p-5 sm:p-8 shadow-[0_4px_24px_rgba(16,29,38,0.08)]">
         <SlipwayLogo size="lg" />
 
         <div className="mt-5">

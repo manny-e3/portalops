@@ -189,7 +189,7 @@ export function IntegrationsView() {
       <PublicNav />
 
       {/* Header */}
-      <section className="pt-16 pb-12 px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
+      <section className="pt-16 pb-12 px-4 sm:px-6 md:px-12 max-w-[1240px] mx-auto w-full text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-white/5 border border-white/10 text-teal-300 mb-6">
           <Layers className="w-3.5 h-3.5 text-[#00DF8F]" />
           <span>Integrations</span>
@@ -222,7 +222,7 @@ export function IntegrationsView() {
       </section>
 
       {/* Integrations Grid */}
-      <section className="py-8 pb-20 px-6 max-w-[1240px] mx-auto w-full">
+      <section className="py-8 pb-20 px-4 sm:px-6 max-w-[1240px] mx-auto w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((item) => (
             <div

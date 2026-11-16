@@ -73,7 +73,7 @@ export function ApprovalModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 text-[12px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[12px]">
             <div className="p-2.5 rounded-[6px] bg-[#F4F6F5] border border-[#CDD4D0]">
               <div className="text-[10px] font-mono uppercase text-[#565f6b] font-bold">Target Node</div>
               <div className="font-semibold text-[#101d26] mt-0.5 truncate flex items-center gap-1.5">
@@ -106,21 +106,21 @@ export function ApprovalModal({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 bg-[#F8FAFA] border-t border-[#E2E7E4] flex items-center justify-between gap-3">
+        <div className="p-4 bg-[#F8FAFA] border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5">
           <button
             type="button"
             onClick={onClose}
-            className="px-3.5 py-1.5 text-[12px] font-medium text-[#565f6b] hover:text-[#101d26] cursor-pointer"
+            className="px-3.5 py-1.5 text-[12px] font-medium text-[#565f6b] hover:text-[#101d26] cursor-pointer text-center"
           >
             Cancel
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <button
               type="button"
               disabled={isSubmitting}
               onClick={handleReject}
-              className="px-3.5 py-1.5 rounded-[6px] bg-white border border-[#F1B5AC] hover:bg-[#FAEBE9] text-[#C2412D] text-[12px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 rounded-[6px] bg-white border border-[#F1B5AC] hover:bg-[#FAEBE9] text-[#C2412D] text-[12px] font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer w-full sm:w-auto"
             >
               <XCircle className="w-3.5 h-3.5" />
               <span>Reject Release</span>
@@ -130,7 +130,7 @@ export function ApprovalModal({
               type="button"
               disabled={isSubmitting}
               onClick={handleApprove}
-              className="px-4 py-1.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-semibold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
+              className="px-4 py-1.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-semibold flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer w-full sm:w-auto"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>Approve &amp; Execute</span>

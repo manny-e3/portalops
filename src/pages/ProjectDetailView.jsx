@@ -1079,11 +1079,11 @@ export function ProjectDetailView() {
       )}
 
       {/* 3. Tab Bar Navigation */}
-      <div className="flex items-center gap-6 border-b border-[#CDD4D0] text-[13px] font-medium select-none">
+      <div className="flex items-center gap-4 sm:gap-6 border-b border-[#CDD4D0] text-[13px] font-medium select-none overflow-x-auto whitespace-nowrap scrollbar-none">
         <button
           type="button"
           onClick={() => setActiveTab('Servers')}
-          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Servers'
+          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 shrink-0 ${activeTab === 'Servers'
               ? 'border-[#005459] text-[#005459] font-semibold'
               : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
             }`}
@@ -1098,7 +1098,7 @@ export function ProjectDetailView() {
         <button
           type="button"
           onClick={() => setActiveTab('Deployments')}
-          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Deployments'
+          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 shrink-0 ${activeTab === 'Deployments'
               ? 'border-[#005459] text-[#005459] font-semibold'
               : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
             }`}
@@ -1113,7 +1113,7 @@ export function ProjectDetailView() {
         <button
           type="button"
           onClick={() => setActiveTab('Environment')}
-          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Environment'
+          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 shrink-0 ${activeTab === 'Environment'
               ? 'border-[#005459] text-[#005459] font-semibold'
               : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
             }`}
@@ -1125,24 +1125,11 @@ export function ProjectDetailView() {
           </span>
         </button>
 
-        {/* <button
-          type="button"
-          onClick={() => setActiveTab('Telemetry')}
-          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${
-            activeTab === 'Telemetry'
-              ? 'border-[#005459] text-[#005459] font-semibold'
-              : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
-          }`}
-        >
-          <Cpu className="w-4 h-4" />
-          <span>Host Telemetry</span>
-        </button> */}
-
         {isDatabaseSupported && (
           <button
             type="button"
             onClick={() => setActiveTab('Database')}
-            className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Database'
+            className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 shrink-0 ${activeTab === 'Database'
                 ? 'border-[#005459] text-[#005459] font-semibold'
                 : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
               }`}
@@ -1155,7 +1142,7 @@ export function ProjectDetailView() {
         <button
           type="button"
           onClick={() => setActiveTab('Settings')}
-          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 ${activeTab === 'Settings'
+          className={`pb-3 flex items-center gap-2 cursor-pointer transition-colors border-b-2 shrink-0 ${activeTab === 'Settings'
               ? 'border-[#005459] text-[#005459] font-semibold'
               : 'border-transparent text-[#565f6b] hover:text-[#101d26]'
             }`}

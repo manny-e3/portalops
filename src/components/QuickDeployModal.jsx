@@ -181,7 +181,7 @@ export function QuickDeployModal({
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-[12px] font-mono uppercase font-semibold text-[#565f6b] mb-1.5">
                 FLEET TARGETS
@@ -224,19 +224,19 @@ export function QuickDeployModal({
             />
           </div>
 
-          <div className="pt-3 border-t border-[#E2E7E4] flex items-center justify-end gap-2.5">
+          <div className="pt-3 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="h-[32px] px-3 rounded-[6px] bg-[#FFFFFF] hover:bg-[#F4F6F5] border border-[#CDD4D0] text-[13px] text-[#101d26] font-medium transition-colors cursor-pointer disabled:opacity-50"
+              className="h-[34px] px-3.5 rounded-[6px] bg-[#FFFFFF] hover:bg-[#F4F6F5] border border-[#CDD4D0] text-[13px] text-[#101d26] font-medium transition-colors cursor-pointer disabled:opacity-50 w-full sm:w-auto"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting || projects.length === 0 || isLocked || (requiresBypass && !emergencyBypassNote.trim())}
-              className="h-[32px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="h-[34px] px-4 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43] text-white text-[13px] font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
             >
               {submitting ? (
                 <>

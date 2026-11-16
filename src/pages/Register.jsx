@@ -149,7 +149,7 @@ export function Register() {
   return (
     <div className="min-h-screen flex bg-white dark:bg-[#0D1117] selection:bg-[#005459] selection:text-white transition-colors duration-200">
       {/* 1. Left Column: Registration Form */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-between p-6 sm:p-10 lg:p-12 xl:p-16 min-h-screen text-zinc-900 dark:text-zinc-100">
+      <div className="w-full lg:w-1/2 flex flex-col justify-between p-4 sm:p-8 lg:p-12 xl:p-16 min-h-screen text-zinc-900 dark:text-zinc-100">
         {/* Top Navbar */}
         <div className="flex items-center justify-between w-full">
           <Link to="/" className="flex items-center gap-2 group">

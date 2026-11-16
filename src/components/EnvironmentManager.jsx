@@ -624,11 +624,11 @@ export function EnvironmentManager({ projectId, targets = [], canManage = true, 
         </div>
 
         {/* Sub-tab pills - dynamically filtered by project framework */}
-        <div className="flex items-center gap-1.5 p-1 bg-[#F4F6F5] border border-[#CDD4D0] rounded-[6px]">
+        <div className="flex items-center gap-1.5 p-1 bg-[#F4F6F5] border border-[#CDD4D0] rounded-[6px] overflow-x-auto scrollbar-none max-w-full">
           <button
             type="button"
             onClick={() => setSubTab('env')}
-            className={`px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+            className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
               subTab === 'env'
                 ? 'bg-[#FFFFFF] text-[#005459] shadow-2xs font-semibold'
                 : 'text-[#565f6b] hover:text-[#101d26]'
@@ -642,7 +642,7 @@ export function EnvironmentManager({ projectId, targets = [], canManage = true, 
             <button
               type="button"
               onClick={() => setSubTab('database')}
-              className={`px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+              className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
                 subTab === 'database'
                   ? 'bg-[#FFFFFF] text-[#005459] shadow-2xs font-semibold'
                   : 'text-[#565f6b] hover:text-[#101d26]'
@@ -657,7 +657,7 @@ export function EnvironmentManager({ projectId, targets = [], canManage = true, 
             <button
               type="button"
               onClick={() => setSubTab('artisan')}
-              className={`px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+              className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
                 subTab === 'artisan'
                   ? 'bg-[#FFFFFF] text-[#005459] shadow-2xs font-semibold'
                   : 'text-[#565f6b] hover:text-[#101d26]'
@@ -671,7 +671,7 @@ export function EnvironmentManager({ projectId, targets = [], canManage = true, 
           <button
             type="button"
             onClick={() => setSubTab('diff')}
-            className={`px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+            className={`shrink-0 whitespace-nowrap px-3 py-1.5 rounded-[4px] text-[12px] font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
               subTab === 'diff'
                 ? 'bg-[#FFFFFF] text-[#005459] shadow-2xs font-semibold'
                 : 'text-[#565f6b] hover:text-[#101d26]'

@@ -337,51 +337,53 @@ export function DatabaseMigrationsCard({
         </div>
 
         <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] overflow-hidden">
-          <table className="w-full text-left border-collapse text-[12px]">
-            <thead>
-              <tr className="border-b border-[#E2E7E4] bg-[#F4F6F5] text-[10px] font-mono font-semibold text-[#565f6b] uppercase">
-                <th className="py-2.5 px-4">MIGRATION NAME</th>
-                <th className="py-2.5 px-3">BATCH</th>
-                <th className="py-2.5 px-3">APPLIED AT</th>
-                <th className="py-2.5 px-3">DURATION</th>
-                <th className="py-2.5 px-4 text-right">STATUS</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[#E2E7E4]">
-              {migrations.map((mig) => (
-                <tr key={mig.id} className="hover:bg-[#FAFBFB] transition-colors">
-                  <td className="py-2.5 px-4 font-mono font-medium text-[#101d26]">
-                    <div className="flex items-center gap-2">
-                      <FileCode className="w-3.5 h-3.5 text-[#005459]" />
-                      <span>{mig.name}</span>
-                    </div>
-                  </td>
-                  <td className="py-2.5 px-3 font-mono text-[#565f6b]">
-                    #{mig.batch}
-                  </td>
-                  <td className="py-2.5 px-3 font-mono text-[#565f6b]">
-                    {new Date(mig.appliedAt).toLocaleDateString()} {new Date(mig.appliedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </td>
-                  <td className="py-2.5 px-3 font-mono text-[#565f6b]">
-                    {mig.durationMs}ms
-                  </td>
-                  <td className="py-2.5 px-4 text-right">
-                    <span
-                      className={`text-[10px] font-mono px-2 py-0.5 rounded-[3px] font-bold ${
-                        mig.status === 'APPLIED'
-                          ? 'bg-[#EAF5EE] text-[#2E8B57] border border-[#B8E0C5]'
-                          : mig.status === 'ROLLED_BACK'
-                          ? 'bg-[#F3E8FF] text-[#7E22CE] border border-[#E9D5FF]'
-                          : 'bg-[#FEF5F4] text-[#C2412D] border border-[#FAD2CD]'
-                      }`}
-                    >
-                      {mig.status}
-                    </span>
-                  </td>
+          <div className="overflow-x-auto scrollbar-none">
+            <table className="w-full min-w-[560px] text-left border-collapse text-[12px]">
+              <thead>
+                <tr className="border-b border-[#E2E7E4] bg-[#F4F6F5] text-[10px] font-mono font-semibold text-[#565f6b] uppercase">
+                  <th className="py-2.5 px-4">MIGRATION NAME</th>
+                  <th className="py-2.5 px-3">BATCH</th>
+                  <th className="py-2.5 px-3">APPLIED AT</th>
+                  <th className="py-2.5 px-3">DURATION</th>
+                  <th className="py-2.5 px-4 text-right">STATUS</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-[#E2E7E4]">
+                {migrations.map((mig) => (
+                  <tr key={mig.id} className="hover:bg-[#FAFBFB] transition-colors">
+                    <td className="py-2.5 px-4 font-mono font-medium text-[#101d26]">
+                      <div className="flex items-center gap-2">
+                        <FileCode className="w-3.5 h-3.5 text-[#005459]" />
+                        <span>{mig.name}</span>
+                      </div>
+                    </td>
+                    <td className="py-2.5 px-3 font-mono text-[#565f6b]">
+                      #{mig.batch}
+                    </td>
+                    <td className="py-2.5 px-3 font-mono text-[#565f6b]">
+                      {new Date(mig.appliedAt).toLocaleDateString()} {new Date(mig.appliedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </td>
+                    <td className="py-2.5 px-3 font-mono text-[#565f6b]">
+                      {mig.durationMs}ms
+                    </td>
+                    <td className="py-2.5 px-4 text-right">
+                      <span
+                        className={`text-[10px] font-mono px-2 py-0.5 rounded-[3px] font-bold ${
+                          mig.status === 'APPLIED'
+                            ? 'bg-[#EAF5EE] text-[#2E8B57] border border-[#B8E0C5]'
+                            : mig.status === 'ROLLED_BACK'
+                            ? 'bg-[#F3E8FF] text-[#7E22CE] border border-[#E9D5FF]'
+                            : 'bg-[#FEF5F4] text-[#C2412D] border border-[#FAD2CD]'
+                        }`}
+                      >
+                        {mig.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -396,10 +398,10 @@ export function DatabaseMigrationsCard({
           {snapshots.map((snap) => (
             <div
               key={snap.id}
-              className="p-3 bg-[#FAFBFB] border border-[#CDD4D0] rounded-[6px] flex items-center justify-between gap-3 text-[12px]"
+              className="p-3 bg-[#FAFBFB] border border-[#CDD4D0] rounded-[6px] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-[12px]"
             >
               <div className="flex items-center gap-2.5">
-                <HardDrive className="w-4 h-4 text-[#005459]" />
+                <HardDrive className="w-4 h-4 text-[#005459] shrink-0" />
                 <div>
                   <div className="font-mono font-bold text-[#101d26]">{snap.name}</div>
                   <div className="text-[11px] text-[#565f6b] font-mono">
@@ -412,7 +414,7 @@ export function DatabaseMigrationsCard({
                 type="button"
                 disabled={restoringSnapshot}
                 onClick={() => handleRestoreSnapshot(snap)}
-                className="h-[28px] px-3 rounded-[4px] border border-[#CDD4D0] bg-white hover:bg-[#FEF5F4] hover:text-[#C2412D] text-[#565f6b] text-[11px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+                className="h-[28px] px-3 rounded-[4px] border border-[#CDD4D0] bg-white hover:bg-[#FEF5F4] hover:text-[#C2412D] text-[#565f6b] text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50 self-start sm:self-center"
                 title="Restore this snapshot"
               >
                 <RotateCcw className="w-3 h-3" />

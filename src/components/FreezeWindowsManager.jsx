@@ -245,7 +245,7 @@ export function FreezeWindowsManager() {
           </div>
 
           {/* Quick Presets */}
-          <div className="flex items-center gap-2 text-[11px] font-mono">
+          <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
             <span className="text-[#565f6b]">Presets:</span>
             <button
               type="button"
@@ -387,7 +387,7 @@ export function FreezeWindowsManager() {
                     {win.reason}
                   </p>
 
-                  <div className="flex items-center gap-3 text-[11px] font-mono text-[#8F9CA7] pt-0.5">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-3 text-[11px] font-mono text-[#8F9CA7] pt-0.5">
                     <span>From: {new Date(win.startsAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
                     <span>To: {new Date(win.endsAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</span>
                   </div>

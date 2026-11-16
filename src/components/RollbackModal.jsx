@@ -122,7 +122,7 @@ export function RollbackModal({
 
           {/* Target Metadata Card */}
           <div className="p-3.5 bg-[#F8FAF9] border border-[#E2E7E4] rounded-[6px] space-y-2.5 text-[12px]">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
               <span className="text-[#565f6b] font-mono text-[11px] uppercase">Project / Target</span>
               <span className="font-semibold text-[#101d26] flex items-center gap-1.5">
                 <Server className="w-3.5 h-3.5 text-[#005459]" />
@@ -130,9 +130,9 @@ export function RollbackModal({
               </span>
             </div>
 
-            <div className="flex items-center justify-between border-t border-[#E2E7E4] pt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-[#E2E7E4] pt-2 gap-1 sm:gap-2">
               <span className="text-[#565f6b] font-mono text-[11px] uppercase">Commit</span>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 flex-wrap">
                 <GitBranch className="w-3.5 h-3.5 text-[#565f6b]" />
                 <span className="font-mono text-[11px] px-1.5 py-0.2 rounded bg-[#FFFFFF] border border-[#CDD4D0] font-bold text-[#005459]">
                   {commitSha}
@@ -143,7 +143,7 @@ export function RollbackModal({
               </div>
             </div>
 
-            <div className="flex items-center justify-between border-t border-[#E2E7E4] pt-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-[#E2E7E4] pt-2 gap-1 sm:gap-2">
               <span className="text-[#565f6b] font-mono text-[11px] uppercase">Deployed On</span>
               <span className="font-mono text-[11px] text-[#565f6b] flex items-center gap-1">
                 <Clock className="w-3 h-3 text-[#8F9CA7]" />
@@ -153,19 +153,19 @@ export function RollbackModal({
           </div>
 
           {/* Actions */}
-          <div className="pt-3 border-t border-[#E2E7E4] flex items-center justify-end gap-2.5">
+          <div className="pt-3 border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="h-[34px] px-3.5 rounded-[6px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[12px] font-medium text-[#101d26] transition-colors cursor-pointer disabled:opacity-50"
+              className="h-[34px] px-3.5 rounded-[6px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[12px] font-medium text-[#101d26] transition-colors cursor-pointer disabled:opacity-50 w-full sm:w-auto"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="h-[34px] px-4 rounded-[6px] bg-[#B87E0C] hover:bg-[#A36F0B] active:bg-[#8C5E09] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-50"
+              className="h-[34px] px-4 rounded-[6px] bg-[#B87E0C] hover:bg-[#A36F0B] active:bg-[#8C5E09] text-white text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-50 w-full sm:w-auto"
             >
               {submitting ? (
                 <>

@@ -347,52 +347,54 @@ export function UsersView({ isEmbedded = false, teamTitle }) {
           </div>
 
           {/* Action Bar */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full sm:w-auto">
             {/* Search with ⌘K */}
-            <div className="relative">
+            <div className="relative flex-1 sm:flex-initial">
               <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#565f6b]" />
               <input
                 type="text"
                 placeholder="Filter by name, email..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-[34px] pl-8 pr-9 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] focus:ring-1 focus:ring-[#005459] w-[180px] sm:w-[220px]"
+                className="h-[34px] pl-8 pr-9 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] focus:ring-1 focus:ring-[#005459] w-full sm:w-[220px]"
               />
               <span className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-[#8F9CA7] border border-[#E2E7E4] px-1 rounded bg-[#F4F6F5]">
                 ⌘K
               </span>
             </div>
 
-            {/* Role dropdown */}
-            <select
-              value={roleFilter}
-              onChange={(e) => setRoleFilter(e.target.value)}
-              className="h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
-            >
-              <option value="All Roles">All Roles</option>
-              <option value="Admin">Admin</option>
-              <option value="Deployer">Deployer</option>
-              <option value="Viewer">Viewer</option>
-            </select>
+            <div className="flex items-center gap-2">
+              {/* Role dropdown */}
+              <select
+                value={roleFilter}
+                onChange={(e) => setRoleFilter(e.target.value)}
+                className="flex-1 sm:flex-initial h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
+              >
+                <option value="All Roles">All Roles</option>
+                <option value="Admin">Admin</option>
+                <option value="Deployer">Deployer</option>
+                <option value="Viewer">Viewer</option>
+              </select>
 
-            {/* Status dropdown */}
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
-            >
-              <option value="All Statuses">All Statuses</option>
-              <option value="Active">Active</option>
-              <option value="Invited">Invited</option>
-              <option value="Deactivated">Deactivated</option>
-            </select>
+              {/* Status dropdown */}
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="flex-1 sm:flex-initial h-[34px] px-2.5 bg-[#FFFFFF] border border-[#CDD4D0] rounded-[6px] text-[12px] text-[#101d26] outline-none focus:border-[#005459] cursor-pointer"
+              >
+                <option value="All Statuses">All Statuses</option>
+                <option value="Active">Active</option>
+                <option value="Invited">Invited</option>
+                <option value="Deactivated">Deactivated</option>
+              </select>
+            </div>
 
             {/* Invite Button */}
             {can(role, 'users:manage') && (
               <button
                 type="button"
                 onClick={() => setIsInviteModalOpen(true)}
-                className="h-[34px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
+                className="w-full sm:w-auto justify-center h-[34px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
               >
                 <UserPlus className="w-3.5 h-3.5 stroke-[2.5]" />
                 <span>+ Onboard Colleague</span>
@@ -424,11 +426,11 @@ export function UsersView({ isEmbedded = false, teamTitle }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 shrink-0 w-full md:w-auto">
             <button
               type="button"
               onClick={handleCopyGeneralInvite}
-              className="h-[34px] px-3 rounded-[6px] bg-[#141B22] hover:bg-[#1D2733] border border-[#24313E] text-[#85D3DA] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="justify-center h-[34px] px-3 rounded-[6px] bg-[#141B22] hover:bg-[#1D2733] border border-[#24313E] text-[#85D3DA] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
               title="Copy shareable workspace invite link"
             >
               {copiedGeneralInvite ? <Check className="w-3.5 h-3.5 text-[#2E8B57]" /> : <Copy className="w-3.5 h-3.5" />}
@@ -438,7 +440,7 @@ export function UsersView({ isEmbedded = false, teamTitle }) {
             <button
               type="button"
               onClick={() => setIsInviteModalOpen(true)}
-              className="h-[34px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
+              className="justify-center h-[34px] px-3.5 rounded-[6px] bg-[#005459] hover:bg-[#0B5459] text-white text-[12px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs"
             >
               <UserPlus className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>+ Onboard Team Member</span>
@@ -449,7 +451,7 @@ export function UsersView({ isEmbedded = false, teamTitle }) {
 
       {/* 2. Filter Tabs & Live Sync */}
       <div className="flex items-center justify-between border-b border-[#E2E7E4] pb-2">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 overflow-x-auto scrollbar-none pb-1 sm:pb-0">
           {[
             { id: 'All', label: 'All', count: users.length },
             { id: 'Admins', label: 'Admins', count: users.filter((u) => (u.role || '').toUpperCase().includes('ADMIN') || u.isSuperAdmin).length },
@@ -461,7 +463,7 @@ export function UsersView({ isEmbedded = false, teamTitle }) {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`px-3 py-1.5 rounded-[6px] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer ${
+              className={`px-3 py-1.5 rounded-[6px] text-[12px] font-medium flex items-center gap-1.5 transition-colors cursor-pointer shrink-0 whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-[#101d26] text-white font-semibold shadow-2xs'
                   : 'text-[#565f6b] hover:bg-[#F4F6F5] hover:text-[#101d26]'
@@ -494,7 +496,7 @@ export function UsersView({ isEmbedded = false, teamTitle }) {
           {/* User Table */}
           <div className="bg-[#FFFFFF] border border-[#CDD4D0] rounded-[8px] overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+              <table className="w-full text-left border-collapse min-w-[680px]">
                 <thead>
                   <tr className="border-b border-[#E2E7E4] bg-[#F4F6F5] text-[10px] font-mono font-semibold text-[#565f6b] uppercase tracking-wider">
                     <th className="py-2.5 px-5">USER</th>

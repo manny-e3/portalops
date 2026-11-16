@@ -325,7 +325,7 @@ export function CreateServerView() {
         /* ============================================================== */
         /* STEP 3: Active Connection Handshake Screen (Ploi / Forge Model) */
         /* ============================================================== */
-        <div className="bg-white dark:bg-[#0B1317] border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 sm:p-8 shadow-xs space-y-6 animate-in fade-in zoom-in-95 duration-200">
+        <div className="bg-white dark:bg-[#0B1317] border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 sm:p-8 shadow-xs space-y-6 animate-in fade-in zoom-in-95 duration-200">
           {/* Header & Status Indicator */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-200 dark:border-zinc-800">
             <div className="flex items-center gap-3">
@@ -362,11 +362,11 @@ export function CreateServerView() {
           </div>
 
           {/* Method Selection Tabs */}
-          <div className="flex rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-1 gap-1">
+          <div className="flex flex-col sm:flex-row rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 p-1 gap-1">
             <button
               type="button"
               onClick={() => setSetupMethodTab('script')}
-              className={`flex-1 py-2 px-3 rounded-md text-xs font-semibold transition-all cursor-pointer ${setupMethodTab === 'script'
+              className={`flex-1 py-2 px-3 rounded-md text-xs font-semibold transition-all cursor-pointer text-center ${setupMethodTab === 'script'
                   ? 'bg-white dark:bg-zinc-800 text-[#005459] dark:text-[#00DF8F] shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                 }`}
@@ -376,7 +376,7 @@ export function CreateServerView() {
             <button
               type="button"
               onClick={() => setSetupMethodTab('manual')}
-              className={`flex-1 py-2 px-3 rounded-md text-xs font-semibold transition-all cursor-pointer ${setupMethodTab === 'manual'
+              className={`flex-1 py-2 px-3 rounded-md text-xs font-semibold transition-all cursor-pointer text-center ${setupMethodTab === 'manual'
                   ? 'bg-white dark:bg-zinc-800 text-[#005459] dark:text-[#00DF8F] shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                 }`}
@@ -533,11 +533,11 @@ export function CreateServerView() {
           )}
 
           {/* Bottom Actions */}
-          <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+          <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => setCreatedServer(null)}
-              className="text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors cursor-pointer"
+              className="text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors cursor-pointer text-center sm:text-left"
             >
               ← Back to provider selection
             </button>
@@ -545,7 +545,7 @@ export function CreateServerView() {
             <button
               type="button"
               onClick={() => navigate('/servers')}
-              className={`h-10 px-6 rounded-lg text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer flex items-center gap-2 ${handshakeStatus === 'completed'
+              className={`h-10 px-6 rounded-lg text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto ${handshakeStatus === 'completed'
                   ? 'bg-emerald-600 hover:bg-emerald-700'
                   : 'bg-[#005459] hover:bg-[#074549]'
                 }`}
@@ -560,7 +560,7 @@ export function CreateServerView() {
           {/* ============================================================== */}
           {/* STEP 1: Select provider */}
           {/* ============================================================== */}
-          <div className="bg-white dark:bg-[#0B1317] border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-xs space-y-5">
+          <div className="bg-white dark:bg-[#0B1317] border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 sm:p-6 shadow-xs space-y-5">
             {/* Header */}
             <div className="flex items-center gap-3">
               <span className="w-6 h-6 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-bold flex items-center justify-center shrink-0">
@@ -614,7 +614,7 @@ export function CreateServerView() {
           {/* ============================================================== */}
           {/* STEP 2: Details */}
           {/* ============================================================== */}
-          <div className="bg-white dark:bg-[#0B1317] border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-xs space-y-5">
+          <div className="bg-white dark:bg-[#0B1317] border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 sm:p-6 shadow-xs space-y-5">
             {/* Header */}
             <div className="flex items-center gap-3">
               <span className="w-6 h-6 rounded-full bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-xs font-bold flex items-center justify-center shrink-0">
@@ -702,7 +702,7 @@ export function CreateServerView() {
               {selectedProvider === 'custom' && (
                 <div className="pt-2 space-y-4">
                   {/* Method selector toggle for custom server */}
-                  <div className="flex border border-zinc-200 dark:border-zinc-700 rounded-lg p-1 bg-zinc-50 dark:bg-[#060D10] w-full sm:w-auto self-start">
+                  <div className="flex flex-col sm:flex-row border border-zinc-200 dark:border-zinc-700 rounded-lg p-1 bg-zinc-50 dark:bg-[#060D10] w-full sm:w-auto self-start gap-1">
                     {serverOs !== 'Windows' && (
                       <button
                         type="button"
@@ -878,17 +878,17 @@ export function CreateServerView() {
           </div>
 
           {/* Submit Actions */}
-          <div className="flex items-center justify-end gap-3 pt-2">
+          <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2.5 sm:gap-3 pt-2">
             <Link
               to="/servers"
-              className="px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-medium transition-colors"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-medium transition-colors text-center"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-2.5 rounded-lg bg-[#005459] hover:bg-[#074549] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer flex items-center gap-2 disabled:opacity-50"
+              className="w-full sm:w-auto px-6 py-2.5 rounded-lg bg-[#005459] hover:bg-[#074549] text-white text-xs font-semibold shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

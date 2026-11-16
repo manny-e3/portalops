@@ -17,13 +17,14 @@ import {
   ChevronDown,
   Check,
   Plus,
-  Briefcase
+  Briefcase,
+  X
 } from 'lucide-react'
 import { SlipwayLogo } from './SlipwayLogo'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 
-export function DashboardSidebar() {
+export function DashboardSidebar({ isMobileOpen = false, onCloseMobile }) {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, isSuperAdmin, organizationName, logout } = useAuth()
@@ -158,29 +159,48 @@ export function DashboardSidebar() {
     navigate('/login')
   }
 
-  return (
-    <aside className="w-[240px] bg-[#1B2430] text-[#8F9CA7] flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none border-r border-[#24313E]">
+  const handleNavClick = () => {
+    if (onCloseMobile) onCloseMobile()
+  }
+
+  const renderContent = (isMobile = false) => (
+    <div className="flex flex-col justify-between h-full">
       {/* Top Section */}
       <div>
         {/* Brand Header */}
-        <Link
-          to="/dashboard"
-          className="h-[64px] px-4 flex items-center justify-between border-b border-[#253241] hover:bg-[#253241]/30 transition-colors"
-        >
-          <div className="flex items-center gap-2.5">
+        <div className="h-[64px] px-4 flex items-center justify-between border-b border-[#253241]">
+          <Link
+            to="/dashboard"
+            onClick={handleNavClick}
+            className="flex items-center gap-2.5 group hover:opacity-90 transition-opacity"
+          >
             <SlipwayLogo size="md" />
             <span className="font-semibold text-[15.5px] text-white tracking-tight">
               PortalOps
             </span>
-          </div>
+          </Link>
 
-          {/* Control Plane Tag */}
-          <div className="text-[9px] font-mono leading-tight text-right text-slate-300 font-semibold uppercase tracking-wider pl-1.5 border-l border-slate-700/60">
-            <div>PortalOps</div>
-            <div className="text-[8px] text-emerald-400">CONTROL</div>
-            <div className="text-[8px] text-zinc-400">PLANE</div>
+          <div className="flex items-center gap-2">
+            {/* Control Plane Tag (desktop) */}
+            <div className="text-[9px] font-mono leading-tight text-right text-slate-300 font-semibold uppercase tracking-wider pl-1.5 border-l border-slate-700/60 hidden sm:block">
+              <div>PortalOps</div>
+              <div className="text-[8px] text-emerald-400">CONTROL</div>
+              <div className="text-[8px] text-zinc-400">PLANE</div>
+            </div>
+
+            {/* Close button for mobile drawer */}
+            {isMobile && (
+              <button
+                type="button"
+                onClick={onCloseMobile}
+                className="p-1.5 text-zinc-400 hover:text-white rounded-[6px] hover:bg-[#253241] transition-colors cursor-pointer"
+                title="Close Navigation Menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
           </div>
-        </Link>
+        </div>
 
         {/* Client Workspace / Agency Switcher */}
         <div className="px-3 pt-3 pb-1 relative" ref={menuRef}>
@@ -220,7 +240,10 @@ export function DashboardSidebar() {
                   <button
                     key={ws.id}
                     type="button"
-                    onClick={() => handleSelectWorkspace(ws)}
+                    onClick={() => {
+                      handleSelectWorkspace(ws)
+                      handleNavClick()
+                    }}
                     className={`w-full px-2.5 py-1.5 rounded-md flex items-center justify-between text-left transition-colors cursor-pointer text-xs ${isActive
                         ? 'bg-[#005459] text-white font-semibold'
                         : 'text-zinc-300 hover:bg-[#202C38] hover:text-white'
@@ -249,7 +272,10 @@ export function DashboardSidebar() {
 
                 <Link
                   to="/teams"
-                  onClick={() => setIsWorkspaceMenuOpen(false)}
+                  onClick={() => {
+                    setIsWorkspaceMenuOpen(false)
+                    handleNavClick()
+                  }}
                   className="w-full px-2.5 py-1.5 rounded-md flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white hover:bg-[#202C38] transition-colors"
                 >
                   <Settings className="w-3.5 h-3.5" />
@@ -265,6 +291,7 @@ export function DashboardSidebar() {
           <div className="px-3 pt-2 pb-1">
             <Link
               to="/platform-admin"
+              onClick={handleNavClick}
               className={`w-full px-3 py-2 rounded-[6px] border flex items-center justify-between transition-all group cursor-pointer ${location.pathname.startsWith('/platform-admin')
                   ? 'bg-amber-400/15 border-amber-400/40 text-amber-300 font-semibold shadow-xs'
                   : 'bg-[#141416] border-[#27272A] text-zinc-300 hover:text-white hover:border-zinc-600'
@@ -299,6 +326,7 @@ export function DashboardSidebar() {
               <Link
                 key={item.label}
                 to={item.path}
+                onClick={handleNavClick}
                 className={`w-full h-[40px] px-3 rounded-[6px] flex items-center justify-between text-[14px] font-medium transition-colors cursor-pointer ${isActive
                     ? 'bg-[#2D3A4B] text-white shadow-xs font-semibold'
                     : 'text-[#8F9CA7] hover:bg-[#253241] hover:text-white'
@@ -329,6 +357,7 @@ export function DashboardSidebar() {
         >
           <Link
             to="/profile"
+            onClick={handleNavClick}
             className="flex items-center gap-2.5 overflow-hidden flex-1 min-w-0 group"
             title="View & Edit Profile"
           >
@@ -376,6 +405,32 @@ export function DashboardSidebar() {
           </div>
         </div>
       </div>
-    </aside>
+    </div>
+  )
+
+  return (
+    <>
+      {/* 1. Desktop Persistent Sidebar (hidden on mobile, visible md+) */}
+      <aside className="w-[240px] bg-[#1B2430] text-[#8F9CA7] flex-col justify-between h-screen sticky top-0 shrink-0 select-none border-r border-[#24313E] hidden md:flex">
+        {renderContent(false)}
+      </aside>
+
+      {/* 2. Mobile Slide-Over Drawer with Backdrop (visible only when isMobileOpen) */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex select-none">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+            onClick={onCloseMobile}
+            aria-hidden="true"
+          />
+
+          {/* Drawer Panel */}
+          <aside className="relative w-[270px] max-w-[85vw] bg-[#1B2430] text-[#8F9CA7] flex flex-col justify-between h-full shadow-2xl border-r border-[#24313E] z-10 animate-in slide-in-from-left duration-200">
+            {renderContent(true)}
+          </aside>
+        </div>
+      )}
+    </>
   )
 }

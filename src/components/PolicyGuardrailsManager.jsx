@@ -152,7 +152,7 @@ export function PolicyGuardrailsManager() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             type="button"
             onClick={handleResetDefaults}
@@ -303,7 +303,7 @@ export function PolicyGuardrailsManager() {
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="space-y-1 flex-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold text-[13px] text-[#101d26]">
                       {rule.name}
                     </span>
@@ -326,7 +326,7 @@ export function PolicyGuardrailsManager() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3 shrink-0">
+                <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-[#E2E7E4] shrink-0">
                   {/* Severity selector */}
                   <select
                     disabled={!rule.enabled}

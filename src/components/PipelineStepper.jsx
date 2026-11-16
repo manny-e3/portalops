@@ -85,8 +85,8 @@ export function PipelineStepper({
   return (
     <div className="bg-[#17202A] border border-[#24313E] rounded-[8px] p-3 text-white shadow-xs">
       {/* Top Header */}
-      <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#24313E]/80 text-[11px] font-mono">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center justify-between pb-2 mb-2 border-b border-[#24313E]/80 text-[11px] font-mono gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[#8F9CA7] uppercase font-bold tracking-wider">PIPELINE EXECUTION</span>
           <span className="text-[#3B4C5C]">|</span>
           <span className="text-[#85d3da]">
@@ -129,7 +129,7 @@ export function PipelineStepper({
 
       {/* COMPACT MODE: Sleek 1-line connected pill stepper */}
       {isCompact ? (
-        <div className="flex items-center gap-1.5 overflow-x-auto py-1 select-none">
+        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none py-1 select-none shrink-0">
           {activeStages.map((stg, idx) => {
             const Icon = stg.icon
             const isDone =

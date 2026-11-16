@@ -99,19 +99,19 @@ export function DeleteProjectModal({ isOpen, onClose, project, onProjectDeleted 
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-2 flex items-center justify-end gap-2.5">
+          <div className="pt-2 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
               disabled={isDeleting}
-              className="h-[34px] px-3.5 rounded-[6px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[12px] font-medium text-[#101d26] transition-colors cursor-pointer"
+              className="h-[34px] px-3.5 rounded-[6px] border border-[#CDD4D0] bg-[#FFFFFF] hover:bg-[#F4F6F5] text-[12px] font-medium text-[#101d26] transition-colors cursor-pointer w-full sm:w-auto"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={!isConfirmed || isDeleting}
-              className="h-[34px] px-4 rounded-[6px] bg-[#C2412D] hover:bg-[#A93422] active:bg-[#8D2B1B] text-white text-[12px] font-medium flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              className="h-[34px] px-4 rounded-[6px] bg-[#C2412D] hover:bg-[#A93422] active:bg-[#8D2B1B] text-white text-[12px] font-medium flex items-center justify-center gap-1.5 transition-colors shadow-xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
             >
               {isDeleting ? (
                 <>

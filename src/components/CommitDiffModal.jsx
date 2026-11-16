@@ -120,17 +120,17 @@ export function CommitDiffModal({
         role="dialog"
       >
         {/* Modal Header */}
-        <div className="h-[52px] px-5 bg-[#FFFFFF] border-b border-[#E2E7E4] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-[6px] bg-[#005459]/10 text-[#005459] flex items-center justify-center">
+        <div className="h-[52px] px-4 sm:px-5 bg-[#FFFFFF] border-b border-[#E2E7E4] flex items-center justify-between shrink-0 gap-2">
+          <div className="flex items-center gap-2.5 truncate">
+            <div className="w-7 h-7 rounded-[6px] bg-[#005459]/10 text-[#005459] flex items-center justify-center shrink-0">
               <FileDiff className="w-4 h-4" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-[14px] font-bold text-[#101d26] tracking-tight">
+            <div className="truncate">
+              <div className="flex items-center gap-2 truncate">
+                <h3 className="text-[14px] font-bold text-[#101d26] tracking-tight truncate">
                   Pre-Deployment Review &amp; Diff
                 </h3>
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded-[4px] bg-[#F4F6F5] text-[#565f6b] border border-[#CDD4D0]">
+                <span className="hidden sm:inline-block text-[11px] font-mono px-2 py-0.5 rounded-[4px] bg-[#F4F6F5] text-[#565f6b] border border-[#CDD4D0] shrink-0">
                   {projectName}
                 </span>
               </div>
@@ -179,7 +179,7 @@ export function CommitDiffModal({
             /* Real diff returned from backend API */
             <>
               {/* Diff Metric Summary Cards */}
-              <div className="grid grid-cols-4 gap-2 text-center">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
                 <div className="p-2.5 bg-[#F4F6F5] border border-[#CDD4D0] rounded-[6px]">
                   <span className="block text-[18px] font-bold text-[#101d26] leading-tight">
                     {diff.aheadBy ?? realCommits.length}
@@ -398,7 +398,7 @@ export function CommitDiffModal({
         </div>
 
         {/* Modal Footer Controls */}
-        <div className="h-[56px] px-5 bg-[#F9FBFA] border-t border-[#E2E7E4] flex items-center justify-between shrink-0">
+        <div className="min-h-[56px] h-auto py-2.5 px-4 sm:px-5 bg-[#F9FBFA] border-t border-[#E2E7E4] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 shrink-0">
           <div className="text-[11px] text-[#565f6b]">
             {hasBreaking && !acknowledgedBreaking ? (
               <span className="text-amber-800 font-medium">⚠️ Acknowledge breaking change to deploy</span>
@@ -411,7 +411,7 @@ export function CommitDiffModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-3.5 h-[34px] rounded-[6px] border border-[#CDD4D0] bg-white hover:bg-[#F4F6F5] text-[12px] font-medium text-[#565f6b] cursor-pointer transition-colors"
+              className="px-3.5 h-[34px] rounded-[6px] border border-[#CDD4D0] bg-white hover:bg-[#F4F6F5] text-[12px] font-medium text-[#565f6b] cursor-pointer transition-colors flex-1 sm:flex-initial"
             >
               Cancel
             </button>
@@ -423,7 +423,7 @@ export function CommitDiffModal({
                 onConfirmDeploy()
                 onClose()
               }}
-              className={`px-4 h-[34px] rounded-[6px] text-[12px] font-semibold text-white flex items-center gap-1.5 transition-all shadow-xs cursor-pointer ${
+              className={`px-4 h-[34px] rounded-[6px] text-[12px] font-semibold text-white flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer flex-1 sm:flex-initial ${
                 canProceed && !loading
                   ? 'bg-[#005459] hover:bg-[#0B5459] active:bg-[#083F43]'
                   : 'bg-[#005459]/40 cursor-not-allowed opacity-60'
