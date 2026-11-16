@@ -23,7 +23,6 @@ export const PIPELINE_STAGES = [
   { id: 'pre_deploy', label: 'Pre-Deploy Hook', icon: PlayCircle, shortDesc: 'Pre-flight & migrations' },
   { id: 'sync', label: 'Artifact Sync', icon: FolderSync, shortDesc: 'Transfer to target dir' },
   { id: 'post_deploy', label: 'Post-Deploy Hook', icon: Zap, shortDesc: 'Restart & clear cache' },
-  { id: 'health', label: 'Health Check', icon: Activity, shortDesc: 'Endpoint HTTP 200 probe' },
 ]
 
 export function PipelineStepper({
@@ -49,7 +48,6 @@ export function PipelineStepper({
         { id: 'build', label: 'Build & Compile', icon: Hammer, shortDesc: 'Vite / React build' },
         { id: 'sync', label: 'Artifact Sync', icon: FolderSync, shortDesc: 'Transfer dist to web root' },
         { id: 'post_deploy', label: 'Post-Deploy', icon: Zap, shortDesc: 'Clean stale cache' },
-        { id: 'health', label: 'Health Check', icon: Activity, shortDesc: 'Endpoint HTTP 200 probe' },
       ]
     }
     return PIPELINE_STAGES

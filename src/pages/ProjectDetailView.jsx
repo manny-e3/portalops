@@ -420,206 +420,29 @@ export function ProjectDetailView() {
         }
 
         // Deployment build/hook commands succeeded.
-        // Stage 7: Run Post-Deploy Health Check Probe!
-        const targetObj = servers.find((s) => s.id === (finished.targetId || activeDeployment?.targetId)) || servers[0]
-        const probeUrl = resolveTargetProbeUrl(targetObj)
-
+        // Health check probe disabled during deployment per user instruction.
         setLogs((prev) => [
           ...prev,
           {
             seq: (prev.length > 0 ? (prev[prev.length - 1].seq || prev.length) + 1 : 1),
             time: new Date().toLocaleTimeString(),
-            line: `[STAGE 7/7: HEALTH CHECK] Executing Post-Deploy Health Check Probe on ${probeUrl}...`,
+            line: `[PIPELINE COMPLETE] Deployment #${finished.number || finished.id.slice(0, 8)} successfully promoted.`,
             stream: 'SYSTEM'
           }
         ])
-
-        try {
-          const probeStart = performance.now()
-          const probeRes = await fetch(`/probe-url?url=${encodeURIComponent(probeUrl)}`, { cache: 'no-store' })
-            .then((r) => r.json())
-            .catch(async () => {
-              const d = await fetch(probeUrl, { cache: 'no-store' })
-              return { ok: d.status >= 200 && d.status < 400, status: d.status, statusText: d.statusText }
-            })
-            .catch((err) => ({ ok: false, status: 500, statusText: err.message }))
-
-          const latency = Math.round(performance.now() - probeStart)
-
-          if (probeRes.ok) {
-            // PROBE PASSED (HTTP 200 - 399)
-            setHealthProbeResults((prev) => ({
-              ...prev,
-              [targetObj.id]: { ok: true, latency, status: `${probeRes.status || 200} OK`, testedAt: 'Just now', url: probeUrl }
-            }))
-            setLogs((prev) => [
-              ...prev,
-              {
-                seq: (prev[prev.length - 1].seq || prev.length) + 1,
-                time: new Date().toLocaleTimeString(),
-                line: `[STAGE 7/7: HEALTH CHECK] PASSED · HTTP ${probeRes.status || 200} OK (${latency}ms). Target application is healthy.`,
-                stream: 'STDOUT'
-              },
-              {
-                seq: (prev[prev.length - 1].seq || prev.length) + 2,
-                time: new Date().toLocaleTimeString(),
-                line: `[PIPELINE COMPLETE] Deployment #${finished.number || finished.id.slice(0, 8)} successfully promoted.`,
-                stream: 'SYSTEM'
-              }
-            ])
-            setStreamStatus('SUCCESS')
-            setExitCode(0)
-            setActiveDeployment((prev) => ({
-              ...prev,
-              status: 'SUCCESS',
-              duration: finished.durationMs ? `${Math.round(finished.durationMs / 1000)}s` : 'Completed'
-            }))
-            showToast({
-              type: 'success',
-              title: 'Deployment & Health Check Verified',
-              message: `${targetObj.name}: HTTP ${probeRes.status || 200} OK (${latency}ms)`
-            })
-            refreshProject()
-          } else {
-            // Check if failure is due to shared hosting blocking direct IP requests
-            const isFallbackRawIp =
-              !targetObj?.healthCheckUrl?.trim() &&
-              !project?.url?.trim() &&
-              /^https?:\/\/\d+\.\d+\.\d+\.\d+(?::\d+)?\/?$/i.test(probeUrl)
-            const isSharedHostingIpBlock = isFallbackRawIp && probeRes.status === 403
-
-            if (isSharedHostingIpBlock) {
-              // Direct IP fallback on shared hosting returns 403 Forbidden because virtual host header is absent.
-              // Deployment completed successfully; do not fail deployment or trigger auto-rollback.
-              setHealthProbeResults((prev) => ({
-                ...prev,
-                [targetObj.id]: {
-                  ok: true,
-                  latency,
-                  status: 'HTTP 403 (IP Access Forbidden - Domain Required)',
-                  testedAt: 'Just now',
-                  url: probeUrl,
-                },
-              }))
-              setLogs((prev) => [
-                ...prev,
-                {
-                  seq: (prev[prev.length - 1].seq || prev.length) + 1,
-                  time: new Date().toLocaleTimeString(),
-                  line: `[STAGE 7/7: HEALTH CHECK] NOTICE · ${probeUrl} returned HTTP 403 Forbidden (Shared hosting blocks direct IP requests without a domain name).`,
-                  stream: 'STDOUT',
-                },
-                {
-                  seq: (prev[prev.length - 1].seq || prev.length) + 2,
-                  time: new Date().toLocaleTimeString(),
-                  line: `[STAGE 7/7: HEALTH CHECK] VERIFIED · Release activated and symlinked successfully. Configure Project URL or Target Health Check URL to probe your live domain.`,
-                  stream: 'STDOUT',
-                },
-                {
-                  seq: (prev[prev.length - 1].seq || prev.length) + 3,
-                  time: new Date().toLocaleTimeString(),
-                  line: `[PIPELINE COMPLETE] Deployment #${finished.number || finished.id.slice(0, 8)} successfully promoted.`,
-                  stream: 'SYSTEM',
-                },
-              ])
-              setStreamStatus('SUCCESS')
-              setExitCode(0)
-              setActiveDeployment((prev) => ({
-                ...prev,
-                status: 'SUCCESS',
-                duration: finished.durationMs ? `${Math.round(finished.durationMs / 1000)}s` : 'Completed',
-              }))
-              showToast({
-                type: 'success',
-                title: 'Deployment Completed',
-                message: `${targetObj.name}: Release active. Set Project URL in settings to probe live domain.`,
-              })
-              refreshProject()
-            } else {
-              // PROBE FAILED! (HTTP 500, ParseError, timeout, etc.)
-              const statusMsg = `HTTP ${probeRes.status || 500} ${probeRes.statusText || 'Internal Server Error'}`
-              setHealthProbeResults((prev) => ({
-                ...prev,
-                [targetObj.id]: { ok: false, latency, status: statusMsg, testedAt: 'Just now', url: probeUrl },
-              }))
-              setLogs((prev) => [
-                ...prev,
-                {
-                  seq: (prev[prev.length - 1].seq || prev.length) + 1,
-                  time: new Date().toLocaleTimeString(),
-                  line: `[STAGE 7/7: HEALTH CHECK] FAILED · ${probeUrl} returned ${statusMsg}!`,
-                  stream: 'STDERR',
-                },
-                {
-                  seq: (prev[prev.length - 1].seq || prev.length) + 2,
-                  time: new Date().toLocaleTimeString(),
-                  line: `[PIPELINE FAILURE] Application returned fatal error post-deployment (HTTP ${probeRes.status || 500}).`,
-                  stream: 'STDERR',
-                },
-              ])
-
-              setStreamStatus('FAILED')
-              setExitCode(1)
-              setActiveDeployment((prev) => ({
-                ...prev,
-                status: 'FAILED',
-                duration: finished.durationMs ? `${Math.round(finished.durationMs / 1000)}s` : 'Probe Failed',
-              }))
-              showToast({
-                type: 'error',
-                title: 'Health Check Failed',
-                message: `Target ${targetObj.name} returned ${statusMsg} post-deployment!`,
-              })
-
-              // Auto-rollback disabled per user instruction
-              const shouldRollback = false
-              if (shouldRollback) {
-                setLogs((prev) => [
-                  ...prev,
-                  {
-                    seq: (prev[prev.length - 1].seq || prev.length) + 1,
-                    time: new Date().toLocaleTimeString(),
-                    line: `[AUTO-ROLLBACK] Auto-rollback safeguard is ENABLED. Dispatched automatic rollback to restore working release...`,
-                    stream: 'SYSTEM',
-                  },
-                ])
-
-                try {
-                  // Find prior successful deployment on this project/target
-                  const priorDeploy = projectDeployments.find((d) => d.id !== finished.id && d.status === 'SUCCESS')
-                  const deployIdToRollback = priorDeploy?.id || finished.id
-                  const rollbackRes = await api(`/deployments/${deployIdToRollback}/rollback`, { method: 'POST' })
-                  const startedRollback = rollbackRes?.started?.[0] || rollbackRes
-                  if (startedRollback && startedRollback.id) {
-                    handleRollbackSuccess(startedRollback)
-                    showToast({
-                      type: 'warning',
-                      title: 'Auto-Rollback Dispatched',
-                      message: `Health probe failed. Automatically reverting target to release #${startedRollback.number || startedRollback.id.slice(0, 8)}.`,
-                    })
-                  }
-                } catch (rbErr) {
-                  console.error('Auto-rollback dispatch error:', rbErr)
-                  setLogs((prev) => [
-                    ...prev,
-                    {
-                      seq: (prev[prev.length - 1].seq || prev.length) + 1,
-                      time: new Date().toLocaleTimeString(),
-                      line: `[AUTO-ROLLBACK] Error dispatching automatic rollback: ${rbErr.message}`,
-                      stream: 'STDERR',
-                    },
-                  ])
-                }
-              }
-              refreshProject()
-            }
-          }
-        } catch (probeErr) {
-          console.error('Health probe execution exception:', probeErr)
-          setStreamStatus('FAILED')
-          setExitCode(1)
-          refreshProject()
-        }
+        setStreamStatus('SUCCESS')
+        setExitCode(0)
+        setActiveDeployment((prev) => ({
+          ...prev,
+          status: 'SUCCESS',
+          duration: finished.durationMs ? `${Math.round(finished.durationMs / 1000)}s` : 'Completed'
+        }))
+        showToast({
+          type: 'success',
+          title: 'Deployment Successful',
+          message: `Release #${finished.number || finished.id.slice(0, 8)} deployed successfully!`
+        })
+        refreshProject()
       }
     })
 
